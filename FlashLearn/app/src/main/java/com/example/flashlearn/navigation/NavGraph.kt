@@ -2,14 +2,19 @@ package com.example.flashlearn.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.flashlearn.data.repository.PreferencesRepository
 import com.example.flashlearn.ui.component.BottomNavItem
 import com.example.flashlearn.ui.screen.AddNewFolderScreen
+import com.example.flashlearn.ui.screen.EditFolderDetailScreen
+import com.example.flashlearn.ui.screen.FolderDetailScreen
 import com.example.flashlearn.ui.screen.HomeScreen
 import com.example.flashlearn.ui.screen.OnboardingScreen
 import com.example.flashlearn.ui.screen.SplashScreen
+import java.net.URLDecoder
 
 //Quản lý điều hướng màn hình
 @Composable
@@ -48,5 +53,24 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
 
         composable(BottomNavItem.Stats.route) { /* StatsScreen */ }
         composable(BottomNavItem.Profile.route) { /* ProfileScreen */ }
+        composable(
+            Screen.FolderDetail.route,
+            arguments = listOf(navArgument("folderName") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val encodedFolderName = backStackEntry.arguments?.getString("folderName") ?: ""
+            val folderName = URLDecoder.decode(encodedFolderName, "UTF-8")
+
+            FolderDetailScreen(folderName = folderName, navController = navController)
+        }
+        composable(
+            Screen.EditFolderDetail.route,
+            arguments = listOf(navArgument("folderName") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val encodedFolderName = backStackEntry.arguments?.getString("folderName") ?: ""
+            val folderName = URLDecoder.decode(encodedFolderName, "UTF-8")
+            EditFolderDetailScreen(navController = navController, folderTitle = folderName)
+        }
+
+
     }
 }

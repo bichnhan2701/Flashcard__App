@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 import com.example.flashlearn.ui.component.GradientText
+import java.net.URLEncoder
 
 @Composable
 fun HomeScreen (navController: NavController) {
@@ -96,8 +97,15 @@ fun HomeScreen (navController: NavController) {
 
             // Flashcard Folder list
             LazyColumn {
-                items(categories) { (title, count) ->
-                    FlashcardFolderItem(title, count)
+
+                items(categories) { (title, count ) ->
+                    val encodedName = URLEncoder.encode(title, "UTF-8")
+                    FlashcardFolderItem(
+                        title,
+                        count,
+                        onClick = {
+                        navController.navigate("folder_detail/${encodedName}")
+                    })
                 }
             }
         }

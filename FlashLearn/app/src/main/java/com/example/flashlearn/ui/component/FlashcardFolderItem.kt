@@ -1,6 +1,7 @@
 package com.example.flashlearn.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,12 +27,13 @@ import androidx.compose.ui.unit.sp
 
 // Hiển thị một folder Flashcard trong danh sách
 @Composable
-fun FlashcardFolderItem(title: String, count: Int) {
+fun FlashcardFolderItem(title: String, count: Int, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp)
             .background(color = Color(0xFFDAEAF7), shape = RoundedCornerShape(12.dp))
+            .clickable { onClick() } // gọi onClick khi click
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

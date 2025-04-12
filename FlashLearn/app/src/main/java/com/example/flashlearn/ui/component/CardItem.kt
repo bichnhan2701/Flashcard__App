@@ -29,7 +29,8 @@ fun CardItem(
     onTermChange: (String) -> Unit,
     onDefinitionChange: (String) -> Unit,
     onDelete: () -> Unit,
-    canDelete: Boolean
+    canDelete: Boolean,
+    modifier: Modifier = Modifier
 ) {
     val dismissState = rememberDismissState(
         confirmStateChange = {
@@ -49,12 +50,16 @@ fun CardItem(
             val backgroundColor =
                 if (dismissState.targetValue == DismissValue.DismissedToStart) Color.Red else Color(0xFFD5E7F7)
 
-            // Thêm chiều cao cố định để nền match chiều cao nội dung (Card)
+            LaunchedEffect(dismissState.currentValue) {
+                if (dismissState.currentValue == DismissValue.DismissedToStart && !canDelete) {
+                    dismissState.reset()
+                }
+            }
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp), // Giống padding của Card
-                    //.height(IntrinsicSize.Min), // Tự khớp chiều cao với content
+                    .padding(vertical = 8.dp),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 Box(
@@ -76,7 +81,7 @@ fun CardItem(
         },
         dismissContent = {
             Card(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 elevation = CardDefaults.cardElevation(4.dp),
@@ -96,8 +101,7 @@ fun CardItem(
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedBorderColor = Color(0xFF6587A2),
                             unfocusedBorderColor = Color(0xFF8DA9B5),
-                            cursorColor = Color(0xFF6587A2),
-                            focusedLabelColor = Color(0xFF8DA9B5)
+                            cursorColor = Color(0xFF6587A2)
                         )
                     )
 
@@ -111,8 +115,7 @@ fun CardItem(
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedBorderColor = Color(0xFF6587A2),
                             unfocusedBorderColor = Color(0xFF8DA9B5),
-                            cursorColor = Color(0xFF6587A2),
-                            focusedLabelColor = Color(0xFF8DA9B5)
+                            cursorColor = Color(0xFF6587A2)
                         )
                     )
                 }
@@ -120,6 +123,7 @@ fun CardItem(
         }
     )
 }
+
 
 @Preview(showBackground = true)
 @Composable

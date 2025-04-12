@@ -17,6 +17,8 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -33,7 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.flashlearn.R
-import com.example.flashlearn.ui.component.AddButton
+import com.example.flashlearn.ui.component.ActionButton
 import com.example.flashlearn.ui.component.CardItem
 
 @Composable
@@ -145,7 +147,12 @@ fun AddNewFolderScreen(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                AddButton { cards = cards + CardInput("", "") }
+                //AddButton { cards = cards + CardInput("", "") }
+                ActionButton(
+                    text = "Add card",
+                    icon = Icons.Default.Add,
+                    onClick = { cards = cards + CardInput("", "") }
+                )
             }
             Spacer(modifier = Modifier.height(24.dp))
         }
