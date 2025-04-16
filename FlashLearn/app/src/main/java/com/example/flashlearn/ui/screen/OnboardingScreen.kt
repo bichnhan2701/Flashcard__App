@@ -1,19 +1,8 @@
 package com.example.flashlearn.ui.screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -32,6 +21,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.flashlearn.R
+import com.example.flashlearn.ui.component.ActionButton
 
 // Màn hình hướng dẫn Onboarding
 @Composable
@@ -68,9 +58,7 @@ fun OnboardingScreen(
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Spacer(modifier = Modifier.height(16.dp))
-
             OnboardingContent(page = pages[currentPage])
-
             DotIndicator(
                 totalDots = pages.size,
                 selectedIndex = currentPage
@@ -90,15 +78,16 @@ fun OnboardingScreen(
                     Spacer(modifier = Modifier.width(64.dp))
                 }
 
-                Button(onClick = {
-                    if (currentPage < pages.size - 1) {
-                        currentPage++
-                    } else {
-                        onDone()
+                ActionButton(
+                    text = if (currentPage == pages.size - 1) "Bắt đầu" else "Tiếp tục",
+                    onClick = {
+                        if (currentPage < pages.size - 1) {
+                            currentPage++
+                        } else {
+                            onDone()
+                        }
                     }
-                }) {
-                    Text(text = if (currentPage == pages.size - 1) "Bắt đầu" else "Tiếp tục")
-                }
+                )
             }
         }
 

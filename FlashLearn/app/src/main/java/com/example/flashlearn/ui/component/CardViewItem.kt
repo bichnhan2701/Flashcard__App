@@ -59,9 +59,3 @@ fun CardViewItem(term: String, definition: String) {
         )
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun CardViewItemPreview() {
-    CardViewItem("", "")
-}

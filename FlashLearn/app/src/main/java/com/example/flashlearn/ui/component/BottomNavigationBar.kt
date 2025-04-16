@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.flashlearn.navigation.Screen
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
@@ -42,8 +43,8 @@ fun BottomNavigationBar(navController: NavController) {
                 onClick = {
                     if (currentRoute != item.route) {
                         navController.navigate(item.route) {
-                            // tránh nhân bản fragment khi back
-                            popUpTo(navController.graph.startDestinationId) {
+                            // Tránh nhân bản fragment khi quay lại một destination
+                            popUpTo(Screen.Home.route) {  // Hoặc sử dụng route mong muốn
                                 saveState = true
                             }
                             launchSingleTop = true
@@ -57,7 +58,8 @@ fun BottomNavigationBar(navController: NavController) {
                         contentDescription = item.label,
                         modifier = Modifier
                             .size(if (item is BottomNavItem.Add) 50.dp else 20.dp)
-                    ) },
+                    )
+                },
                 label = if (item.label.isNotEmpty()) { { Text(item.label) } } else null
             )
         }

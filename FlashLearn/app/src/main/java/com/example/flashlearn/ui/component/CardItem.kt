@@ -18,18 +18,22 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.Icon
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.icons.outlined.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CardItem(
     term: String,
     definition: String,
-    onTermChange: (String) -> Unit,
-    onDefinitionChange: (String) -> Unit,
-    onDelete: () -> Unit,
-    canDelete: Boolean,
+    onTermChange: (String) -> Unit = {},
+    onDefinitionChange: (String) -> Unit = {},
+    onDelete: () -> Unit = {},
+    onFavoriteClick: (() -> Unit)? = null,
+    isFavorite: Boolean = false,
+    canDelete: Boolean = true,
+    readOnly: Boolean = false,
     modifier: Modifier = Modifier
 ) {
     val dismissState = rememberDismissState(
@@ -37,15 +41,15 @@ fun CardItem(
             if (it == DismissValue.DismissedToStart && canDelete) {
                 onDelete()
                 true
-            } else {
-                false
-            }
+            } else false
         }
     )
 
+    val isSwipeEnabled = canDelete && dismissState.currentValue != DismissValue.DismissedToStart
+
     SwipeToDismiss(
         state = dismissState,
-        directions = if (canDelete) setOf(DismissDirection.EndToStart) else emptySet(),
+        directions = if (isSwipeEnabled) setOf(DismissDirection.EndToStart) else emptySet(),
         background = {
             val backgroundColor =
                 if (dismissState.targetValue == DismissValue.DismissedToStart) Color.Red else Color(0xFFD5E7F7)
@@ -69,7 +73,7 @@ fun CardItem(
                         .padding(horizontal = 20.dp),
                     contentAlignment = Alignment.CenterEnd
                 ) {
-                    if (canDelete) {
+                    if (isSwipeEnabled) {
                         Icon(
                             imageVector = Icons.Outlined.Delete,
                             contentDescription = "Delete Icon",
@@ -90,43 +94,58 @@ fun CardItem(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(color = Color.White)
+                        .background(Color.White)
                         .padding(12.dp)
                 ) {
-                    OutlinedTextField(
-                        value = term,
-                        onValueChange = onTermChange,
-                        placeholder = { Text("Term") },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color(0xFF6587A2),
-                            unfocusedBorderColor = Color(0xFF8DA9B5),
-                            cursorColor = Color(0xFF6587A2)
+                    if (readOnly) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(term, style = MaterialTheme.typography.titleMedium)
+                                Text(definition, style = MaterialTheme.typography.bodyMedium)
+                            }
+                            if (onFavoriteClick != null) {
+                                IconButton(onClick = onFavoriteClick) {
+                                    Icon(
+                                        imageVector = if (isFavorite) Icons.Outlined.Favorite else Icons.Outlined.FavoriteBorder,
+                                        contentDescription = "Favorite",
+                                        tint = Color.Red
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        OutlinedTextField(
+                            value = term,
+                            onValueChange = onTermChange,
+                            placeholder = { Text("Term") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF6587A2),
+                                unfocusedBorderColor = Color(0xFF8DA9B5),
+                                cursorColor = Color(0xFF6587A2)
+                            )
                         )
-                    )
 
-                    Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                    OutlinedTextField(
-                        value = definition,
-                        onValueChange = onDefinitionChange,
-                        placeholder = { Text("Definition") },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color(0xFF6587A2),
-                            unfocusedBorderColor = Color(0xFF8DA9B5),
-                            cursorColor = Color(0xFF6587A2)
+                        OutlinedTextField(
+                            value = definition,
+                            onValueChange = onDefinitionChange,
+                            placeholder = { Text("Definition") },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                                focusedBorderColor = Color(0xFF6587A2),
+                                unfocusedBorderColor = Color(0xFF8DA9B5),
+                                cursorColor = Color(0xFF6587A2)
+                            )
                         )
-                    )
+                    }
                 }
             }
         }
     )
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun CardItemPreview() {
-    CardItem("", "", onDelete = {}, onTermChange = {}, onDefinitionChange = {}, canDelete = true)
 }

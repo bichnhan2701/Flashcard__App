@@ -3,27 +3,41 @@ package com.example.flashlearn.ui.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.flashlearn.ui.component.ActionButton
-import com.example.flashlearn.ui.component.CardViewItem
-import java.net.URLEncoder
+import com.example.flashlearn.ui.component.CardItem
+import com.example.flashlearn.ui.viewmodel.FolderDetailViewModel
 
 @Composable
-fun FolderDetailScreen(folderName: String, navController: NavController) {
-    val count = 15
+fun FolderDetailScreen(
+    categoryId: Int,
+    navController: NavController,
+    viewModel: FolderDetailViewModel = hiltViewModel()
+) {
+    val flashcards by viewModel.flashcards.collectAsState()
+    val folderNameState by viewModel.folderName.collectAsState()
+
+    LaunchedEffect(categoryId) {
+        viewModel.load(categoryId, "Folder Name")
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -39,14 +53,17 @@ fun FolderDetailScreen(folderName: String, navController: NavController) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.Outlined.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
             }
             Row {
-                val encodedName = URLEncoder.encode(folderName, "UTF-8")
-                IconButton(onClick = { navController.navigate("edit_folder_detail/$encodedName") }) {
+                IconButton(onClick = {
+
+                }) {
                     Icon(Icons.Outlined.Edit, contentDescription = "Edit")
                 }
-                IconButton(onClick = { /* TODO: Delete Folder */ }) {
+                IconButton(onClick = {
+                    // TODO: Delete folder + confirm dialog
+                }) {
                     Icon(Icons.Outlined.Delete, contentDescription = "Delete")
                 }
             }
@@ -54,12 +71,12 @@ fun FolderDetailScreen(folderName: String, navController: NavController) {
 
         // Title & card count
         Text(
-            text = folderName,
+            text = folderNameState,
             style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.SemiBold),
             modifier = Modifier.padding(bottom = 4.dp)
         )
         Text(
-            text = "$count cards",
+            text = "${flashcards.size} cards",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -72,8 +89,12 @@ fun FolderDetailScreen(folderName: String, navController: NavController) {
                 .padding(bottom = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            ActionButton(text = "Review", icon = Icons.Outlined.MailOutline, onClick = {})
-            ActionButton(text = "Mini quiz", icon = Icons.Outlined.Create, onClick = {})
+            ActionButton(text = "Review", icon = Icons.Outlined.MailOutline, onClick = {
+                // TODO: Chuyển sang màn hình review
+            })
+            ActionButton(text = "Mini quiz", icon = Icons.Outlined.Create, onClick = {
+                // TODO: Chuyển sang màn hình quiz
+            })
         }
 
         // Card List
@@ -83,16 +104,20 @@ fun FolderDetailScreen(folderName: String, navController: NavController) {
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            items(4) {
-                CardViewItem(term = "establish (v)", definition = "thành lập")
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            itemsIndexed(flashcards) { _, card ->
+                CardItem(
+                    term = card.term,
+                    definition = card.definition,
+                    isFavorite = card.isFavorite,
+                    onFavoriteClick = { viewModel.toggleFavorite(card) },
+                    onDelete = { viewModel.deleteFlashcard(card) },
+                    readOnly = true
+                )
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FolderDetailScreenPreview() {
-    FolderDetailScreen("TOEIC Vocab 1", navController = rememberNavController())
 }

@@ -9,12 +9,10 @@ import androidx.navigation.navArgument
 import com.example.flashlearn.data.repository.PreferencesRepository
 import com.example.flashlearn.ui.component.BottomNavItem
 import com.example.flashlearn.ui.screen.AddNewFolderScreen
-import com.example.flashlearn.ui.screen.EditFolderDetailScreen
 import com.example.flashlearn.ui.screen.FolderDetailScreen
 import com.example.flashlearn.ui.screen.HomeScreen
 import com.example.flashlearn.ui.screen.OnboardingScreen
 import com.example.flashlearn.ui.screen.SplashScreen
-import java.net.URLDecoder
 
 //Quản lý điều hướng màn hình
 @Composable
@@ -43,34 +41,33 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
             HomeScreen(navController)
         }
         composable(BottomNavItem.Category.route) { /* CategoryScreen */ }
-        composable(Screen.Add.route) {
-            AddNewFolderScreen(
-                onCancel = {
-                    navController.popBackStack() // hoặc điều hướng về màn hình chính
-                }
-            )
+        composable(BottomNavItem.Add.route) {
+            AddNewFolderScreen(navController = navController)
         }
-
+        composable(Screen.Add.route) {
+            AddNewFolderScreen(navController = navController)
+        }
         composable(BottomNavItem.Stats.route) { /* StatsScreen */ }
         composable(BottomNavItem.Profile.route) { /* ProfileScreen */ }
-        composable(
-            Screen.FolderDetail.route,
-            arguments = listOf(navArgument("folderName") { type = NavType.StringType })
-        ) { backStackEntry ->
-            val encodedFolderName = backStackEntry.arguments?.getString("folderName") ?: ""
-            val folderName = URLDecoder.decode(encodedFolderName, "UTF-8")
 
-            FolderDetailScreen(folderName = folderName, navController = navController)
-        }
         composable(
-            Screen.EditFolderDetail.route,
-            arguments = listOf(navArgument("folderName") { type = NavType.StringType })
+//            route = "folder_detail/{folderName}/{categoryId}",
+            route = Screen.FolderDetail.route,
+            arguments = listOf(
+                navArgument("categoryId") { type = NavType.IntType }
+            )
         ) { backStackEntry ->
-            val encodedFolderName = backStackEntry.arguments?.getString("folderName") ?: ""
-            val folderName = URLDecoder.decode(encodedFolderName, "UTF-8")
-            EditFolderDetailScreen(navController = navController, folderTitle = folderName)
+            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 0
+            FolderDetailScreen(categoryId = categoryId, navController = navController)
         }
 
-
+//        composable(
+//            Screen.EditFolderDetail.route,
+//            arguments = listOf(navArgument("folderName") { type = NavType.StringType })
+//        ) { backStackEntry ->
+//            val encodedFolderName = backStackEntry.arguments?.getString("folderName") ?: ""
+//            val folderName = URLDecoder.decode(encodedFolderName, "UTF-8")
+//            EditFolderDetailScreen(navController = navController, folderTitle = folderName)
+//        }
     }
 }

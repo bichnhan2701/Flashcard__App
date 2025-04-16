@@ -27,20 +27,25 @@ import com.example.flashlearn.ui.component.BottomNavigationBar
 import com.example.flashlearn.ui.component.FlashcardFolderItem
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.flashlearn.navigation.Screen
+import com.example.flashlearn.ui.component.BottomNavItem
+import com.example.flashlearn.ui.component.EmptyView
 import com.example.flashlearn.ui.component.GradientText
+import com.example.flashlearn.ui.viewmodel.HomeViewModel
 import java.net.URLEncoder
 
 @Composable
-fun HomeScreen (navController: NavController) {
-    val categories = listOf(
-        "TOEIC vocab day1" to 20,
-        "TOEIC vocab day2" to 23,
-        "HSK vocab day1" to 10,
-        "HSK vocab day2" to 11
-    )
+fun HomeScreen (
+    navController: NavController,
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    val categories by viewModel.categories.collectAsState()
 
     Scaffold(
         bottomBar = {
@@ -75,7 +80,7 @@ fun HomeScreen (navController: NavController) {
             // Search box
             OutlinedTextField(
                 value = "",
-                onValueChange = { },
+                onValueChange = {  },
                 placeholder = { Text("Search...") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -89,23 +94,32 @@ fun HomeScreen (navController: NavController) {
             Text(
                 "Flashcard categories",
                 style = TextStyle(
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
                 ),
                 modifier = Modifier.padding(bottom = 8.dp)
             )
 
-            // Flashcard Folder list
+            // Folder list
             LazyColumn {
-
-                items(categories) { (title, count ) ->
-                    val encodedName = URLEncoder.encode(title, "UTF-8")
+                items(categories) { category ->
                     FlashcardFolderItem(
-                        title,
-                        count,
+                        title = category.name,
+                        count = category.cardCount,
                         onClick = {
-                        navController.navigate("folder_detail/${encodedName}")
-                    })
+                            navController.navigate(Screen.FolderDetail.passCategoryId(category.id))
+                        }
+                    )
+                }
+                if (categories.isEmpty()) {
+                    item {
+                        EmptyView(
+                            message = "Chưa có folder nào. Hãy tạo mới!",
+                            onActionClick = {
+                                navController.navigate(BottomNavItem.Add.route)
+                            }
+                        )
+                    }
                 }
             }
         }

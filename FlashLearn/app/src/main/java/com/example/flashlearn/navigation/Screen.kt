@@ -11,6 +11,9 @@ sealed class Screen(val route: String) {
     object Add : Screen("add")
     object Stats : Screen("stats")
     object Profile : Screen("profile")
-    object  FolderDetail : Screen( "folder_detail/{folderName}")
+    object FolderDetail : Screen("folder_detail/{categoryId}") {
+        fun passCategoryId(categoryId: Int): String = "folder_detail/$categoryId"
+    }
+
     object EditFolderDetail : Screen("edit_folder_detail/{folderName}")
 }

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ActionButton(
     text: String,
-    icon: ImageVector,
+    icon: ImageVector? = null,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = Color.White,
@@ -40,20 +40,24 @@ fun ActionButton(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 10.dp)
         ) {
-            Box(
-                modifier = Modifier
-                    .size(32.dp)
-                    .background(color = iconBackgroundColor, shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = text,
-                    tint = Color.White,
-                    modifier = Modifier.size(iconSize)
-                )
+            // Nếu icon được truyền vào thì hiển thị
+            if (icon != null) {
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .background(color = iconBackgroundColor, shape = CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = text,
+                        tint = Color.White,
+                        modifier = Modifier.size(iconSize)
+                    )
+                }
+                Spacer(modifier = Modifier.width(8.dp))
             }
-            Spacer(modifier = Modifier.width(8.dp))
+
             Text(
                 text = text,
                 color = contentColor,
