@@ -34,10 +34,10 @@ class FolderDetailViewModel @Inject constructor(
         }
     }
 
-    fun deleteFlashcard(card: Flashcard) {
-        viewModelScope.launch {
-            flashcardUseCases.delete(card)
-            load(card.categoryId, _folderName.value)
-        }
-    }
+//    fun deleteFlashcard(card: Flashcard) {
+//        viewModelScope.launch {
+//            flashcardUseCases.delete(card)
+//            load(card.categoryId, _folderName.value)
+//        }
+//    }
 }

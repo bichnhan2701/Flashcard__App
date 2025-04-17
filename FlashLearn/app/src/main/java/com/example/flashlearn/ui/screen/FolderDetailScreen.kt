@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.flashlearn.navigation.Screen
 import com.example.flashlearn.ui.component.ActionButton
 import com.example.flashlearn.ui.component.CardItem
 import com.example.flashlearn.ui.viewmodel.FolderDetailViewModel
@@ -55,18 +56,23 @@ fun FolderDetailScreen(
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
             }
-            Row {
-                IconButton(onClick = {
-
-                }) {
-                    Icon(Icons.Outlined.Edit, contentDescription = "Edit")
-                }
-                IconButton(onClick = {
-                    // TODO: Delete folder + confirm dialog
-                }) {
-                    Icon(Icons.Outlined.Delete, contentDescription = "Delete")
-                }
+            IconButton(onClick = {
+                navController.navigate(Screen.EditFolderDetail.passCategoryId(categoryId))
+            }) {
+                Icon(Icons.Outlined.Edit, contentDescription = "Edit")
             }
+//            Row {
+//                IconButton(onClick = {
+//                    navController.navigate(Screen.EditFolderDetail.passCategoryId(categoryId))
+//                }) {
+//                    Icon(Icons.Outlined.Edit, contentDescription = "Edit")
+//                }
+//                IconButton(onClick = {
+//
+//                }) {
+//                    Icon(Icons.Outlined.Delete, contentDescription = "Delete")
+//                }
+//            }
         }
 
         // Title & card count
@@ -114,7 +120,7 @@ fun FolderDetailScreen(
                     definition = card.definition,
                     isFavorite = card.isFavorite,
                     onFavoriteClick = { viewModel.toggleFavorite(card) },
-                    onDelete = { viewModel.deleteFlashcard(card) },
+                    canDelete = false,
                     readOnly = true
                 )
             }

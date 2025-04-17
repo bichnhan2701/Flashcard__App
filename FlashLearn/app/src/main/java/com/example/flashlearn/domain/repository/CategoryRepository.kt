@@ -8,4 +8,7 @@ interface CategoryRepository {
     suspend fun createCategory(category: Category): Int
     suspend fun addFlashcardsToCategory(categoryId: Int, flashcards: List<Flashcard>)
     fun getAllCategories(): Flow<List<Category>>
+    suspend fun updateName(categoryId: Int, newName: String)
+    suspend fun deleteById(categoryId: Int)
+    suspend fun getCategoryById(categoryId: Int): Category?
 }

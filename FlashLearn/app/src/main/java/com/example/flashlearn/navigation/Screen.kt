@@ -15,5 +15,7 @@ sealed class Screen(val route: String) {
         fun passCategoryId(categoryId: Int): String = "folder_detail/$categoryId"
     }
 
-    object EditFolderDetail : Screen("edit_folder_detail/{folderName}")
+    object EditFolderDetail : Screen("edit_folder_detail/{categoryId}") {
+        fun passCategoryId(id: Int): String = "edit_folder_detail/$id"
+    }
 }

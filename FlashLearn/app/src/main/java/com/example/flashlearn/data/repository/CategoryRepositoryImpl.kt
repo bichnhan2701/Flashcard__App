@@ -46,4 +46,16 @@ class CategoryRepositoryImpl @Inject constructor(
     override fun getAllCategories(): Flow<List<Category>> {
         return categoryDao.getAll().map { it.map(CategoryEntity::toDomain) }
     }
+
+    override suspend fun updateName(categoryId: Int, newName: String) {
+        categoryDao.updateCategoryName(categoryId, newName)
+    }
+
+    override suspend fun deleteById(categoryId: Int) {
+        categoryDao.deleteById(categoryId)
+    }
+
+    override suspend fun getCategoryById(categoryId: Int): Category? {
+        return categoryDao.getById(categoryId)?.toDomain()
+    }
 }

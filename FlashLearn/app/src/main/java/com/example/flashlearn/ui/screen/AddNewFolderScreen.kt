@@ -104,7 +104,7 @@ fun AddNewFolderScreen(
                 .padding(16.dp)
         ) {
             // Header: Cancel + Save buttons
-            HeaderIcons(
+            AddHeaderIcons(
                 onCancel = { showExitDialog = true },
                 onSave = {
                     val isValid = flashcardFormViewModel.validate()
@@ -164,7 +164,7 @@ fun AddNewFolderScreen(
 }
 
 @Composable
-fun HeaderIcons(onCancel: () -> Unit, onSave: () -> Unit) {
+fun AddHeaderIcons(onCancel: () -> Unit, onSave: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

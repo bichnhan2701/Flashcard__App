@@ -32,18 +32,6 @@ fun DynamicFlashcardList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         itemsIndexed(flashcards) { index, flashcard ->
-//            CardItem(
-//                term = flashcard.term,
-//                definition = flashcard.definition,
-//                onTermChange = { newTerm ->
-//                    onFlashcardChange(index, flashcard.copy(term = newTerm))
-//                },
-//                onDefinitionChange = { newDef ->
-//                    onFlashcardChange(index, flashcard.copy(definition = newDef))
-//                },
-//                onDelete = { onRemoveFlashcard(index) },
-//                canDelete = canDeleteFlashcard // Chỉ cho phép xóa nếu có hơn 2 flashcard
-//            )
             CardItem(
                 term = flashcard.term,
                 definition = flashcard.definition,
