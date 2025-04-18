@@ -5,7 +5,7 @@ import com.example.flashlearn.domain.repository.CategoryRepository
 import com.example.flashlearn.domain.repository.FlashcardRepository
 import javax.inject.Inject
 
-class UpdateFolderWithFlashcardsUseCase @Inject constructor(
+class UpdateCategoryWithFlashcardsUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val flashcardRepository: FlashcardRepository
 )  {

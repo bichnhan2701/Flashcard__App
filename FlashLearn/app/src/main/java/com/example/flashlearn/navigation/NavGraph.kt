@@ -10,6 +10,7 @@ import com.example.flashlearn.data.repository.PreferencesRepository
 import com.example.flashlearn.ui.component.BottomNavItem
 import com.example.flashlearn.ui.screen.AddNewFolderScreen
 import com.example.flashlearn.ui.screen.EditFolderDetailScreen
+import com.example.flashlearn.ui.screen.FlashcardReviewScreen
 import com.example.flashlearn.ui.screen.FolderDetailScreen
 import com.example.flashlearn.ui.screen.HomeScreen
 import com.example.flashlearn.ui.screen.OnboardingScreen
@@ -52,7 +53,6 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
         composable(BottomNavItem.Profile.route) { /* ProfileScreen */ }
 
         composable(
-//            route = "folder_detail/{folderName}/{categoryId}",
             route = Screen.FolderDetail.route,
             arguments = listOf(
                 navArgument("categoryId") { type = NavType.IntType }
@@ -68,6 +68,14 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
         ) { backStackEntry ->
             val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 0
             EditFolderDetailScreen(navController = navController, categoryId = categoryId)
+        }
+
+        composable(
+            route = Screen.FlashcardReview.route,
+            arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 0
+            FlashcardReviewScreen (navController = navController, categoryId = categoryId)
         }
 
     }

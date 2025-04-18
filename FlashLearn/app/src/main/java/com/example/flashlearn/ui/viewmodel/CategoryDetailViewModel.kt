@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FolderDetailViewModel @Inject constructor(
+class CategoryDetailViewModel @Inject constructor(
     private val flashcardUseCases: FlashcardUseCases
 ) : ViewModel() {
     private val _flashcards = MutableStateFlow<List<Flashcard>>(emptyList())

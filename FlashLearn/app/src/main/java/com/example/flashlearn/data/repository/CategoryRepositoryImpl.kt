@@ -36,6 +36,7 @@ class CategoryRepositoryImpl @Inject constructor(
                 definition = it.definition,
                 pronunciation = it.pronunciation,
                 isFavorite = it.isFavorite,
+                isRemembered = it.isRemembered,
                 createdAt = it.createdAt,
                 updatedAt = it.updatedAt
             )

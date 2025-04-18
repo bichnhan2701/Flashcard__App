@@ -4,14 +4,14 @@ import com.example.flashlearn.domain.repository.CategoryRepository
 import com.example.flashlearn.domain.repository.FlashcardRepository
 import com.example.flashlearn.domain.usecase.CreateCategoryUseCase
 import com.example.flashlearn.domain.usecase.DeleteFlashcardUseCase
-import com.example.flashlearn.domain.usecase.DeleteFolderWithFlashcardsUseCase
+import com.example.flashlearn.domain.usecase.DeleteCategoryWithFlashcardsUseCase
 import com.example.flashlearn.domain.usecase.FlashcardUseCases
 import com.example.flashlearn.domain.usecase.GetAllCategoriesUseCase
 import com.example.flashlearn.domain.usecase.GetFlashcardsByCategoryUseCase
-import com.example.flashlearn.domain.usecase.GetFolderWithFlashcardsUseCase
+import com.example.flashlearn.domain.usecase.GetCategoryWithFlashcardsUseCase
 import com.example.flashlearn.domain.usecase.InsertFlashcardsUseCase
 import com.example.flashlearn.domain.usecase.UpdateFlashcardUseCase
-import com.example.flashlearn.domain.usecase.UpdateFolderWithFlashcardsUseCase
+import com.example.flashlearn.domain.usecase.UpdateCategoryWithFlashcardsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,8 +58,8 @@ object UseCaseModule {
     fun provideGetFolderWithFlashcardsUseCase(
         categoryRepository: CategoryRepository,
         flashcardRepository: FlashcardRepository
-    ): GetFolderWithFlashcardsUseCase {
-        return GetFolderWithFlashcardsUseCase(categoryRepository, flashcardRepository)
+    ): GetCategoryWithFlashcardsUseCase {
+        return GetCategoryWithFlashcardsUseCase(categoryRepository, flashcardRepository)
     }
 
     @Provides
@@ -67,8 +67,8 @@ object UseCaseModule {
     fun provideUpdateFolderWithFlashcardsUseCase(
         flashcardRepository: FlashcardRepository,
         categoryRepository: CategoryRepository
-    ): UpdateFolderWithFlashcardsUseCase {
-        return UpdateFolderWithFlashcardsUseCase(categoryRepository, flashcardRepository)
+    ): UpdateCategoryWithFlashcardsUseCase {
+        return UpdateCategoryWithFlashcardsUseCase(categoryRepository, flashcardRepository)
     }
 
     @Provides
@@ -76,7 +76,7 @@ object UseCaseModule {
     fun provideDeleteFolderWithFlashcardsUseCase(
         flashcardRepository: FlashcardRepository,
         categoryRepository: CategoryRepository
-    ): DeleteFolderWithFlashcardsUseCase {
-        return DeleteFolderWithFlashcardsUseCase(flashcardRepository, categoryRepository)
+    ): DeleteCategoryWithFlashcardsUseCase {
+        return DeleteCategoryWithFlashcardsUseCase(flashcardRepository, categoryRepository)
     }
 }

@@ -33,6 +33,7 @@ class FlashcardFormViewModel @Inject constructor() : UnsavedChangesViewModel() {
             categoryId = 0,
             isFavorite = false,
             pronunciation = null,
+            isRemembered = false,
             createdAt = now,
             updatedAt = now
         )

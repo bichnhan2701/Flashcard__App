@@ -12,6 +12,7 @@ fun defaultFlashcards(count: Int = 2): List<Flashcard> {
             definition = "",
             pronunciation = null,
             isFavorite = false,
+            isRemembered = false,
             createdAt = now,
             updatedAt = now
         )

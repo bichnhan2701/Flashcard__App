@@ -4,9 +4,9 @@ import com.example.flashlearn.data.local.entity.FlashcardEntity
 import com.example.flashlearn.domain.model.Flashcard
 
 fun FlashcardEntity.toDomain() = Flashcard(
-    id, categoryId, term, definition, pronunciation, isFavorite, createdAt, updatedAt
+    id, categoryId, term, definition, pronunciation, isFavorite, isRemembered , createdAt, updatedAt
 )
 
 fun Flashcard.toEntity() = FlashcardEntity(
-    id, categoryId, term, definition, pronunciation, isFavorite, createdAt, updatedAt
+    id, categoryId, term, definition, pronunciation, isFavorite, isRemembered, createdAt, updatedAt
 )

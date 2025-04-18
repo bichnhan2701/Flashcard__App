@@ -23,7 +23,9 @@ object DatabaseModule {
             context,
             AppDatabase::class.java,
             "flash_learn_db"
-        ).build()
+        )
+            .fallbackToDestructiveMigration(false)
+            .build()
     }
 
     @Provides

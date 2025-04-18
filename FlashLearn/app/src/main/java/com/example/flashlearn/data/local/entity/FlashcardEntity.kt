@@ -11,6 +11,7 @@ data class FlashcardEntity(
     val definition: String,
     val pronunciation: String?,
     val isFavorite: Boolean,
+    val isRemembered: Boolean,
     val createdAt: Long,
     val updatedAt: Long
 )

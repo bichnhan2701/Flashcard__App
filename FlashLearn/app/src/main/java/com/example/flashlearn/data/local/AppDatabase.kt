@@ -7,7 +7,7 @@ import com.example.flashlearn.data.local.dao.FlashcardDao
 import com.example.flashlearn.data.local.entity.CategoryEntity
 import com.example.flashlearn.data.local.entity.FlashcardEntity
 
-@Database(entities = [CategoryEntity::class, FlashcardEntity::class], version = 1, exportSchema = false)
+@Database(entities = [CategoryEntity::class, FlashcardEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun flashcardDao(): FlashcardDao

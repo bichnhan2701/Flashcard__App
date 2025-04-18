@@ -24,13 +24,13 @@ import androidx.navigation.NavController
 import com.example.flashlearn.navigation.Screen
 import com.example.flashlearn.ui.component.ActionButton
 import com.example.flashlearn.ui.component.CardItem
-import com.example.flashlearn.ui.viewmodel.FolderDetailViewModel
+import com.example.flashlearn.ui.viewmodel.CategoryDetailViewModel
 
 @Composable
 fun FolderDetailScreen(
     categoryId: Int,
     navController: NavController,
-    viewModel: FolderDetailViewModel = hiltViewModel()
+    viewModel: CategoryDetailViewModel = hiltViewModel()
 ) {
     val flashcards by viewModel.flashcards.collectAsState()
     val folderNameState by viewModel.folderName.collectAsState()
@@ -61,18 +61,6 @@ fun FolderDetailScreen(
             }) {
                 Icon(Icons.Outlined.Edit, contentDescription = "Edit")
             }
-//            Row {
-//                IconButton(onClick = {
-//                    navController.navigate(Screen.EditFolderDetail.passCategoryId(categoryId))
-//                }) {
-//                    Icon(Icons.Outlined.Edit, contentDescription = "Edit")
-//                }
-//                IconButton(onClick = {
-//
-//                }) {
-//                    Icon(Icons.Outlined.Delete, contentDescription = "Delete")
-//                }
-//            }
         }
 
         // Title & card count
@@ -96,7 +84,7 @@ fun FolderDetailScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             ActionButton(text = "Review", icon = Icons.Outlined.MailOutline, onClick = {
-                // TODO: Chuyển sang màn hình review
+                navController.navigate(Screen.FlashcardReview.passCategoryId(categoryId))
             })
             ActionButton(text = "Mini quiz", icon = Icons.Outlined.Create, onClick = {
                 // TODO: Chuyển sang màn hình quiz

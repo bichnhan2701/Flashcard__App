@@ -112,6 +112,7 @@ fun EditFolderDetailScreen(
                         term = "",
                         definition = "",
                         pronunciation = null,
+                        isRemembered = false,
                         isFavorite = false,
                         createdAt = System.currentTimeMillis(),
                         updatedAt = System.currentTimeMillis()

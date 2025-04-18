@@ -11,11 +11,15 @@ sealed class Screen(val route: String) {
     object Add : Screen("add")
     object Stats : Screen("stats")
     object Profile : Screen("profile")
+
     object FolderDetail : Screen("folder_detail/{categoryId}") {
         fun passCategoryId(categoryId: Int): String = "folder_detail/$categoryId"
     }
-
     object EditFolderDetail : Screen("edit_folder_detail/{categoryId}") {
         fun passCategoryId(id: Int): String = "edit_folder_detail/$id"
     }
+    object FlashcardReview : Screen("review/{categoryId}") {
+        fun passCategoryId(categoryId: Int) = "review/$categoryId"
+    }
+
 }

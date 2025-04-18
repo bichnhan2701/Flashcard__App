@@ -1,6 +1,6 @@
 package com.example.flashlearn.domain.model
 
-data class FolderWithFlashcards(
+data class CategoryWithFlashcards(
     val name: String,
     val flashcards: List<Flashcard>
 )
