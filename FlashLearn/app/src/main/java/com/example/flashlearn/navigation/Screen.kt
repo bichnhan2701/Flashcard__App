@@ -10,7 +10,7 @@ sealed class Screen(val route: String) {
     object Category : Screen("category")
     object Add : Screen("add")
     object Stats : Screen("stats")
-    object Profile : Screen("profile")
+    object UserProfile : Screen("user_profile")
 
     object FolderDetail : Screen("folder_detail/{categoryId}") {
         fun passCategoryId(categoryId: Int): String = "folder_detail/$categoryId"
@@ -21,5 +21,11 @@ sealed class Screen(val route: String) {
     object FlashcardReview : Screen("review/{categoryId}") {
         fun passCategoryId(categoryId: Int) = "review/$categoryId"
     }
+
+    // Quiz
+    object MiniQuiz : Screen("mini_quiz")
+    object StartMiniQuiz : Screen("start_mini_quiz")
+    object MiniQuizResult : Screen("mini_quiz_result")
+
 
 }

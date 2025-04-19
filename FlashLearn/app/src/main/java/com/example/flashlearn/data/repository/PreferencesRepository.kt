@@ -14,4 +14,13 @@ class PreferencesRepository(context: Context) {
     fun hasSeenOnboarding(): Boolean {
         return sharedPrefs.getBoolean("seen_onboarding", false)
     }
+
+    // ✅ Thêm xử lý Dark Mode
+    suspend fun isDarkMode(): Boolean {
+        return sharedPrefs.getBoolean("dark_mode", false)
+    }
+
+    suspend fun setDarkMode(isDark: Boolean) {
+        sharedPrefs.edit().putBoolean("dark_mode", isDark).apply()
+    }
 }
