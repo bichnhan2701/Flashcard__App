@@ -11,7 +11,7 @@ class GetCategoryWithFlashcardsUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(categoryId: Int): CategoryWithFlashcards {
         val name = categoryRepository.getCategoryById(categoryId)?.name ?: ""
-        val flashcards = flashcardRepository.getByCategory(categoryId)
+        val flashcards  = flashcardRepository.getByCategory(categoryId)
 
         return CategoryWithFlashcards(
             name = name,

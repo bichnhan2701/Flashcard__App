@@ -1,67 +1,104 @@
 package com.example.flashlearn.ui.viewmodel
 
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
-import com.example.flashlearn.navigation.Screen
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import androidx.lifecycle.viewModelScope
+import com.example.flashlearn.domain.model.MiniQuizQuestion
+import com.example.flashlearn.domain.model.MiniQuizResult
+import com.example.flashlearn.domain.usecase.GenerateMiniQuizQuestionsUseCase
+import com.example.flashlearn.domain.usecase.GetFlashcardsByCategoryUseCase
+import com.example.flashlearn.domain.usecase.SaveMiniQuizResultUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MiniQuizViewModel : ViewModel() {
-    private val _questions = MutableStateFlow(
-        listOf(
-            Question("abide by", listOf("bến học", "tuân thủ", "đạp xe", "đi học"), 1),
-            Question("bring up", listOf("nuôi dưỡng", "hạ xuống", "mang đi", "nói to"), 0),
-            Question("call off", listOf("gọi điện", "hủy bỏ", "gọi lại", "bắt đầu"), 1)
-            // ➕ Add more questions as needed
-        )
-    )
-    val questions: StateFlow<List<Question>> = _questions
+sealed class MiniQuizUiState {
+    data object Loading : MiniQuizUiState()
+    data class Loaded(
+        val question: MiniQuizQuestion,
+        val questionIndex: Int,
+        val totalQuestions: Int,
+        val selectedIndex: Int? = null,
+        val isCorrect: Boolean? = null,
+        val correctCount: Int = 0
+    ) : MiniQuizUiState()
 
-    private val _currentIndex = MutableStateFlow(0)
-    val currentIndex: StateFlow<Int> = _currentIndex
+    data class Finished(val total: Int, val correct: Int) : MiniQuizUiState()
+}
 
-    val currentQuestion = mutableStateOf(_questions.value[_currentIndex.value])
-    val selectedAnswerIndex = mutableStateOf<Int?>(null)
-    val isAnswerCorrect = mutableStateOf<Boolean?>(null)
+@HiltViewModel
+class MiniQuizViewModel @Inject constructor(
+    private val getFlashcardsByCategoryUseCase: GetFlashcardsByCategoryUseCase,
+    private val generateQuizQuestionsUseCase: GenerateMiniQuizQuestionsUseCase,
+    private val saveMiniQuizResultUseCase: SaveMiniQuizResultUseCase
+) : ViewModel() {
 
-    fun selectAnswer(index: Int) {
-        selectedAnswerIndex.value = index
-        isAnswerCorrect.value = index == currentQuestion.value.correctAnswerIndex
-    }
+    private var questions: List<MiniQuizQuestion> = emptyList()
+    private var currentIndex = 0
+    private var currentCategoryId: Int = -1
+    private var correctAnswers = 0
+    private val wrongFlashcardIds = mutableListOf<Int>()
 
-    fun goToNextQuestion() {
-        if (_currentIndex.value < _questions.value.size - 1) {
-            _currentIndex.value++
-            updateCurrentQuestion()
+    private val _uiState = mutableStateOf<MiniQuizUiState>(MiniQuizUiState.Loading)
+    val uiState: State<MiniQuizUiState> = _uiState
+
+    fun loadQuestions(categoryId: Int) {
+        viewModelScope.launch {
+            _uiState.value = MiniQuizUiState.Loading
+            currentCategoryId = categoryId
+            val flashcards = getFlashcardsByCategoryUseCase(categoryId)
+            questions = generateQuizQuestionsUseCase(flashcards)
+            currentIndex = 0
+            correctAnswers = 0
+            wrongFlashcardIds.clear()
+
+            questions.getOrNull(currentIndex)?.let {
+                _uiState.value = MiniQuizUiState.Loaded(it, currentIndex, questions.size)
+            }
         }
     }
 
-    private fun updateCurrentQuestion() {
-        currentQuestion.value = _questions.value[_currentIndex.value]
-        selectedAnswerIndex.value = null
-        isAnswerCorrect.value = null
+    fun selectAnswer(index: Int) {
+        val currentQuestion = questions.getOrNull(currentIndex) ?: return
+        val isCorrect = currentQuestion.options[index] == currentQuestion.correctAnswer
+        if (isCorrect) correctAnswers++
+        else wrongFlashcardIds.add(currentQuestion.flashcardId)
+
+        _uiState.value = MiniQuizUiState.Loaded(
+            question = currentQuestion,
+            questionIndex = currentIndex,
+            totalQuestions = questions.size,
+            selectedIndex = index,
+            isCorrect = isCorrect,
+            correctCount = correctAnswers
+        )
     }
 
-    fun getQuestionProgress(): String =
-        "Question ${_currentIndex.value + 1} / ${_questions.value.size}"
-
-    fun getQuestions(): List<Question> = _questions.value
-
-    fun getCurrentIndex(): Int = _currentIndex.value
-
-    // ✅ Hàm dùng cho nút "Next" trong QuizScreen
-    fun goToNext(navController: NavController) {
-        if (_currentIndex.value < _questions.value.size - 1) {
-            goToNextQuestion()
+    fun goToNext() {
+        if (currentIndex < questions.lastIndex) {
+            currentIndex++
+            _uiState.value = MiniQuizUiState.Loaded(
+                question = questions[currentIndex],
+                questionIndex = currentIndex,
+                totalQuestions = questions.size,
+                correctCount = correctAnswers
+            )
         } else {
-            navController.navigate(Screen.MiniQuizResult.route)
+            // Lưu kết quả
+            viewModelScope.launch {
+                saveMiniQuizResultUseCase(
+                    MiniQuizResult(
+                        categoryId = currentCategoryId,
+                        totalQuestions = questions.size,
+                        correctAnswers = correctAnswers,
+                        wrongFlashcardIds = wrongFlashcardIds  // Truyền danh sách flashcard sai
+                    )
+                )
+                _uiState.value = MiniQuizUiState.Finished(
+                    total = questions.size,
+                    correct = correctAnswers
+                )
+            }
         }
     }
 }
-
-data class Question(
-    val term: String,
-    val options: List<String>,
-    val correctAnswerIndex: Int
-)

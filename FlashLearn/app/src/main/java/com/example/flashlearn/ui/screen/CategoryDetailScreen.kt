@@ -87,7 +87,8 @@ fun FolderDetailScreen(
                 navController.navigate(Screen.FlashcardReview.passCategoryId(categoryId))
             })
             ActionButton(text = "Mini quiz", icon = Icons.Outlined.Create, onClick = {
-                navController.navigate(Screen.StartMiniQuiz.route)
+                navController.navigate(Screen.StartMiniQuiz.createRoute(categoryId))
+
             })
         }
 

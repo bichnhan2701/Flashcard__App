@@ -20,7 +20,7 @@ fun BottomNavigationBar(navController: NavController) {
         BottomNavItem.Home,
         BottomNavItem.Category,
         BottomNavItem.Add,
-        BottomNavItem.Stats,
+        BottomNavItem.Progress,
         BottomNavItem.Profile
     )
 

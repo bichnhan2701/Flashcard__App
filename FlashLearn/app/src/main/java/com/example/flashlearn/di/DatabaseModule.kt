@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.example.flashlearn.data.local.AppDatabase
 import com.example.flashlearn.data.local.dao.CategoryDao
 import com.example.flashlearn.data.local.dao.FlashcardDao
+import com.example.flashlearn.data.local.dao.MiniQuizResultDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +39,11 @@ object DatabaseModule {
     @Singleton
     fun provideFlashcardDao(database: AppDatabase): FlashcardDao {
         return database.flashcardDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideMiniQuizDao(database: AppDatabase): MiniQuizResultDao {
+        return database.miniQuizResultDao()
     }
 }

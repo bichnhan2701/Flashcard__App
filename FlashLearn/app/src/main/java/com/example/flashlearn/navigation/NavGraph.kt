@@ -18,6 +18,9 @@ import com.example.flashlearn.ui.screen.HomeScreen
 import com.example.flashlearn.ui.screen.MiniQuizResultScreen
 import com.example.flashlearn.ui.screen.MiniQuizScreen
 import com.example.flashlearn.ui.screen.OnboardingScreen
+import com.example.flashlearn.ui.screen.ProgressDetailScreen
+import com.example.flashlearn.ui.screen.ProgressScreen
+import com.example.flashlearn.ui.screen.QuizHistoryScreen
 import com.example.flashlearn.ui.screen.SplashScreen
 import com.example.flashlearn.ui.screen.StartMiniQuizScreen
 import com.example.flashlearn.ui.screen.UserProfileScreen
@@ -55,7 +58,17 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
         composable(Screen.Add.route) {
             AddNewFolderScreen(navController = navController)
         }
-        composable(BottomNavItem.Stats.route) { /* StatsScreen */ }
+        composable(BottomNavItem.Progress.route) {
+            ProgressScreen(
+                onCategoryClick = { categoryId ->
+                    navController.navigate(Screen.ProgressDetail.createRoute(categoryId))
+                },
+                onQuizClick = { categoryId ->
+                    navController.navigate(Screen.QuizHistory.createRoute(categoryId))
+                }
+            )
+        }
+
         composable(BottomNavItem.Profile.route) {
             UserProfileScreen(navController = navController, preferences = preferences)
         }
@@ -87,14 +100,33 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
         }
 
         // Quiz
-        composable(Screen.MiniQuiz.route) {
-            MiniQuizScreen(navController = navController)
+        composable(
+            route = Screen.StartMiniQuiz.route,
+            arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: 0
+            StartMiniQuizScreen(navController = navController, categoryId = categoryId)
         }
-        composable(Screen.StartMiniQuiz.route) {
-            StartMiniQuizScreen(navController = navController)
+        composable(Screen.MiniQuiz.route) { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull() ?: return@composable
+
+            MiniQuizScreen(
+                categoryId = categoryId,
+                onFinish = { total, correct ->
+                    navController.navigate(Screen.MiniQuizResult.createRoute(total, correct))
+                }
+            )
         }
-        composable(Screen.MiniQuizResult.route) {
-            MiniQuizResultScreen(navController = navController)
+        composable(
+            route = Screen.MiniQuizResult.route,
+            arguments = listOf(
+                navArgument("total") { type = NavType.IntType },
+                navArgument("correct") { type = NavType.IntType }
+            )
+        ) { backStackEntry ->
+            val total = backStackEntry.arguments?.getInt("total") ?: 0
+            val correct = backStackEntry.arguments?.getInt("correct") ?: 0
+            MiniQuizResultScreen(navController = navController, total = total, correct = correct)
         }
 
         // About
@@ -103,6 +135,24 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
         }
         composable("help") {
             HelpScreen(navController = navController)
+        }
+
+        // Progress
+
+        composable(
+            route = Screen.ProgressDetail.route,
+            arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: return@composable
+            ProgressDetailScreen(categoryId)
+        }
+
+        composable(
+            route = Screen.QuizHistory.route,
+            arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: return@composable
+            QuizHistoryScreen(categoryId)
         }
 
     }

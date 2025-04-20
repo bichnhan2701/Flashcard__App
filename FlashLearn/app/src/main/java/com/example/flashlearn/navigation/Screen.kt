@@ -9,7 +9,7 @@ sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Category : Screen("category")
     object Add : Screen("add")
-    object Stats : Screen("stats")
+    object Progress : Screen("progress")
     object UserProfile : Screen("user_profile")
 
     object FolderDetail : Screen("folder_detail/{categoryId}") {
@@ -23,9 +23,23 @@ sealed class Screen(val route: String) {
     }
 
     // Quiz
-    object MiniQuiz : Screen("mini_quiz")
-    object StartMiniQuiz : Screen("start_mini_quiz")
-    object MiniQuizResult : Screen("mini_quiz_result")
+    object StartMiniQuiz : Screen("start_mini_quiz/{categoryId}") {
+        fun createRoute(categoryId: Int) = "start_mini_quiz/$categoryId"
+    }
+    object MiniQuiz : Screen("mini_quiz/{categoryId}") {
+        fun createRoute(categoryId: Int) = "mini_quiz/$categoryId"
+    }
+    object MiniQuizResult : Screen("mini_quiz_result/{total}/{correct}") {
+        fun createRoute(total: Int, correct: Int) = "mini_quiz_result/$total/$correct"
+    }
+
+    // Progress
+    object ProgressDetail : Screen("progress_detail/{categoryId}") {
+        fun createRoute(categoryId: Int) = "progress_detail/$categoryId"
+    }
+    object QuizHistory : Screen("quiz_history/{categoryId}") {
+        fun createRoute(categoryId: Int) = "quiz_history/$categoryId"
+    }
 
 
 }

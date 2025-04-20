@@ -81,6 +81,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
+    // Chart
+//    implementation(libs.charts)
+    implementation (libs.mpandroidchart)
 
     testImplementation(libs.junit)
 

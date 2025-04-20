@@ -2,14 +2,22 @@ package com.example.flashlearn.di
 
 import com.example.flashlearn.domain.repository.CategoryRepository
 import com.example.flashlearn.domain.repository.FlashcardRepository
+import com.example.flashlearn.domain.repository.MiniQuizRepository
 import com.example.flashlearn.domain.usecase.CreateCategoryUseCase
 import com.example.flashlearn.domain.usecase.DeleteFlashcardUseCase
 import com.example.flashlearn.domain.usecase.DeleteCategoryWithFlashcardsUseCase
 import com.example.flashlearn.domain.usecase.FlashcardUseCases
+import com.example.flashlearn.domain.usecase.GenerateMiniQuizQuestionsUseCase
+import com.example.flashlearn.domain.usecase.GetAllCategoriesProgressUseCase
 import com.example.flashlearn.domain.usecase.GetAllCategoriesUseCase
+import com.example.flashlearn.domain.usecase.GetAllQuizResultsUseCase
 import com.example.flashlearn.domain.usecase.GetFlashcardsByCategoryUseCase
 import com.example.flashlearn.domain.usecase.GetCategoryWithFlashcardsUseCase
+import com.example.flashlearn.domain.usecase.GetLatestQuizResultByCategoryUseCase
+import com.example.flashlearn.domain.usecase.GetQuizHistoryByCategoryUseCase
+import com.example.flashlearn.domain.usecase.GetQuizResultsBetweenUseCase
 import com.example.flashlearn.domain.usecase.InsertFlashcardsUseCase
+import com.example.flashlearn.domain.usecase.SaveMiniQuizResultUseCase
 import com.example.flashlearn.domain.usecase.UpdateFlashcardUseCase
 import com.example.flashlearn.domain.usecase.UpdateCategoryWithFlashcardsUseCase
 import dagger.Module
@@ -79,4 +87,60 @@ object UseCaseModule {
     ): DeleteCategoryWithFlashcardsUseCase {
         return DeleteCategoryWithFlashcardsUseCase(flashcardRepository, categoryRepository)
     }
+
+    @Provides
+    @Singleton
+    fun provideGenerateMiniQuizQuestionsUseCase(): GenerateMiniQuizQuestionsUseCase {
+        return GenerateMiniQuizQuestionsUseCase()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetQuizHistoryByCategoryUseCase(
+        miniQuizRepository: MiniQuizRepository
+    ): GetQuizHistoryByCategoryUseCase {
+        return GetQuizHistoryByCategoryUseCase(miniQuizRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSaveMiniQuizResultUseCase(
+        miniQuizRepository: MiniQuizRepository
+    ): SaveMiniQuizResultUseCase {
+        return SaveMiniQuizResultUseCase(miniQuizRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetAllQuizResultsUseCase(
+        miniQuizRepository: MiniQuizRepository
+    ): GetAllQuizResultsUseCase {
+        return GetAllQuizResultsUseCase(miniQuizRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetQuizResultsBetweenUseCase(
+        miniQuizRepository: MiniQuizRepository
+    ): GetQuizResultsBetweenUseCase {
+        return GetQuizResultsBetweenUseCase(miniQuizRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetLatestQuizResultByCategoryUseCase(
+        miniQuizRepository: MiniQuizRepository
+    ): GetLatestQuizResultByCategoryUseCase {
+        return GetLatestQuizResultByCategoryUseCase(miniQuizRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetAllCategoriesProgressUseCase(
+        categoryRepository: CategoryRepository,
+        flashcardRepository: FlashcardRepository
+    ): GetAllCategoriesProgressUseCase {
+        return GetAllCategoriesProgressUseCase(categoryRepository, flashcardRepository)
+    }
+
 }

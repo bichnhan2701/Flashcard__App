@@ -26,7 +26,11 @@ import com.example.flashlearn.R
 import com.example.flashlearn.navigation.Screen
 
 @Composable
-fun MiniQuizResultScreen(navController: NavController) {
+fun MiniQuizResultScreen(
+    navController: NavController,
+    total: Int,
+    correct: Int
+) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Transparent // Tránh theme ghi đè background
@@ -61,6 +65,7 @@ fun MiniQuizResultScreen(navController: NavController) {
 
                     Spacer(modifier = Modifier.height(24.dp))
 
+                    // Tiêu đề kết quả
                     Text(
                         text = "Great Job!",
                         fontSize = 28.sp,
@@ -69,13 +74,24 @@ fun MiniQuizResultScreen(navController: NavController) {
 
                     Spacer(modifier = Modifier.height(12.dp))
 
+                    // Hiển thị tổng kết
                     Text(
                         text = "You’ve completed the quiz.",
                         fontSize = 18.sp
                     )
 
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    // Hiển thị số câu đúng và tổng câu hỏi
+                    Text(
+                        text = "You answered $correct out of $total correctly.",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+
                     Spacer(modifier = Modifier.height(32.dp))
 
+                    // Nút quay lại trang chủ hoặc làm lại quiz
                     Button(
                         onClick = {
                             navController.navigate(Screen.Home.route) {
@@ -87,6 +103,19 @@ fun MiniQuizResultScreen(navController: NavController) {
                         shape = MaterialTheme.shapes.medium
                     ) {
                         Text("Back to Home")
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Nút chơi lại quiz (nếu muốn)
+                    Button(
+                        onClick = {
+                            navController.popBackStack() // Điều hướng trở lại quiz
+                        },
+                        modifier = Modifier.fillMaxWidth(0.6f),
+                        shape = MaterialTheme.shapes.medium
+                    ) {
+                        Text("Play Again")
                     }
                 }
             }

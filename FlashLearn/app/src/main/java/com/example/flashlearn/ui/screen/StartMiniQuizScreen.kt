@@ -31,7 +31,7 @@ import androidx.navigation.NavController
 import com.example.flashlearn.navigation.Screen
 
 @Composable
-fun StartMiniQuizScreen(navController: NavController) {
+fun StartMiniQuizScreen(navController: NavController, categoryId: Int) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -103,7 +103,7 @@ fun StartMiniQuizScreen(navController: NavController) {
                 )
                 Button(
                     onClick = {
-                        navController.navigate(Screen.MiniQuiz.route)
+                        navController.navigate(Screen.MiniQuiz.createRoute(categoryId))
                     },
                     modifier = Modifier
                         .fillMaxWidth(0.5f),

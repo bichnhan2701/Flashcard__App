@@ -12,6 +12,6 @@ sealed class BottomNavItem(
     object Home : BottomNavItem("home", Icons.Outlined.Home, "Home")
     object Category : BottomNavItem("category", Icons.Outlined.Email, "Category")
     object Add : BottomNavItem("add", Icons.Outlined.AddCircle, "")
-    object Stats : BottomNavItem("stats", Icons.Outlined.Menu, "Stats")
+    object Progress : BottomNavItem("progress", Icons.Outlined.Menu, "Progress")
     object Profile : BottomNavItem("profile", Icons.Outlined.Person, "Profile")
 }

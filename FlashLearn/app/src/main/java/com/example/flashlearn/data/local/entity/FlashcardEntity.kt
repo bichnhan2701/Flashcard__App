@@ -13,5 +13,6 @@ data class FlashcardEntity(
     val isFavorite: Boolean,
     val isRemembered: Boolean,
     val createdAt: Long,
-    val updatedAt: Long
+    val updatedAt: Long,
+    val lastReviewedDate: Long? = null
 )
