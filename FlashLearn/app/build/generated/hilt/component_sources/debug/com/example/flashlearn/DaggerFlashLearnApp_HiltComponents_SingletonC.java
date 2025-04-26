@@ -461,65 +461,65 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_AddFolderViewModel = "com.example.flashlearn.ui.viewmodel.AddFolderViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_NotificationViewModel = "com.example.flashlearn.ui.viewmodel.NotificationViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardReviewViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_AuthViewModel = "com.example.flashlearn.ui.viewmodel.AuthViewModel";
-
       static String com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel = "com.example.flashlearn.ui.viewmodel.CategoryDetailViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_HomeViewModel = "com.example.flashlearn.ui.viewmodel.HomeViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel = "com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel = "com.example.flashlearn.ui.viewmodel.ProgressDetailViewModel";
 
-      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
+      static String com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel = "com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_AuthViewModel = "com.example.flashlearn.ui.viewmodel.AuthViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_ProgressViewModel = "com.example.flashlearn.ui.viewmodel.ProgressViewModel";
 
+      static String com_example_flashlearn_ui_viewmodel_AddFolderViewModel = "com.example.flashlearn.ui.viewmodel.AddFolderViewModel";
+
       static String com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel = "com.example.flashlearn.ui.viewmodel.EditFolderDetailViewModel";
 
-      @KeepFieldType
-      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardReviewViewModel";
 
-      @KeepFieldType
-      AddFolderViewModel com_example_flashlearn_ui_viewmodel_AddFolderViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
 
-      @KeepFieldType
-      NotificationViewModel com_example_flashlearn_ui_viewmodel_NotificationViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
 
-      @KeepFieldType
-      FlashcardReviewViewModel com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_NotificationViewModel = "com.example.flashlearn.ui.viewmodel.NotificationViewModel";
 
-      @KeepFieldType
-      AuthViewModel com_example_flashlearn_ui_viewmodel_AuthViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_HomeViewModel = "com.example.flashlearn.ui.viewmodel.HomeViewModel";
 
       @KeepFieldType
       CategoryDetailViewModel com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel2;
 
       @KeepFieldType
-      HomeViewModel com_example_flashlearn_ui_viewmodel_HomeViewModel2;
+      ProgressDetailViewModel com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel2;
 
       @KeepFieldType
       QuizHistoryViewModel com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel2;
 
       @KeepFieldType
-      ProgressDetailViewModel com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel2;
-
-      @KeepFieldType
-      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
+      AuthViewModel com_example_flashlearn_ui_viewmodel_AuthViewModel2;
 
       @KeepFieldType
       ProgressViewModel com_example_flashlearn_ui_viewmodel_ProgressViewModel2;
 
       @KeepFieldType
+      AddFolderViewModel com_example_flashlearn_ui_viewmodel_AddFolderViewModel2;
+
+      @KeepFieldType
       EditFolderDetailViewModel com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel2;
+
+      @KeepFieldType
+      FlashcardReviewViewModel com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel2;
+
+      @KeepFieldType
+      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
+
+      @KeepFieldType
+      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
+
+      @KeepFieldType
+      NotificationViewModel com_example_flashlearn_ui_viewmodel_NotificationViewModel2;
+
+      @KeepFieldType
+      HomeViewModel com_example_flashlearn_ui_viewmodel_HomeViewModel2;
     }
   }
 
@@ -593,65 +593,65 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
+      static String com_example_flashlearn_ui_viewmodel_HomeViewModel = "com.example.flashlearn.ui.viewmodel.HomeViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_AddFolderViewModel = "com.example.flashlearn.ui.viewmodel.AddFolderViewModel";
 
-      static String com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel = "com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel = "com.example.flashlearn.ui.viewmodel.EditFolderDetailViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_HomeViewModel = "com.example.flashlearn.ui.viewmodel.HomeViewModel";
+      static String com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel = "com.example.flashlearn.ui.viewmodel.CategoryDetailViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_ProgressViewModel = "com.example.flashlearn.ui.viewmodel.ProgressViewModel";
 
-      static String com_example_flashlearn_ui_viewmodel_NotificationViewModel = "com.example.flashlearn.ui.viewmodel.NotificationViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_AuthViewModel = "com.example.flashlearn.ui.viewmodel.AuthViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel = "com.example.flashlearn.ui.viewmodel.CategoryDetailViewModel";
+      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardReviewViewModel";
 
+      static String com_example_flashlearn_ui_viewmodel_NotificationViewModel = "com.example.flashlearn.ui.viewmodel.NotificationViewModel";
+
       static String com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel = "com.example.flashlearn.ui.viewmodel.ProgressDetailViewModel";
 
-      @KeepFieldType
-      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel = "com.example.flashlearn.ui.viewmodel.EditFolderDetailViewModel";
 
-      @KeepFieldType
-      AddFolderViewModel com_example_flashlearn_ui_viewmodel_AddFolderViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
 
-      @KeepFieldType
-      QuizHistoryViewModel com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel = "com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel";
 
-      @KeepFieldType
-      EditFolderDetailViewModel com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel2;
+      static String com_example_flashlearn_ui_viewmodel_AuthViewModel = "com.example.flashlearn.ui.viewmodel.AuthViewModel";
 
       @KeepFieldType
       HomeViewModel com_example_flashlearn_ui_viewmodel_HomeViewModel2;
 
       @KeepFieldType
-      ProgressViewModel com_example_flashlearn_ui_viewmodel_ProgressViewModel2;
-
-      @KeepFieldType
-      NotificationViewModel com_example_flashlearn_ui_viewmodel_NotificationViewModel2;
-
-      @KeepFieldType
-      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
-
-      @KeepFieldType
-      AuthViewModel com_example_flashlearn_ui_viewmodel_AuthViewModel2;
+      AddFolderViewModel com_example_flashlearn_ui_viewmodel_AddFolderViewModel2;
 
       @KeepFieldType
       CategoryDetailViewModel com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel2;
 
       @KeepFieldType
+      ProgressViewModel com_example_flashlearn_ui_viewmodel_ProgressViewModel2;
+
+      @KeepFieldType
+      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
+
+      @KeepFieldType
       FlashcardReviewViewModel com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel2;
 
       @KeepFieldType
+      NotificationViewModel com_example_flashlearn_ui_viewmodel_NotificationViewModel2;
+
+      @KeepFieldType
       ProgressDetailViewModel com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel2;
+
+      @KeepFieldType
+      EditFolderDetailViewModel com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel2;
+
+      @KeepFieldType
+      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
+
+      @KeepFieldType
+      QuizHistoryViewModel com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel2;
+
+      @KeepFieldType
+      AuthViewModel com_example_flashlearn_ui_viewmodel_AuthViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {

@@ -10,20 +10,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -47,6 +35,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
 fun UserProfileScreen(
@@ -56,6 +50,7 @@ fun UserProfileScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     var isDarkMode by remember { mutableStateOf(false) }
+    var showLogoutDialog by remember { mutableStateOf(false) }
     val authState by authViewModel.authState.collectAsState()
     val context = LocalContext.current
 
@@ -141,15 +136,14 @@ fun UserProfileScreen(
                     .padding(top = 160.dp)
                     .background(Color.White, shape = MaterialTheme.shapes.large)
                     .padding(top = 56.dp),
-//                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-//                Spacer(modifier = Modifier.height(16.dp))
-
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 16.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, bottom = 16.dp)
                 ) {
                     Text(
                         text = user?.displayName ?: "Guest User",
@@ -223,10 +217,7 @@ fun UserProfileScreen(
                     ActionButton(
                         text = "Logout",
                         onClick = {
-                            authViewModel.logout(context)
-                            navController.navigate(Screen.Profile.route) {
-                                popUpTo(Screen.Profile.route) { inclusive = true }
-                            }
+                            showLogoutDialog = true
                         },
                         containerColor = Color.Red,
                         contentColor = Color.White
@@ -268,10 +259,24 @@ fun UserProfileScreen(
                     )
                 }
             }
+
+            if (showLogoutDialog) {
+                LogoutConfirmationDialog(
+                    onConfirm = {
+                        showLogoutDialog = false
+                        authViewModel.logout(context)
+                        navController.navigate(Screen.Profile.route) {
+                            popUpTo(Screen.Profile.route) { inclusive = true }
+                        }
+                    },
+                    onDismiss = {
+                        showLogoutDialog = false
+                    }
+                )
+            }
         }
     }
 }
-
 
 @Composable
 fun SettingItem(
@@ -305,6 +310,57 @@ fun SettingItem(
         Spacer(modifier = Modifier.weight(1f))
 
         trailing()
+    }
+}
+
+@Composable
+fun LogoutConfirmationDialog(
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    Surface(
+        shape = RoundedCornerShape(16.dp),
+        color = Color.White,
+        shadowElevation = 8.dp,
+    ) {
+        AlertDialog(
+            containerColor = Color.White,
+            shape = RoundedCornerShape(16.dp),
+            onDismissRequest = onDismiss,
+            title = {
+                Text(
+                    text = "Đăng xuất",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black
+                )
+            },
+            text = {
+                Text(
+                    text = "Bạn có chắc chắn muốn đăng xuất không?",
+                    fontSize = 14.sp,
+                    color = Color.DarkGray
+                )
+            },
+            confirmButton = {
+                TextButton(onClick = onConfirm) {
+                    Text(
+                        text = "Đăng xuất",
+                        color = Color.Red,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismiss) {
+                    Text(
+                        text = "Hủy",
+                        color = Color.Gray,
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+        )
     }
 }
 

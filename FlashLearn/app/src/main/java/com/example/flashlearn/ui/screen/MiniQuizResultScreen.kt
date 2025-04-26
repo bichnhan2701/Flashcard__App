@@ -33,7 +33,7 @@ fun MiniQuizResultScreen(
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = Color.Transparent // Tránh theme ghi đè background
+        color = Color.Transparent
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -53,7 +53,6 @@ fun MiniQuizResultScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    // ✅ Hình ảnh minh họa
                     Image(
                         painter = painterResource(id = R.drawable.result_image),
                         contentDescription = "Result",
@@ -99,7 +98,7 @@ fun MiniQuizResultScreen(
                     // Nút chơi lại quiz (nếu muốn)
                     Button(
                         onClick = {
-                            navController.popBackStack() // Điều hướng trở lại quiz
+                            navController.popBackStack()
                         },
                         modifier = Modifier.fillMaxWidth(0.6f),
                         shape = MaterialTheme.shapes.medium

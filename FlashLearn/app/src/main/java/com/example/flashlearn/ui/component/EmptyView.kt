@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import com.example.flashlearn.R
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.style.TextAlign
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
@@ -47,7 +48,11 @@ fun EmptyView (
             message,
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier
+                .padding(horizontal = 16.dp),
+            textAlign = TextAlign.Center
+
         )
         if (onActionClick != null) {
             Spacer(modifier = Modifier.height(16.dp))

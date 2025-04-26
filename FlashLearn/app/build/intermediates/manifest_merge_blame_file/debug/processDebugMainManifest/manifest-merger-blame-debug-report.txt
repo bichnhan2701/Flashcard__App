@@ -9,8 +9,8 @@
 9        android:targetSdkVersion="35" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:33:5-67
-11-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:33:22-64
+11-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:33:5-67
+11-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:33:22-64
 12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 12-->[com.google.firebase:firebase-auth:23.2.0] C:\Users\Windows\.gradle\caches\8.9\transforms\3b97220d1d6a83127f2bbb7f26466108\transformed\firebase-auth-23.2.0\AndroidManifest.xml:26:5-79
 12-->[com.google.firebase:firebase-auth:23.2.0] C:\Users\Windows\.gradle\caches\8.9\transforms\3b97220d1d6a83127f2bbb7f26466108\transformed\firebase-auth-23.2.0\AndroidManifest.xml:26:22-76
@@ -39,58 +39,58 @@
 22-->[androidx.core:core:1.15.0] C:\Users\Windows\.gradle\caches\8.9\transforms\d9cd78e768116665cb2b85d2dc308d68\transformed\core-1.15.0\AndroidManifest.xml:26:22-94
 23
 24    <application
-24-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:5:5-31:19
+24-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:5:5-31:19
 25        android:name="com.example.flashlearn.FlashLearnApp"
-25-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:6:9-38
+25-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:6:9-38
 26        android:allowBackup="true"
-26-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:7:9-35
+26-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:7:9-35
 27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 27-->[androidx.core:core:1.15.0] C:\Users\Windows\.gradle\caches\8.9\transforms\d9cd78e768116665cb2b85d2dc308d68\transformed\core-1.15.0\AndroidManifest.xml:28:18-86
 28        android:dataExtractionRules="@xml/data_extraction_rules"
-28-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:8:9-65
+28-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:8:9-65
 29        android:debuggable="true"
 30        android:extractNativeLibs="false"
 31        android:fullBackupContent="@xml/backup_rules"
-31-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:9:9-54
+31-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:9:9-54
 32        android:icon="@mipmap/ic_launcher"
-32-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:10:9-43
+32-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:10:9-43
 33        android:label="@string/app_name"
-33-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:11:9-41
+33-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:11:9-41
 34        android:roundIcon="@mipmap/ic_launcher_round"
-34-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:12:9-54
+34-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:12:9-54
 35        android:supportsRtl="true"
-35-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:13:9-35
+35-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:13:9-35
 36        android:testOnly="true"
 37        android:theme="@style/Theme.FlashLearn" >
-37-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:14:9-48
+37-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:14:9-48
 38        <activity
-38-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:16:9-26:20
+38-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:16:9-26:20
 39            android:name="com.example.flashlearn.MainActivity"
-39-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:17:13-41
+39-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:17:13-41
 40            android:exported="true"
-40-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:18:13-36
+40-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:18:13-36
 41            android:label="@string/app_name"
-41-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:19:13-45
+41-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:19:13-45
 42            android:theme="@style/Theme.FlashLearn" >
-42-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:20:13-52
+42-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:20:13-52
 43            <intent-filter>
-43-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:21:13-25:29
+43-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:21:13-25:29
 44                <action android:name="android.intent.action.MAIN" />
-44-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:22:17-69
-44-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:22:25-66
+44-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:22:17-69
+44-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:22:25-66
 45
 46                <category android:name="android.intent.category.LAUNCHER" />
-46-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:24:17-77
-46-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:24:27-74
+46-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:24:17-77
+46-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:24:27-74
 47            </intent-filter>
 48        </activity>
 49        <!-- Google Sign-In Configuration -->
 50        <meta-data
-50-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:28:9-30:56
+50-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:28:9-30:56
 51            android:name="com.google.android.gms.games.APP_ID"
-51-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:29:13-63
+51-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:29:13-63
 52            android:value="@string/server_client_id" />
-52-->D:\MobileFlashcardApp\Flashcard__App\FlashLearn\app\src\main\AndroidManifest.xml:30:13-53
+52-->D:\app\FlashLearn\app\src\main\AndroidManifest.xml:30:13-53
 53
 54        <activity
 54-->[androidx.compose.ui:ui-test-manifest:1.7.8] C:\Users\Windows\.gradle\caches\8.9\transforms\e5312ab288c36109940414c730800dcc\transformed\ui-test-manifest-1.7.8\AndroidManifest.xml:23:9-25:39

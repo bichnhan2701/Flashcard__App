@@ -4,7 +4,7 @@
             "outputFile": "com.example.flashlearn.test.app-mergeDebugAndroidTestResources-36:/values-ar/values-ar.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\2f1d57a24809342a766ce0baf558b1ab\\transformed\\core-1.15.0\\res\\values-ar\\values-ar.xml",
+                    "source": "C:\\Users\\Windows\\.gradle\\caches\\8.9\\transforms\\d9cd78e768116665cb2b85d2dc308d68\\transformed\\core-1.15.0\\res\\values-ar\\values-ar.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\11d08b25db1c6ce1cbdceffb0dd88ae2\\transformed\\ui-release\\res\\values-ar\\values-ar.xml",
+                    "source": "C:\\Users\\Windows\\.gradle\\caches\\8.9\\transforms\\301561b79e4843d2613dc645fec6629e\\transformed\\ui-release\\res\\values-ar\\values-ar.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",

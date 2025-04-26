@@ -4,24 +4,7 @@
             "outputFile": "com.example.flashlearn.test.app-mergeDebugAndroidTestResources-36:/values-ml/values-ml.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\2f1d57a24809342a766ce0baf558b1ab\\transformed\\core-1.15.0\\res\\values-ml\\values-ml.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "55,157,260,362,466,569,670,792",
-                        "endColumns": "101,102,101,103,102,100,121,100",
-                        "endOffsets": "152,255,357,461,564,665,787,888"
-                    },
-                    "to": {
-                        "startLines": "2,3,4,5,6,7,8,24",
-                        "startColumns": "4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,207,310,412,516,619,720,2154",
-                        "endColumns": "101,102,101,103,102,100,121,100",
-                        "endOffsets": "202,305,407,511,614,715,837,2250"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\11d08b25db1c6ce1cbdceffb0dd88ae2\\transformed\\ui-release\\res\\values-ml\\values-ml.xml",
+                    "source": "C:\\Users\\Windows\\.gradle\\caches\\8.9\\transforms\\301561b79e4843d2613dc645fec6629e\\transformed\\ui-release\\res\\values-ml\\values-ml.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -35,6 +18,23 @@
                         "startOffsets": "842,937,1024,1123,1227,1317,1403,1504,1591,1679,1765,1852,1930,2007,2081,2255,2331,2398",
                         "endColumns": "94,86,98,103,89,85,100,86,87,85,86,77,76,73,72,75,66,118",
                         "endOffsets": "932,1019,1118,1222,1312,1398,1499,1586,1674,1760,1847,1925,2002,2076,2149,2326,2393,2512"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Windows\\.gradle\\caches\\8.9\\transforms\\d9cd78e768116665cb2b85d2dc308d68\\transformed\\core-1.15.0\\res\\values-ml\\values-ml.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,157,260,362,466,569,670,792",
+                        "endColumns": "101,102,101,103,102,100,121,100",
+                        "endOffsets": "152,255,357,461,564,665,787,888"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,24",
+                        "startColumns": "4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,207,310,412,516,619,720,2154",
+                        "endColumns": "101,102,101,103,102,100,121,100",
+                        "endOffsets": "202,305,407,511,614,715,837,2250"
                     }
                 }
             ]

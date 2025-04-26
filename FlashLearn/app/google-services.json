@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1014156441007",
+    "firebase_url": "https://flashlearn-8f12e-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "flashlearn-8f12e",
     "storage_bucket": "flashlearn-8f12e.firebasestorage.app"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.example.flashlearn",
             "certificate_hash": "fa43b56e63a8ab70c4b59bde66488e9b9266062a"
+          }
+        },
+        {
+          "client_id": "1014156441007-cgat182ebefbmqm2drjit8l62issiu52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flashlearn",
+            "certificate_hash": "ce7abcc48616e90e38f6598c84688ebcc1b13396"
           }
         },
         {
