@@ -33,10 +33,10 @@ fun FolderDetailScreen(
     viewModel: CategoryDetailViewModel = hiltViewModel()
 ) {
     val flashcards by viewModel.flashcards.collectAsState()
-    val folderNameState by viewModel.folderName.collectAsState()
+    val name by viewModel.categoryName.collectAsState()
 
     LaunchedEffect(categoryId) {
-        viewModel.load(categoryId, "Folder Name")
+        viewModel.load(categoryId)
     }
 
     Column(
@@ -62,10 +62,9 @@ fun FolderDetailScreen(
                 Icon(Icons.Outlined.Edit, contentDescription = "Edit")
             }
         }
-
         // Title & card count
         Text(
-            text = folderNameState,
+            text = name,
             style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.SemiBold),
             modifier = Modifier.padding(bottom = 4.dp)
         )
@@ -75,7 +74,6 @@ fun FolderDetailScreen(
             color = Color.Gray,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-
         // Buttons
         Row(
             modifier = Modifier
@@ -91,14 +89,12 @@ fun FolderDetailScreen(
 
             })
         }
-
         // Card List
         Text(
             text = "Cards",
             style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier.padding(bottom = 8.dp)
         )
-
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)

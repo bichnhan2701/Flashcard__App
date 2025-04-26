@@ -45,7 +45,6 @@ fun MiniQuizResultScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-
             // Nội dung chính
             Box(
                 modifier = Modifier
@@ -62,35 +61,27 @@ fun MiniQuizResultScreen(
                             .height(200.dp)
                             .fillMaxWidth()
                     )
-
                     Spacer(modifier = Modifier.height(24.dp))
-
                     // Tiêu đề kết quả
                     Text(
                         text = "Great Job!",
                         fontSize = 28.sp,
                         fontWeight = FontWeight.Bold
                     )
-
                     Spacer(modifier = Modifier.height(12.dp))
-
                     // Hiển thị tổng kết
                     Text(
                         text = "You’ve completed the quiz.",
                         fontSize = 18.sp
                     )
-
                     Spacer(modifier = Modifier.height(12.dp))
-
                     // Hiển thị số câu đúng và tổng câu hỏi
                     Text(
                         text = "You answered $correct out of $total correctly.",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Medium
                     )
-
                     Spacer(modifier = Modifier.height(32.dp))
-
                     // Nút quay lại trang chủ hoặc làm lại quiz
                     Button(
                         onClick = {
@@ -104,9 +95,7 @@ fun MiniQuizResultScreen(
                     ) {
                         Text("Back to Home")
                     }
-
                     Spacer(modifier = Modifier.height(16.dp))
-
                     // Nút chơi lại quiz (nếu muốn)
                     Button(
                         onClick = {

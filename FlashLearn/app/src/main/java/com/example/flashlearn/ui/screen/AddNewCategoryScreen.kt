@@ -54,19 +54,16 @@ fun AddNewFolderScreen(
     LaunchedEffect(Unit) {
         flashcardFormViewModel.initFlashcards(defaultFlashcards())
     }
-
     // Lắng nghe sự kiện lưu thành công
     LaunchedEffect(state) {
         if (state is CreateFolderState.Success) {
             showSuccessDialog = true
         }
     }
-
     // Quản lý nút Back
     BackHandler(enabled = viewModel.hasUnsavedChanges.value || flashcardFormViewModel.hasUnsavedChanges.value) {
         showExitDialog = true
     }
-
     // Dialogs
     ExitConfirmationDialog(
         showDialog = showExitDialog,
@@ -80,7 +77,6 @@ fun AddNewFolderScreen(
             navController.popBackStack()
         }
     )
-
     // Hiển thị snackbar lỗi
     if (showNameError) {
         LaunchedEffect(Unit) {
@@ -94,7 +90,6 @@ fun AddNewFolderScreen(
             showMinFlashcardError = false
         }
     }
-
     Scaffold(snackbarHost = { SnackbarHost(snackbarHostState) }) { padding ->
         Column(
             modifier = Modifier
@@ -116,7 +111,6 @@ fun AddNewFolderScreen(
                 }
             )
             Spacer(modifier = Modifier.height(32.dp))
-
             // Folder name input
             Text("Folder name", style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(8.dp))
@@ -130,7 +124,6 @@ fun AddNewFolderScreen(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
-
             // Flashcard section
             Text("Cards", style = MaterialTheme.typography.titleMedium)
             Text("(At least two cards)", color = Color.DarkGray, style = MaterialTheme.typography.bodySmall)

@@ -51,9 +51,6 @@ fun EmptyView (
         )
         if (onActionClick != null) {
             Spacer(modifier = Modifier.height(16.dp))
-//            Button(onClick = onActionClick) {
-//                Text(actionLabel)
-//            }
             ActionButton(
                 text = actionLabel,
                 onClick = onActionClick

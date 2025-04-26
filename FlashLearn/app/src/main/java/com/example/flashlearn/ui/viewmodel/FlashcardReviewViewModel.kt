@@ -7,7 +7,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashlearn.domain.model.Flashcard
 import com.example.flashlearn.domain.usecase.FlashcardUseCases
+import com.example.flashlearn.domain.usecase.GetCategoryByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -15,8 +18,11 @@ import javax.inject.Inject
 @HiltViewModel
 class FlashcardReviewViewModel @Inject constructor(
     application: Application,
-    private val flashcardUseCases: FlashcardUseCases
+    private val flashcardUseCases: FlashcardUseCases,
+    private val getCategoryByIdUseCase: GetCategoryByIdUseCase
 ) : AndroidViewModel(application) {
+    private val _categoryName = MutableStateFlow("")
+    val categoryName: StateFlow<String> = _categoryName
 
     private val _flashcards = mutableStateListOf<Flashcard>()
     val flashcards: List<Flashcard> get() = _flashcards
@@ -66,6 +72,7 @@ class FlashcardReviewViewModel @Inject constructor(
             val cards = flashcardUseCases.getByCategory(categoryId)
             _flashcards.clear()
             _flashcards.addAll(cards)
+            _categoryName.value = getCategoryByIdUseCase(categoryId)?.name ?: "Không rõ"
             _currentIndex.intValue = 0
             resetFlip()
         }

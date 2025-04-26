@@ -8,22 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.flashlearn.data.repository.PreferencesRepository
 import com.example.flashlearn.ui.component.BottomNavItem
-import com.example.flashlearn.ui.screen.AboutScreen
-import com.example.flashlearn.ui.screen.AddNewFolderScreen
-import com.example.flashlearn.ui.screen.EditFolderDetailScreen
-import com.example.flashlearn.ui.screen.FlashcardReviewScreen
-import com.example.flashlearn.ui.screen.FolderDetailScreen
-import com.example.flashlearn.ui.screen.HelpScreen
-import com.example.flashlearn.ui.screen.HomeScreen
-import com.example.flashlearn.ui.screen.MiniQuizResultScreen
-import com.example.flashlearn.ui.screen.MiniQuizScreen
-import com.example.flashlearn.ui.screen.OnboardingScreen
-import com.example.flashlearn.ui.screen.ProgressDetailScreen
-import com.example.flashlearn.ui.screen.ProgressScreen
-import com.example.flashlearn.ui.screen.QuizHistoryScreen
-import com.example.flashlearn.ui.screen.SplashScreen
-import com.example.flashlearn.ui.screen.StartMiniQuizScreen
-import com.example.flashlearn.ui.screen.UserProfileScreen
+import com.example.flashlearn.ui.screen.*
 
 //Quản lý điều hướng màn hình
 @Composable
@@ -51,10 +36,7 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
         composable(Screen.Home.route) {
             HomeScreen(navController)
         }
-        composable(BottomNavItem.Category.route) { /* CategoryScreen */ }
-        composable(BottomNavItem.Add.route) {
-            AddNewFolderScreen(navController = navController)
-        }
+
         composable(Screen.Add.route) {
             AddNewFolderScreen(navController = navController)
         }
@@ -138,7 +120,6 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
         }
 
         // Progress
-
         composable(
             route = Screen.ProgressDetail.route,
             arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
@@ -155,5 +136,9 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
             QuizHistoryScreen(categoryId)
         }
 
+        // Notification
+        composable(Screen.Notification.route) {
+            NotificationScreen(navController = navController)
+        }
     }
 }

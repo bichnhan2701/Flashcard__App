@@ -18,8 +18,8 @@ import com.example.flashlearn.navigation.Screen
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
         BottomNavItem.Home,
-        BottomNavItem.Category,
-        BottomNavItem.Add,
+//        BottomNavItem.Category,
+//        BottomNavItem.Add,
         BottomNavItem.Progress,
         BottomNavItem.Profile
     )
@@ -57,7 +57,8 @@ fun BottomNavigationBar(navController: NavController) {
                         item.icon,
                         contentDescription = item.label,
                         modifier = Modifier
-                            .size(if (item is BottomNavItem.Add) 50.dp else 20.dp)
+//                            .size(if (item is BottomNavItem.Add) 50.dp else 20.dp)
+                            .size(20.dp)
                     )
                 },
                 label = if (item.label.isNotEmpty()) { { Text(item.label) } } else null

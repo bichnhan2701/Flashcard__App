@@ -1,5 +1,8 @@
 package com.example.flashlearn.ui.screen
 
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +18,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,23 +28,82 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.flashlearn.R
 import com.example.flashlearn.data.repository.PreferencesRepository
+import com.example.flashlearn.navigation.Screen
+import com.example.flashlearn.ui.component.ActionButton
 import com.example.flashlearn.ui.component.BottomNavigationBar
+import com.example.flashlearn.ui.viewmodel.AuthViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 
 @Composable
-fun UserProfileScreen(navController: NavController, preferences: PreferencesRepository) {
+fun UserProfileScreen(
+    navController: NavController,
+    preferences: PreferencesRepository,
+    authViewModel: AuthViewModel = hiltViewModel()
+) {
     val coroutineScope = rememberCoroutineScope()
     var isDarkMode by remember { mutableStateOf(false) }
+    val authState by authViewModel.authState.collectAsState()
+    val context = LocalContext.current
+
+    val googleSignInClient = remember {
+        GoogleSignIn.getClient(
+            context,
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(context.getString(R.string.server_client_id))
+                .requestEmail()
+                .build()
+        )
+    }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        val account = task.result
+        if (account != null) {
+            val idToken = account.idToken
+            if (idToken != null) {
+                authViewModel.googleLogin(idToken)
+            } else {
+                Log.e("UserProfile", "Google Sign-In failed, idToken is null")
+            }
+        } else {
+            Log.e("UserProfile", "Google Sign-In failed: ${task.exception?.message}")
+        }
+    }
+
+    val user = FirebaseAuth.getInstance().currentUser
 
     LaunchedEffect(Unit) {
         isDarkMode = preferences.isDarkMode()
+    }
+
+    LaunchedEffect(authState) {
+        authState?.let { result ->
+            result
+                .onSuccess {
+                    navController.navigate(Screen.Profile.route) {
+                        popUpTo(Screen.Profile.route) { inclusive = true }
+                    }
+                }
+                .onFailure {
+                    Log.e("Auth", "Đăng nhập thất bại: ${it.message}")
+                }
+        }
     }
 
     Scaffold(
@@ -53,7 +116,6 @@ fun UserProfileScreen(navController: NavController, preferences: PreferencesRepo
                 .background(Color(0xFFF5F5F5))
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                // Header with background
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -62,55 +124,38 @@ fun UserProfileScreen(navController: NavController, preferences: PreferencesRepo
                         .padding(top = 32.dp, bottom = 72.dp),
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 32.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = "My profile",
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black
-                            )
-                        }
-                    }
+                    Text(
+                        text = "My profile",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Black
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(56.dp)) // Push white card down
+                Spacer(modifier = Modifier.height(56.dp))
             }
 
-            // White card content with avatar overlapping
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(top = 160.dp)
                     .background(Color.White, shape = MaterialTheme.shapes.large)
-                    .padding(top = 56.dp)
+                    .padding(top = 56.dp),
+//                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Username + edit
-                Spacer(modifier = Modifier.height(16.dp))
+//                Spacer(modifier = Modifier.height(16.dp))
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                {
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp, bottom = 16.dp)
+                ) {
                     Text(
-                        text = "Nguyen Ngoc Minh Chau",
+                        text = user?.displayName ?: "Guest User",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Black
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Icon(
-                        painter = painterResource(id = android.R.drawable.ic_menu_edit),
-                        contentDescription = "Edit profile",
-                        tint = Color.Black,
-                        modifier = Modifier.size(16.dp)
                     )
                 }
 
@@ -124,7 +169,6 @@ fun UserProfileScreen(navController: NavController, preferences: PreferencesRepo
                     modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
                 )
 
-                // Settings options
                 SettingItem(
                     icon = painterResource(id = android.R.drawable.ic_menu_day),
                     title = "Dark mode",
@@ -172,27 +216,62 @@ fun UserProfileScreen(navController: NavController, preferences: PreferencesRepo
                         )
                     }
                 )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                user?.let {
+                    ActionButton(
+                        text = "Logout",
+                        onClick = {
+                            authViewModel.logout(context)
+                            navController.navigate(Screen.Profile.route) {
+                                popUpTo(Screen.Profile.route) { inclusive = true }
+                            }
+                        },
+                        containerColor = Color.Red,
+                        contentColor = Color.White
+                    )
+                } ?: run {
+                    ActionButton(
+                        text = "Login with Google",
+                        onClick = { launcher.launch(googleSignInClient.signInIntent) },
+                        containerColor = Color(0xFF4CAF50),
+                        contentColor = Color.White
+                    )
+                }
             }
 
-            // Avatar (overlapping both sections)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 120.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.result_image),
-                    contentDescription = "Profile picture",
-                    modifier = Modifier
-                        .size(100.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray)
-                )
+                val avatarUrl = user?.photoUrl
+                if (avatarUrl != null) {
+                    AsyncImage(
+                        model = avatarUrl,
+                        contentDescription = "User Avatar",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.result_image),
+                        contentDescription = "Default Avatar",
+                        modifier = Modifier
+                            .size(100.dp)
+                            .clip(CircleShape)
+                            .background(Color.Gray)
+                    )
+                }
             }
         }
     }
 }
+
 
 @Composable
 fun SettingItem(

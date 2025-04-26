@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ActionButton(
-    text: String,
+    text: String?,
     icon: ImageVector? = null,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -55,14 +55,19 @@ fun ActionButton(
                         modifier = Modifier.size(iconSize)
                     )
                 }
+            }
+
+            if (icon != null && text != null) {
                 Spacer(modifier = Modifier.width(8.dp))
             }
 
-            Text(
-                text = text,
-                color = contentColor,
-                fontSize = 16.sp
-            )
+            if (text != null) {
+                Text(
+                    text = text,
+                    color = contentColor,
+                    fontSize = 16.sp
+                )
+            }
         }
     }
 }

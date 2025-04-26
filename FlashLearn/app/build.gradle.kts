@@ -5,6 +5,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.ui.tooling.preview)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(libs.androidx.runtime.livedata)
     debugImplementation(libs.ui.tooling)
     // View Model Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -82,8 +84,17 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
     // Chart
-//    implementation(libs.charts)
     implementation (libs.mpandroidchart)
+    // WorkManager
+    implementation (libs.androidx.work.runtime.ktx)
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    // Firebase Authentication
+    implementation(libs.firebase.auth)
+    implementation (libs.play.services.auth)
+    // Coil
+    implementation(libs.coil.compose)
+
 
     testImplementation(libs.junit)
 

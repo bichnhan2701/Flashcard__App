@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ fun MiniQuizScreen(
 ) {
     val uiState by viewModel.uiState
     val optionLabels = listOf("A", "B", "C", "D")
+    val categoryName by viewModel.categoryName.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.loadQuestions(categoryId)
@@ -42,6 +44,11 @@ fun MiniQuizScreen(
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
+                Text(
+                    categoryName,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Question ${state.questionIndex + 1} of ${state.totalQuestions}",
                     style = MaterialTheme.typography.titleMedium

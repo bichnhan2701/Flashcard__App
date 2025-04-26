@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1014156441007",
+    "project_id": "flashlearn-8f12e",
+    "storage_bucket": "flashlearn-8f12e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014156441007:android:2a8e403ad9ae3fbb472b5a",
+        "android_client_info": {
+          "package_name": "com.example.flashlearn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014156441007-23asbjtu46ve8g5682se1qjk6u3mcr7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flashlearn",
+            "certificate_hash": "fa43b56e63a8ab70c4b59bde66488e9b9266062a"
+          }
+        },
+        {
+          "client_id": "1014156441007-57uj7ji49tm22f6f4sg1kdeqfnsl5aop.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZoPlw09-WfryhV8z014OMVprFNwpkhsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014156441007-57uj7ji49tm22f6f4sg1kdeqfnsl5aop.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

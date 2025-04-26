@@ -1,11 +1,7 @@
 package com.example.flashlearn.ui.screen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
@@ -27,101 +23,182 @@ import com.example.flashlearn.ui.component.BottomNavigationBar
 import com.example.flashlearn.ui.component.FlashcardFolderItem
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashlearn.navigation.Screen
-import com.example.flashlearn.ui.component.BottomNavItem
+import com.example.flashlearn.ui.component.ActionButton
 import com.example.flashlearn.ui.component.EmptyView
 import com.example.flashlearn.ui.component.GradientText
 import com.example.flashlearn.ui.viewmodel.HomeViewModel
-import java.net.URLEncoder
+
 
 @Composable
-fun HomeScreen (
+fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val categories by viewModel.categories.collectAsState()
+    val searchQuery by viewModel.searchInput.collectAsState()
+    val searchText by viewModel.searchQuery.collectAsState()
+    val categories by viewModel.filteredCategories.collectAsState()
 
-    Scaffold(
-        bottomBar = {
-            BottomNavigationBar(navController)
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .padding(16.dp)
-                .fillMaxSize()
-        ) {
-            // Header
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                GradientText(text = "FlashLearn", fontSize = 40.sp)
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Outlined.Notifications, contentDescription = "Thông báo")
-                }
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            bottomBar = {
+                BottomNavigationBar(navController)
             }
-
-            Text(
-                "Supports vocabulary and concept learning.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 4.dp)
-            )
-
-            // Search box
-            OutlinedTextField(
-                value = "",
-                onValueChange = {  },
-                placeholder = { Text("Search...") },
+        ) { innerPadding ->
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(RoundedCornerShape(16.dp))
-                    .padding(vertical = 16.dp),
-                leadingIcon = {
-                    Icon(Icons.Outlined.Search, contentDescription = null)
+                    .padding(innerPadding)
+                    .padding(16.dp)
+                    .fillMaxSize()
+            ) {
+                // Header
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    GradientText(text = "FlashLearn", fontSize = 40.sp)
+                    IconButton(
+                        onClick = { navController.navigate(Screen.Notification.route) },
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Outlined.Notifications,
+                            contentDescription = "Thông báo",
+                            tint = Color.Gray
+                        )
+                    }
                 }
-            )
 
-            Text(
-                "Flashcard categories",
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
-                ),
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+                Text(
+                    "Supports vocabulary and concept learning.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
 
-            // Folder list
-            LazyColumn {
-                items(categories) { category ->
-                    FlashcardFolderItem(
-                        title = category.name,
-                        count = category.cardCount,
-                        onClick = {
-                            navController.navigate(Screen.FolderDetail.passCategoryId(category.id))
-                        }
+                // Search box
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = searchQuery,
+                        onValueChange = viewModel::onSearchInputChanged,
+                        placeholder = { Text("Search...") },
+                        modifier = Modifier
+                            .weight(1f)
+                            .clip(RoundedCornerShape(16.dp)),
+                        singleLine = true,
+                        leadingIcon = {
+                            Icon(Icons.Outlined.Search, contentDescription = null)
+                        },
+                        colors = TextFieldDefaults.colors(
+                            focusedIndicatorColor = Color(0xFF2AAAAA),
+                            unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+                            focusedLabelColor = MaterialTheme.colorScheme.primary,
+                            focusedContainerColor = Color.Transparent // tránh nền xám
+                        )
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    IconButton(
+                        onClick = { viewModel.onSearchSubmit() },
+                        modifier = Modifier
+                            .size(48.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.primaryContainer)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search",
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
                 }
-                if (categories.isEmpty()) {
-                    item {
-                        EmptyView(
-                            message = "Chưa có folder nào. Hãy tạo mới!",
-                            onActionClick = {
-                                navController.navigate(BottomNavItem.Add.route)
+
+                // Kết quả tìm kiếm và nút "Xem tất cả"
+                if (!searchText.isNullOrEmpty()) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Kết quả hiển thị theo từ khóa \"$searchText\"",
+                            style = TextStyle(fontSize = 14.sp),
+                            color = Color.Gray
+                        )
+                        TextButton(onClick = { viewModel.clearSearch() }) {
+                            Text("Xem tất cả")
+                        }
+                    }
+                }
+
+                Text(
+                    "Flashcard categories",
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                LazyColumn {
+                    items(categories) { category ->
+                        FlashcardFolderItem(
+                            title = category.name,
+                            count = category.cardCount,
+                            onClick = {
+                                navController.navigate(Screen.FolderDetail.passCategoryId(category.id))
                             }
                         )
+                    }
+
+                    if (categories.isEmpty()) {
+                        item {
+                            if (searchText.isNullOrEmpty()) {
+                                EmptyView(
+                                    message = "Chưa có bộ thẻ nào, hãy nhấn \"+\" để thêm bộ thẻ mới",
+                                    onActionClick = null
+//                                    actionLabel = "Thêm bộ thẻ"
+                                )
+                            } else {
+                                EmptyView(
+                                    message = "Không tìm thấy bộ thẻ này",
+                                    onActionClick = null
+                                )
+                            }
+                        }
                     }
                 }
             }
         }
+
+        ActionButton(
+            text = null,
+            icon = Icons.Default.Add,
+            onClick = {
+                navController.navigate(Screen.Add.route)
+            },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 24.dp, bottom = 100.dp)
+                .zIndex(1f)
+        )
     }
 }

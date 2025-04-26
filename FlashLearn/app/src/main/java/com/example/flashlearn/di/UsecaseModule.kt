@@ -1,25 +1,10 @@
 package com.example.flashlearn.di
 
+import com.example.flashlearn.domain.repository.AuthRepository
 import com.example.flashlearn.domain.repository.CategoryRepository
 import com.example.flashlearn.domain.repository.FlashcardRepository
 import com.example.flashlearn.domain.repository.MiniQuizRepository
-import com.example.flashlearn.domain.usecase.CreateCategoryUseCase
-import com.example.flashlearn.domain.usecase.DeleteFlashcardUseCase
-import com.example.flashlearn.domain.usecase.DeleteCategoryWithFlashcardsUseCase
-import com.example.flashlearn.domain.usecase.FlashcardUseCases
-import com.example.flashlearn.domain.usecase.GenerateMiniQuizQuestionsUseCase
-import com.example.flashlearn.domain.usecase.GetAllCategoriesProgressUseCase
-import com.example.flashlearn.domain.usecase.GetAllCategoriesUseCase
-import com.example.flashlearn.domain.usecase.GetAllQuizResultsUseCase
-import com.example.flashlearn.domain.usecase.GetFlashcardsByCategoryUseCase
-import com.example.flashlearn.domain.usecase.GetCategoryWithFlashcardsUseCase
-import com.example.flashlearn.domain.usecase.GetLatestQuizResultByCategoryUseCase
-import com.example.flashlearn.domain.usecase.GetQuizHistoryByCategoryUseCase
-import com.example.flashlearn.domain.usecase.GetQuizResultsBetweenUseCase
-import com.example.flashlearn.domain.usecase.InsertFlashcardsUseCase
-import com.example.flashlearn.domain.usecase.SaveMiniQuizResultUseCase
-import com.example.flashlearn.domain.usecase.UpdateFlashcardUseCase
-import com.example.flashlearn.domain.usecase.UpdateCategoryWithFlashcardsUseCase
+import com.example.flashlearn.domain.usecase.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,12 +14,53 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
+    // Cung cấp các use case liên quan đến đăng nhập, đăng ký
+//    @Provides
+//    @Singleton
+//    fun provideLoginWithEmailUseCase(
+//        repository: AuthRepository
+//    ): LoginWithEmailUseCase {
+//        return LoginWithEmailUseCase(repository)
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideRegisterWithEmailUseCase(
+//        repository: AuthRepository
+//    ): RegisterWithEmailUseCase {
+//        return RegisterWithEmailUseCase(repository)
+//    }
+
+    @Provides
+    @Singleton
+    fun provideLoginWithGoogleUseCase(
+        repository: AuthRepository
+    ): LoginWithGoogleUseCase {
+        return LoginWithGoogleUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLogoutUseCase(
+        repository: AuthRepository
+    ): LogoutUseCase {
+        return LogoutUseCase(repository)
+    }
+
+
     @Provides
     @Singleton
     fun provideGetAllCategoriesUseCase(
         repository: CategoryRepository
     ): GetAllCategoriesUseCase {
         return GetAllCategoriesUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetCategoryByIdUseCases(
+        repository: CategoryRepository
+    ): GetCategoryByIdUseCase {
+        return GetCategoryByIdUseCase(repository)
     }
 
     @Provides

@@ -6,9 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.flashlearn.domain.model.MiniQuizQuestion
 import com.example.flashlearn.domain.model.MiniQuizResult
 import com.example.flashlearn.domain.usecase.GenerateMiniQuizQuestionsUseCase
+import com.example.flashlearn.domain.usecase.GetCategoryByIdUseCase
 import com.example.flashlearn.domain.usecase.GetFlashcardsByCategoryUseCase
 import com.example.flashlearn.domain.usecase.SaveMiniQuizResultUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,8 +33,11 @@ sealed class MiniQuizUiState {
 class MiniQuizViewModel @Inject constructor(
     private val getFlashcardsByCategoryUseCase: GetFlashcardsByCategoryUseCase,
     private val generateQuizQuestionsUseCase: GenerateMiniQuizQuestionsUseCase,
-    private val saveMiniQuizResultUseCase: SaveMiniQuizResultUseCase
+    private val saveMiniQuizResultUseCase: SaveMiniQuizResultUseCase,
+    private val getCategoryByIdUseCase: GetCategoryByIdUseCase
 ) : ViewModel() {
+    private val _categoryName = MutableStateFlow("")
+    val categoryName: StateFlow<String> = _categoryName
 
     private var questions: List<MiniQuizQuestion> = emptyList()
     private var currentIndex = 0
@@ -55,6 +61,7 @@ class MiniQuizViewModel @Inject constructor(
             questions.getOrNull(currentIndex)?.let {
                 _uiState.value = MiniQuizUiState.Loaded(it, currentIndex, questions.size)
             }
+            _categoryName.value = getCategoryByIdUseCase(categoryId)?.name ?: "Không rõ"
         }
     }
 

@@ -1,0 +1,106 @@
+[
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_background.jpg.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/background.jpg"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/xml_data_extraction_rules.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/raw_card_animation.json.flat",
+        "source": "com.example.flashlearn.app-main-87:/raw/card_animation.json"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_mingcute_save_line.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/mingcute_save_line.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/raw_nothing_animation.json.flat",
+        "source": "com.example.flashlearn.app-main-87:/raw/nothing_animation.json"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/raw_hello_animation.json.flat",
+        "source": "com.example.flashlearn.app-main-87:/raw/hello_animation.json"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-anydpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-anydpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_result_image.jpg.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/result_image.jpg"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/raw_start_animation.json.flat",
+        "source": "com.example.flashlearn.app-main-87:/raw/start_animation.json"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/xml_backup_rules.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_logoflashlearn.png.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/logoflashlearn.png"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_delete_2_svgrepo_com.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/delete_2_svgrepo_com.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/drawable_close.xml.flat",
+        "source": "com.example.flashlearn.app-main-87:/drawable/close.xml"
+    },
+    {
+        "merged": "com.example.flashlearn.app-debug-85:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.example.flashlearn.app-main-87:/mipmap-mdpi/ic_launcher.webp"
+    }
+]

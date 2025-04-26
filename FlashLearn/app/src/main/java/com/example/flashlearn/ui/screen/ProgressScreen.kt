@@ -45,8 +45,8 @@ fun ProgressScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("📈 Tiến độ học", fontSize = 20.sp, fontWeight = FontWeight.Bold)
 
+        Text("📈 Tiến độ học", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(8.dp))
 
         TabRow(selectedTabIndex = selectedTab) {

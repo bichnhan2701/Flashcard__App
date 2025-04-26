@@ -17,46 +17,58 @@ import java.util.ArrayList
 
 @Composable
 fun CategoryProgressChart(categories: List<CategoryProgress>) {
-    AndroidView(factory = { context ->
-        BarChart(context).apply {
-            layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, 600)
-
-            val rememberedEntries = ArrayList<BarEntry>()
-            val remainingEntries = ArrayList<BarEntry>()
+    AndroidView(
+        factory = { context ->
+            BarChart(context).apply {
+                layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, 600)
+                description.isEnabled = false
+                legend.isEnabled = true
+                axisRight.isEnabled = false
+                xAxis.position = XAxis.XAxisPosition.BOTTOM
+                xAxis.granularity = 1f
+                xAxis.setCenterAxisLabels(true)
+            }
+        },
+        update = { chart ->
+            val entries = ArrayList<BarEntry>()
             val labels = ArrayList<String>()
 
             categories.forEachIndexed { index, category ->
-                rememberedEntries.add(BarEntry(index.toFloat(), category.rememberedCards.toFloat()))
-                remainingEntries.add(BarEntry(index.toFloat(), (category.totalCards - category.rememberedCards).toFloat()))
+                val remembered = category.rememberedCards.toFloat()
+                val total = category.totalCards.toFloat()
+                val remaining = (total - remembered).coerceAtLeast(0f)
+
+                entries.add(BarEntry(index.toFloat(), floatArrayOf(remembered, remaining)))
                 labels.add(category.categoryName)
             }
 
-            val dataSet1 = BarDataSet(rememberedEntries, "Đã nhớ").apply {
-                color = Color(0xFF4CAF50).toArgb()
+            val dataSet = BarDataSet(entries, "").apply {
+                setColors(
+                    Color(0xFF4CAF50).toArgb(), // Đã nhớ - Xanh lá
+                    Color(0xFFFF5722).toArgb()  // Chưa nhớ - Cam
+                )
+                stackLabels = arrayOf("Đã nhớ", "Chưa nhớ")
             }
-            val dataSet2 = BarDataSet(remainingEntries, "Chưa nhớ").apply {
-                color = Color(0xFFFF5722).toArgb()
-            }
-            val barData = BarData(dataSet1, dataSet2)
-            barData.barWidth = 0.4f
 
-            // Gán dữ liệu vào biểu đồ trước khi gọi groupBars
-            data = barData
-            // Gọi groupBars sau khi đã gán dữ liệu vào biểu đồ
-            groupBars(0f, 0.2f, 0.05f)
-            // Cấu hình trục X
-            xAxis.valueFormatter = IndexAxisValueFormatter(labels)
-            xAxis.position = XAxis.XAxisPosition.BOTTOM
-            xAxis.granularity = 1f
-            xAxis.setCenterAxisLabels(true)
-            xAxis.axisMinimum = 0f
-            // Tắt trục Y bên phải
-            axisRight.isEnabled = false
-            // Hiển thị legend
-            legend.isEnabled = true
-            description.isEnabled = false
-            // Cập nhật lại biểu đồ
-            invalidate()
+            val barData = BarData(dataSet).apply {
+                barWidth = 0.6f
+            }
+
+            chart.data = barData
+
+            chart.xAxis.apply {
+                valueFormatter = IndexAxisValueFormatter(labels)
+                position = XAxis.XAxisPosition.BOTTOM
+                granularity = 1f
+                setDrawGridLines(false)
+            }
+
+            chart.axisLeft.axisMinimum = 0f
+            chart.axisRight.isEnabled = false
+            chart.description.isEnabled = false
+            chart.legend.isEnabled = true
+
+            chart.invalidate()
         }
-    })
+    )
 }

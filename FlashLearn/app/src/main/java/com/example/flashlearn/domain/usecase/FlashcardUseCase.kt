@@ -35,4 +35,3 @@ class UpdateFlashcardUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(card: Flashcard) = repo.update(card)
 }
-
