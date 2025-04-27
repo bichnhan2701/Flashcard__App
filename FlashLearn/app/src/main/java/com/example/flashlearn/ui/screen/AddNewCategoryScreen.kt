@@ -19,7 +19,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashlearn.R
 import com.example.flashlearn.ui.viewmodel.AddFolderViewModel
@@ -80,13 +83,13 @@ fun AddNewFolderScreen(
     // Hiển thị snackbar lỗi
     if (showNameError) {
         LaunchedEffect(Unit) {
-            snackbarHostState.showSnackbar("Tên folder không được để trống")
+            snackbarHostState.showSnackbar("Name of category can not null!")
             showNameError = false
         }
     }
     if (showMinFlashcardError) {
         LaunchedEffect(Unit) {
-            snackbarHostState.showSnackbar("Phải có ít nhất 2 flashcard")
+            snackbarHostState.showSnackbar("Must have at least 2 flashcards!")
             showMinFlashcardError = false
         }
     }
@@ -110,23 +113,57 @@ fun AddNewFolderScreen(
                     }
                 }
             )
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             // Folder name input
-            Text("Folder name", style = MaterialTheme.typography.titleMedium)
-            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                "Category name",
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF39544F)
+                )
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             OutlinedTextField(
                 value = name,
                 onValueChange = {
                     name = it
                     viewModel.setUnsavedChanges(true)
                 },
-                label = { Text("Tên Folder") },
-                modifier = Modifier.fillMaxWidth()
+                textStyle = TextStyle(
+                    fontSize = 18.sp
+                ),
+                label = { Text("Input category name") },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color(0xFF3F788C),
+                    unfocusedIndicatorColor = Color(0xFF3F788C),
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    unfocusedPlaceholderColor = Color(0xFF3F788C),
+                    focusedPlaceholderColor = Color(0xFF3F788C),
+                    focusedTextColor = Color(0xFF39544F),
+                    unfocusedTextColor = Color(0xFF39544F)
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
             // Flashcard section
-            Text("Cards", style = MaterialTheme.typography.titleMedium)
-            Text("(At least two cards)", color = Color.DarkGray, style = MaterialTheme.typography.bodySmall)
+            Text(
+                "Cards",
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF39544F)
+                )
+            )
+            Text(
+                "(At least two cards)",
+                color = Color(0xFF313F42),
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Light
+                )
+            )
             Spacer(modifier = Modifier.height(8.dp))
             DynamicFlashcardList(
                 flashcards = flashcards,
@@ -141,16 +178,22 @@ fun AddNewFolderScreen(
             // Hiển thị lỗi flashcard
             flashcardErrors.forEach { (i, err) ->
                 if (err.first || err.second) {
-                    Text(
-                        "Flashcard ${i + 1}: ${if (err.first) "thiếu thuật ngữ " else ""}${if (err.second) "thiếu định nghĩa" else ""}",
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    val errorMessage = buildString {
+                        append("Flashcard ${i + 1}: ")
+                        if (err.first) append(" lack of term!")
+                        if (err.second) append(" lack of definition!")
+                    }
+                    LaunchedEffect(errorMessage) {
+                        snackbarHostState.showSnackbar(errorMessage)
+                    }
                 }
             }
-            // Lỗi hệ thống nếu có
+             //Lỗi hệ thống nếu có
             if (state is CreateFolderState.Error) {
-                Text((state as CreateFolderState.Error).message, color = Color.Red)
+                val systemErrorMessage = (state as CreateFolderState.Error).message
+                LaunchedEffect(systemErrorMessage) {
+                    snackbarHostState.showSnackbar(systemErrorMessage)
+                }
             }
         }
     }
@@ -161,7 +204,7 @@ fun AddHeaderIcons(onCancel: () -> Unit, onSave: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp),
+            .padding(top = 12.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -171,7 +214,8 @@ fun AddHeaderIcons(onCancel: () -> Unit, onSave: () -> Unit) {
             modifier = Modifier
                 .padding(end = 30.dp)
                 .size(36.dp)
-                .clickable { onCancel() }
+                .clickable { onCancel() },
+            tint = Color.Red
         )
         Icon(
             painter = painterResource(R.drawable.mingcute_save_line),

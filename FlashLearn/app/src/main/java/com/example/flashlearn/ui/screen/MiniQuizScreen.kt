@@ -10,12 +10,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.flashlearn.R
 import com.example.flashlearn.ui.component.OptionButton
@@ -66,38 +69,48 @@ fun MiniQuizScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = categoryName,
-                        style = MaterialTheme.typography.titleMedium.copy(color = Color.White)
+                        text = "Mini Quiz of Category \"categoryName\" ",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 16.dp),
+                        textAlign = TextAlign.Center,
+                        color = Color(0xFF313F42)
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     LinearProgressIndicator(
                         progress = { (state.questionIndex + 1).toFloat() / state.totalQuestions },
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        color = Color(0xFF0F81DA)
+                            .padding(bottom = 8.dp)
+                            .height(10.dp)
+                            .clip(RoundedCornerShape(4.dp)),
+                        color = Color(0xFF37474F),
+                        trackColor = Color(0xFFB0BEC5)
                     )
 
                     Text(
                         text = "Question ${state.questionIndex + 1} of ${state.totalQuestions}",
-                        style = MaterialTheme.typography.titleMedium.copy(color = Color.White),
-                        modifier = Modifier.padding(vertical = 8.dp)
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Normal,
+                        color = Color(0xFF313F42),
+                        modifier = Modifier.padding(bottom = 8.dp)
                     )
 
                     Card(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().height(180.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = CardDefaults.cardColors(containerColor = Color.White)
                     ) {
                         Box(
-                            modifier = Modifier.padding(24.dp),
+                            modifier = Modifier.padding(24.dp).fillMaxSize(),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
                                 text = state.question.definition,
-                                style = MaterialTheme.typography.headlineMedium,
-                                textAlign = TextAlign.Center
+                                fontSize = 20.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.align(Alignment.Center)
                             )
                         }
                     }

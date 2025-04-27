@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun OptionButton(
@@ -45,8 +46,8 @@ fun OptionButton(
             .padding(vertical = 6.dp)
             .clickable(enabled = isCorrect == null) { onClick() },
         colors = CardDefaults.cardColors(containerColor = backgroundColor),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        shape = RoundedCornerShape(10.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -59,14 +60,22 @@ fun OptionButton(
                 Text(
                     text = optionLabel,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF3F51B5),
+                    fontSize = 20.sp,
+                    color = Color(0xFF3F788C),
                     modifier = Modifier.width(24.dp)
                 )
                 Spacer(modifier = Modifier.width(12.dp))
-                Text(text)
+                Text(
+                    text,
+                    fontSize = 18.sp
+                )
             }
             if (icon != null) {
-                Text(icon, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    icon,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
         }
     }

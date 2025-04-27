@@ -54,24 +54,39 @@ fun FolderDetailScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = { navController.popBackStack() }) {
-                Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
+                Icon(
+                    Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier.size(30.dp)
+                )
             }
             IconButton(onClick = {
                 navController.navigate(Screen.EditFolderDetail.passCategoryId(categoryId))
             }) {
-                Icon(Icons.Outlined.Edit, contentDescription = "Edit")
+                Icon(
+                    Icons.Outlined.Edit,
+                    contentDescription = "Edit",
+                    modifier = Modifier.size(30.dp)
+                )
             }
         }
         // Title & card count
         Text(
             text = name,
-            style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.SemiBold),
+            style = TextStyle(
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF39544F)
+            ),
             modifier = Modifier.padding(bottom = 4.dp)
         )
         Text(
             text = "${flashcards.size} cards",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray,
+            style = TextStyle(
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Light,
+                color = Color(0xFF3F788C)
+            ),
             modifier = Modifier.padding(bottom = 16.dp)
         )
         // Buttons
@@ -92,12 +107,15 @@ fun FolderDetailScreen(
         // Card List
         Text(
             text = "Cards",
-            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium),
+            style = TextStyle(
+                fontSize = 20.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF39544F)
+            ),
             modifier = Modifier.padding(bottom = 8.dp)
         )
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier = Modifier.fillMaxSize()
         ) {
             itemsIndexed(flashcards) { _, card ->
                 CardItem(

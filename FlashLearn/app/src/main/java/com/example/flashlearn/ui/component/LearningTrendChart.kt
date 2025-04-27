@@ -37,7 +37,7 @@ fun LearningTrendChart(quizStats: List<MiniQuizResult>) {
                     Entry(index.toFloat(), totalCorrect.toFloat())  // Sử dụng Entry ở đây
                 }
 
-            val dataSet = LineDataSet(entries, "Tổng số câu đúng").apply {
+            val dataSet = LineDataSet(entries, "Total correct answers").apply {
                 color = Color(0xFF03A9F4).toArgb()
                 circleRadius = 5f
                 setCircleColor(Color(0xFF0288D1).toArgb())

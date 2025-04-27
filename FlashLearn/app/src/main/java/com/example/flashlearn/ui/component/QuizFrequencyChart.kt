@@ -30,7 +30,7 @@ fun QuizFrequencyChart(quizStats: List<MiniQuizResult>) {
                 labels.add("C${quiz.categoryId}")
             }
 
-            val dataSet = BarDataSet(entries, "Lượt làm quiz").apply {
+            val dataSet = BarDataSet(entries, "Quiz times").apply {
                 color = Color(0xFF2196F3).toArgb()
             }
 

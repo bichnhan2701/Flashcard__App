@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -47,48 +46,41 @@ fun HomeScreen(
                     navController.navigate(Screen.Add.route)
                 },
                 modifier = Modifier
-                    .size(72.dp)
+                    .size(80.dp)
                     .zIndex(1f),
-                iconSize = 40.dp
+                iconSize = 60.dp,
+                contentColor = Color(0xFF3F788C)
             )
         }
     ) { innerPadding ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
                 .padding(innerPadding)
                 .padding(16.dp)
-                .fillMaxSize()
         ) {
             // Header
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 GradientText(text = "FlashLearn", fontSize = 40.sp)
-                IconButton(
-                    onClick = { navController.navigate(Screen.Notification.route) }
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Notifications,
-                        contentDescription = "Thông báo",
-                        tint = Color.Gray
-                    )
-                }
             }
 
             Text(
                 "Supports vocabulary and concept learning.",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 4.dp)
+                color = Color(0xFF8DA9B5),
+                modifier = Modifier.padding(top = 2.dp)
             )
 
             // Search box
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp),
+                    .padding(top = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 OutlinedTextField(
@@ -103,14 +95,18 @@ fun HomeScreen(
                         Icon(
                             Icons.Outlined.Search,
                             contentDescription = null,
-                            tint = Color(0xFF0F81DA)
+                            tint = Color(0xFF3F788C)
                         )
                     },
                     colors = TextFieldDefaults.colors(
-                        focusedIndicatorColor = Color(0xFF0F81DA),
-                        unfocusedIndicatorColor = Color(0xFF0F81DA),
+                        focusedIndicatorColor = Color(0xFF3F788C),
+                        unfocusedIndicatorColor = Color(0xFF3F788C),
                         focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
+                        unfocusedContainerColor = Color.Transparent,
+                        unfocusedPlaceholderColor = Color(0xFF3F788C),
+                        focusedPlaceholderColor = Color(0xFF3F788C),
+                        focusedTextColor = Color(0xFF39544F),
+                        unfocusedTextColor = Color(0xFF39544F)
                     )
                 )
 
@@ -121,14 +117,14 @@ fun HomeScreen(
                     modifier = Modifier
                         .size(48.dp)
                         .background(
-                            color = Color(0xFFE3F2FD),
+                            color = Color(0xFFCADDEC),
                             shape = RoundedCornerShape(12.dp)
                         )
                 ) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search",
-                        tint = Color(0xFF0F81DA)
+                        tint = Color(0xFF3F788C)
                     )
                 }
             }
@@ -137,30 +133,33 @@ fun HomeScreen(
             if (!searchText.isNullOrEmpty()) {
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 8.dp),
+                        .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Kết quả hiển thị theo từ khóa \"$searchText\"",
+                        text = "Results displayed by keyword \"$searchText\"",
                         style = TextStyle(fontSize = 14.sp),
-                        color = Color.Gray
+                        color = Color(0XFF8DA9B5)
                     )
                     TextButton(onClick = { viewModel.clearSearch() }) {
-                        Text("Xem tất cả")
+                        Text(
+                            "View all",
+                            color = Color(0xFF1A237E),
+                            )
                     }
                 }
             }
 
             // Title
             Text(
-                "Flashcard categories",
+                "Categories",
                 style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontSize = 23.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF1A237E)
                 ),
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(top = 10.dp, bottom = 6.dp)
             )
 
             // List Flashcards
@@ -181,9 +180,9 @@ fun HomeScreen(
             } else {
                 EmptyView(
                     message = if (searchText.isNullOrEmpty()) {
-                        "Chưa có bộ thẻ nào, hãy nhấn \"+\" để thêm bộ thẻ mới"
+                        "There is no category here, press \"+\" to add a new one!"
                     } else {
-                        "Không tìm thấy bộ thẻ này"
+                        "The category was not found."
                     },
                     onActionClick = null
                 )

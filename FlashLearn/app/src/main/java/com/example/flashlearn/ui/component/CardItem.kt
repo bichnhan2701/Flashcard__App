@@ -17,10 +17,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.Icon
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -52,7 +53,7 @@ fun CardItem(
         directions = if (isSwipeEnabled) setOf(DismissDirection.EndToStart) else emptySet(),
         background = {
             val backgroundColor =
-                if (dismissState.targetValue == DismissValue.DismissedToStart) Color.Red else Color(0xFFD5E7F7)
+                if (dismissState.targetValue == DismissValue.DismissedToStart) Color.Red else Color.Transparent
 
             LaunchedEffect(dismissState.currentValue) {
                 if (dismissState.currentValue == DismissValue.DismissedToStart && !canDelete) {
@@ -104,8 +105,23 @@ fun CardItem(
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(term, style = MaterialTheme.typography.titleMedium)
-                                Text(definition, style = MaterialTheme.typography.bodyMedium)
+                                Text(
+                                    term,
+                                    style = TextStyle(
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = Color(0xFF313F42)
+                                    )
+                                )
+                                Spacer(modifier = Modifier.height(5.dp))
+                                Text(
+                                    definition,
+                                    style = TextStyle(
+                                        fontSize = 16.sp,
+                                        fontWeight = FontWeight.Normal,
+                                        color = Color(0xFF313F42)
+                                    )
+                                )
                             }
                             if (onFavoriteClick != null) {
                                 IconButton(onClick = onFavoriteClick) {
@@ -121,12 +137,20 @@ fun CardItem(
                         OutlinedTextField(
                             value = term,
                             onValueChange = onTermChange,
+                            textStyle = TextStyle(
+                                fontSize = 18.sp
+                            ),
                             placeholder = { Text("Term") },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
-                                focusedBorderColor = Color(0xFF6587A2),
-                                unfocusedBorderColor = Color(0xFF8DA9B5),
-                                cursorColor = Color(0xFF6587A2)
+                            colors = TextFieldDefaults.colors(
+                                focusedIndicatorColor = Color(0xFF3F788C),
+                                unfocusedIndicatorColor = Color(0xFF3F788C),
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedContainerColor = Color.Transparent,
+                                unfocusedPlaceholderColor = Color(0xFF3F788C),
+                                focusedPlaceholderColor = Color(0xFF3F788C),
+                                focusedTextColor = Color(0xFF39544F),
+                                unfocusedTextColor = Color(0xFF39544F)
                             )
                         )
 
@@ -135,12 +159,20 @@ fun CardItem(
                         OutlinedTextField(
                             value = definition,
                             onValueChange = onDefinitionChange,
+                            textStyle = TextStyle(
+                                fontSize = 18.sp
+                            ),
                             placeholder = { Text("Definition") },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
-                                focusedBorderColor = Color(0xFF6587A2),
-                                unfocusedBorderColor = Color(0xFF8DA9B5),
-                                cursorColor = Color(0xFF6587A2)
+                            colors = TextFieldDefaults.colors(
+                                focusedIndicatorColor = Color(0xFF3F788C),
+                                unfocusedIndicatorColor = Color(0xFF3F788C),
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedContainerColor = Color.Transparent,
+                                unfocusedPlaceholderColor = Color(0xFF3F788C),
+                                focusedPlaceholderColor = Color(0xFF3F788C),
+                                focusedTextColor = Color(0xFF39544F),
+                                unfocusedTextColor = Color(0xFF39544F)
                             )
                         )
                     }

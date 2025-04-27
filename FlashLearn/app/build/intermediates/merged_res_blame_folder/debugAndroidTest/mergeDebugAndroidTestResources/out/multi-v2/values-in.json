@@ -4,7 +4,7 @@
             "outputFile": "com.example.flashlearn.test.app-mergeDebugAndroidTestResources-36:/values-in/values-in.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\301561b79e4843d2613dc645fec6629e\\transformed\\ui-release\\res\\values-in\\values-in.xml",
+                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\0e021327a4e4248b335f52cea1de3c3b\\transformed\\ui-release\\res\\values-in\\values-in.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\d9cd78e768116665cb2b85d2dc308d68\\transformed\\core-1.15.0\\res\\values-in\\values-in.xml",
+                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\f829738d67c08f16a03aa35edb3ac77c\\transformed\\core-1.15.0\\res\\values-in\\values-in.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

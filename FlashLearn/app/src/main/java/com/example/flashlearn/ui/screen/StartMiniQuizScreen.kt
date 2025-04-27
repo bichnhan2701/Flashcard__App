@@ -3,6 +3,9 @@ package com.example.flashlearn.ui.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -10,41 +13,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.flashlearn.R
 import com.example.flashlearn.navigation.Screen
+import com.example.flashlearn.ui.component.ActionButton
+import com.example.flashlearn.ui.component.GradientText
 
 @Composable
 fun StartMiniQuizScreen(navController: NavController, categoryId: Int) {
-    val flashLearnText = "FlashLearn"
-    val colors = listOf(
-        Color(0xFF90A4AE),
-        Color(0xFFC2E4EF),
-        Color(0xFFF8CBDB),
-        Color(0xFFF5ECB9),
-        Color(0xFFA7BAC4),
-        Color(0xFF1A237E),
-        Color(0xFF1A237E),
-        Color(0xFF1A237E),
-        Color(0xFF1A237E),
-        Color(0xFF1A237E)
-    )
-
-    val colorfulText = buildAnnotatedString {
-        flashLearnText.forEachIndexed { index, c ->
-            withStyle(style = SpanStyle(color = colors.getOrElse(index) { Color.Black })) {
-                append(c)
-            }
-        }
-    }
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.Transparent
@@ -76,44 +56,50 @@ fun StartMiniQuizScreen(navController: NavController, categoryId: Int) {
                             .fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        GradientText("FlashLearn", 36.sp)
+
+                        Spacer(modifier = Modifier.height(24.dp))
+
                         Text(
-                            text = colorfulText,
+                            text = "Mini Quiz",
                             fontSize = 32.sp,
                             fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center
+                            color = Color.Black
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
-                            text = "Quiz",
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Black
-                        )
-
-                        Spacer(modifier = Modifier.height(12.dp))
-
-                        Text(
-                            text = "Choose a definition that matches the term given.",
+                            text = "Choose a term that matches the definition given.",
                             textAlign = TextAlign.Center,
-                            fontSize = 16.sp,
+                            fontSize = 20.sp,
                             color = Color.Black
                         )
 
-                        Spacer(modifier = Modifier.height(22.dp))
+                        Spacer(modifier = Modifier.height(24.dp))
 
-                        Button(
-                            onClick = { navController.navigate(Screen.MiniQuiz.createRoute(categoryId)) },
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .height(40.dp),
-                            shape = RoundedCornerShape(8.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color(0xFF4CAF50)
-                            )
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Start", color = Color.White, fontSize = 16.sp)
+                            ActionButton(
+                                text = "Back",
+                                icon = Icons.AutoMirrored.Filled.ArrowBack,
+                                onClick = { navController.popBackStack() },
+                                containerColor = Color(0xFFE0E0E0),
+                                contentColor = Color.Black,
+                                iconBackgroundColor = Color.Gray
+                            )
+
+                            ActionButton(
+                                text = "Start",
+                                icon = Icons.Default.PlayArrow,
+                                onClick = { navController.navigate(Screen.MiniQuiz.createRoute(categoryId)) },
+                                containerColor = Color(0xFF4CAF50),
+                                contentColor = Color.White,
+                                iconBackgroundColor = Color(0xFF388E3C)
+                            )
                         }
                     }
                 }

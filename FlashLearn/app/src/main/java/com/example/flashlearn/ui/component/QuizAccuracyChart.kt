@@ -33,7 +33,7 @@ fun QuizAccuracyChart(quizStats: List<MiniQuizResult>) {
                 labels.add("C${quiz.categoryId}")
             }
 
-            val dataSet = BarDataSet(entries, "Tỷ lệ đúng (%)").apply {
+            val dataSet = BarDataSet(entries, "Correct rate (%)").apply {
                 color = Color(0xFF9C27B0).toArgb()
             }
 

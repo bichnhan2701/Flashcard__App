@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -22,7 +23,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.flashlearn.ui.component.ActionButton
@@ -45,7 +49,7 @@ fun FlashcardReviewScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE2F0F7))
+            .background(Color(0xFFCADDEC))
     ) {
         TopBar(categoryName) { navController.popBackStack() }
 
@@ -63,12 +67,13 @@ fun FlashcardReviewScreen(
             verticalAlignment = Alignment.Top
         ) {
             ActionButton(
-                text = "Đã nhớ",
+                text = "Remembered",
                 icon = Icons.Default.Check,
                 onClick = { viewModel.rememberCurrentFlashcard() },
                 containerColor = Color(0xFF4CAF50),
                 iconBackgroundColor = Color.Transparent,
-                contentColor = Color.White
+                contentColor = Color.White,
+                iconSize = 24.dp
             )
         }
     }
@@ -83,10 +88,16 @@ private fun TopBar(categoryName: String, onBack: () -> Unit) {
         IconButton(onClick = onBack) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back"
+                contentDescription = "Back",
+                modifier = Modifier.size(30.dp)
             )
         }
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = categoryName)
+        Text(
+            text = categoryName,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color(0xFF1A237E)
+        )
     }
 }

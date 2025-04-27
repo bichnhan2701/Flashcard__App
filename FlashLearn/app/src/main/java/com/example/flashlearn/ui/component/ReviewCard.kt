@@ -123,14 +123,14 @@ private fun ProgressBar(progress: Float, countText: String) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = countText, style = MaterialTheme.typography.bodyLarge)
-            Text(text = "${(progress * 100).toInt()}% đã nhớ", style = MaterialTheme.typography.labelLarge)
+            Text(text = "${(progress * 100).toInt()}% remembered", style = MaterialTheme.typography.labelLarge)
         }
         Spacer(modifier = Modifier.height(8.dp))
         LinearProgressIndicator(
             progress = { progress },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(8.dp)
+                .height(10.dp)
                 .clip(RoundedCornerShape(4.dp)),
             color = Color(0xFF37474F), // màu tiến trình đậm
             trackColor = Color(0xFFB0BEC5) // màu nền thanh tiến trình

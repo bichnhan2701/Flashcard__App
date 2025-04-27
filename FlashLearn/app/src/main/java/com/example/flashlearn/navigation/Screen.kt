@@ -32,16 +32,4 @@ sealed class Screen(val route: String) {
     object MiniQuizResult : Screen("mini_quiz_result/{total}/{correct}") {
         fun createRoute(total: Int, correct: Int) = "mini_quiz_result/$total/$correct"
     }
-
-    // Progress
-    object ProgressDetail : Screen("progress_detail/{categoryId}") {
-        fun createRoute(categoryId: Int) = "progress_detail/$categoryId"
-    }
-    object QuizHistory : Screen("quiz_history/{categoryId}") {
-        fun createRoute(categoryId: Int) = "quiz_history/$categoryId"
-    }
-
-    // Notification
-    object Notification : Screen("notification")
-
 }

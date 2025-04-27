@@ -1,6 +1,7 @@
 package com.example.flashlearn.ui.screen
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -14,9 +15,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.flashlearn.R
@@ -58,7 +63,7 @@ fun EditFolderDetailScreen(
     Scaffold(
         topBar = {
             Column {
-                Spacer(modifier = Modifier.height(16.dp))
+//                Spacer(modifier = Modifier.height(16.dp))
                 EditHeaderIcons(
                     onCancel = { showExitDialog = true },
                     onSave = {
@@ -85,17 +90,51 @@ fun EditFolderDetailScreen(
     ) { padding ->
     Column(
             modifier = Modifier
+                .fillMaxSize()   // ✅ để nền trắng phủ hết
+                .background(Color(0xFFDDEDEA))   // ✅ nền trắng
                 .padding(padding)
                 .padding(16.dp)
         ) {
+            Text(
+                "Edit category name",
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF39544F)
+                )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
             OutlinedTextField(
                 value = categoryName,
                 onValueChange = { categoryName = it },
+                textStyle = TextStyle(
+                    fontSize = 18.sp
+                ),
                 label = { Text("Tên thư mục") },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedIndicatorColor = Color(0xFF3F788C),
+                    unfocusedIndicatorColor = Color(0xFF3F788C),
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    unfocusedPlaceholderColor = Color(0xFF3F788C),
+                    focusedPlaceholderColor = Color(0xFF3F788C),
+                    focusedTextColor = Color(0xFF39544F),
+                    unfocusedTextColor = Color(0xFF39544F)
+                )
             )
-
             Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                "Edit cards",
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF39544F)
+                )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
 
             // DynamicFlashcardList now handles adding flashcards
             DynamicFlashcardList(
@@ -167,7 +206,8 @@ fun EditHeaderIcons(onCancel: () -> Unit, onSave: () -> Unit, onDelete: () -> Un
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp),
+            .padding(top = 10.dp, bottom = 8.dp)
+            .padding(16.dp),
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -177,14 +217,16 @@ fun EditHeaderIcons(onCancel: () -> Unit, onSave: () -> Unit, onDelete: () -> Un
             modifier = Modifier
                 .padding(end = 30.dp)
                 .size(36.dp)
-                .clickable { onCancel() }
+                .clickable { onCancel() },
+            tint = Color(0xFFFBA518)
         )
         Icon(
             painter = painterResource(R.drawable.delete_2_svgrepo_com),
             contentDescription = "Delete",
             modifier = Modifier
                 .padding(end = 30.dp)
-                .clickable { onDelete() }
+                .clickable { onDelete() },
+            tint = Color.Red
         )
         Icon(
             painter = painterResource(R.drawable.mingcute_save_line),

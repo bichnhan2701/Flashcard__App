@@ -1,5 +1,6 @@
 package com.example.flashlearn.ui.screen
 
+import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,12 +36,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.text.style.TextAlign
+import com.example.flashlearn.ui.component.LogoutConfirmationDialog
 
 @Composable
 fun UserProfileScreen(
@@ -53,6 +53,7 @@ fun UserProfileScreen(
     var showLogoutDialog by remember { mutableStateOf(false) }
     val authState by authViewModel.authState.collectAsState()
     val context = LocalContext.current
+    val user = FirebaseAuth.getInstance().currentUser
 
     val googleSignInClient = remember {
         GoogleSignIn.getClient(
@@ -68,36 +69,22 @@ fun UserProfileScreen(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        val account = task.result
-        if (account != null) {
-            val idToken = account.idToken
-            if (idToken != null) {
-                authViewModel.googleLogin(idToken)
-            } else {
-                Log.e("UserProfile", "Google Sign-In failed, idToken is null")
-            }
-        } else {
-            Log.e("UserProfile", "Google Sign-In failed: ${task.exception?.message}")
-        }
+        task.result?.idToken?.let { idToken ->
+            authViewModel.googleLogin(idToken)
+        } ?: Log.e("UserProfile", "Google Sign-In failed: ${task.exception?.message}")
     }
-
-    val user = FirebaseAuth.getInstance().currentUser
 
     LaunchedEffect(Unit) {
         isDarkMode = preferences.isDarkMode()
     }
 
     LaunchedEffect(authState) {
-        authState?.let { result ->
-            result
-                .onSuccess {
-                    navController.navigate(Screen.Profile.route) {
-                        popUpTo(Screen.Profile.route) { inclusive = true }
-                    }
-                }
-                .onFailure {
-                    Log.e("Auth", "Đăng nhập thất bại: ${it.message}")
-                }
+        authState?.onSuccess {
+            navController.navigate(Screen.Profile.route) {
+                popUpTo(Screen.Profile.route) { inclusive = true }
+            }
+        }?.onFailure {
+            Log.e("Auth", "Đăng nhập thất bại: ${it.message}")
         }
     }
 
@@ -110,155 +97,46 @@ fun UserProfileScreen(
                 .padding(innerPadding)
                 .background(Color(0xFFF5F5F5))
         ) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp)
-                        .background(Color(0xFFFFE6F0))
-                        .padding(top = 32.dp, bottom = 72.dp),
-                    contentAlignment = Alignment.TopCenter
-                ) {
-                    Text(
-                        text = "My profile",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(56.dp))
-            }
+            ProfileHeader()
 
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 160.dp)
+                    .padding(top = 155.dp)
                     .background(Color.White, shape = MaterialTheme.shapes.large)
                     .padding(top = 56.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 16.dp)
-                ) {
-                    Text(
-                        text = user?.displayName ?: "Guest User",
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
-                    )
-                }
+                ProfileName(user?.displayName ?: "Guest User")
 
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = "Settings",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp,
-                    color = Color.Black,
-                    modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                )
-
-                SettingItem(
-                    icon = painterResource(id = android.R.drawable.ic_menu_day),
-                    title = "Dark mode",
-                    trailing = {
-                        Switch(
-                            checked = isDarkMode,
-                            onCheckedChange = {
-                                isDarkMode = it
-                                coroutineScope.launch {
-                                    preferences.setDarkMode(it)
-                                }
-                            },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = Color.Blue,
-                                uncheckedThumbColor = Color.Gray
-                            )
-                        )
-                    }
-                )
-
-                SettingItem(
-                    icon = painterResource(id = android.R.drawable.ic_menu_help),
-                    title = "Help",
-                    onClick = { navController.navigate("help") },
-                    trailing = {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = "Next",
-                            tint = Color.Gray,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
-                )
-
-                SettingItem(
-                    icon = painterResource(id = android.R.drawable.ic_menu_info_details),
-                    title = "About",
-                    onClick = { navController.navigate("about") },
-                    trailing = {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                            contentDescription = "About",
-                            tint = Color.Gray,
-                            modifier = Modifier.size(24.dp)
-                        )
-                    }
+                ProfileSettings(
+                    isDarkMode = isDarkMode,
+                    onDarkModeChange = {
+                        isDarkMode = it
+                        coroutineScope.launch { preferences.setDarkMode(it) }
+                    },
+                    onHelpClick = {  },
+                    onAboutClick = {  }
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                user?.let {
-                    ActionButton(
-                        text = "Logout",
-                        onClick = {
+                ActionButton(
+                    text = if (user != null) "Logout" else "Login with Google",
+                    onClick = {
+                        if (user != null) {
                             showLogoutDialog = true
-                        },
-                        containerColor = Color.Red,
-                        contentColor = Color.White
-                    )
-                } ?: run {
-                    ActionButton(
-                        text = "Login with Google",
-                        onClick = { launcher.launch(googleSignInClient.signInIntent) },
-                        containerColor = Color(0xFF4CAF50),
-                        contentColor = Color.White
-                    )
-                }
+                        } else {
+                            launcher.launch(googleSignInClient.signInIntent)
+                        }
+                    },
+                    containerColor = if (user != null) Color.Red else Color(0xFF4CAF50),
+                    contentColor = Color.White,
+                    modifier = Modifier.fillMaxWidth(0.6f)
+                )
             }
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 120.dp),
-                contentAlignment = Alignment.TopCenter
-            ) {
-                val avatarUrl = user?.photoUrl
-                if (avatarUrl != null) {
-                    AsyncImage(
-                        model = avatarUrl,
-                        contentDescription = "User Avatar",
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                } else {
-                    Image(
-                        painter = painterResource(id = R.drawable.result_image),
-                        contentDescription = "Default Avatar",
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(CircleShape)
-                            .background(Color.Gray)
-                    )
-                }
-            }
+            ProfileAvatar(user?.photoUrl)
 
             if (showLogoutDialog) {
                 LogoutConfirmationDialog(
@@ -269,9 +147,146 @@ fun UserProfileScreen(
                             popUpTo(Screen.Profile.route) { inclusive = true }
                         }
                     },
-                    onDismiss = {
-                        showLogoutDialog = false
-                    }
+                    onDismiss = { showLogoutDialog = false }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ProfileHeader() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(180.dp)
+            .background(Color(0xFFFFE6F0))
+            .padding(top = 32.dp, bottom = 72.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        Text(
+            text = "My profile",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF313F42)
+        )
+    }
+}
+
+@Composable
+private fun ProfileName(name: String) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 24.dp, bottom = 16.dp)
+    ) {
+        Text(
+            text = name,
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Normal,
+            color = Color(0xFF39544F)
+        )
+    }
+}
+
+@Composable
+private fun ProfileSettings(
+    isDarkMode: Boolean,
+    onDarkModeChange: (Boolean) -> Unit,
+    onHelpClick: () -> Unit,
+    onAboutClick: () -> Unit
+) {
+    Text(
+        text = "Settings",
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp,
+        color = Color(0xFF313F42),
+        modifier = Modifier
+            .padding(start = 16.dp, bottom = 8.dp).fillMaxWidth(),
+        textAlign = TextAlign.Start
+
+    )
+    SettingItem(
+        icon = painterResource(id = R.drawable.dark_mode_night_moon_svgrepo_com),
+        title = "Dark mode",
+        trailing = {
+            Switch(
+                checked = isDarkMode,
+                onCheckedChange = onDarkModeChange,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = Color.Blue,
+                    uncheckedThumbColor = Color.Gray
+                )
+            )
+        }
+    )
+    SettingItem(
+        icon = painterResource(id = R.drawable.help_svgrepo_com),
+        title = "Help",
+        onClick = onHelpClick,
+        trailing = {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                contentDescription = "Next",
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    )
+    SettingItem(
+        icon = painterResource(id = R.drawable.about_svgrepo_com),
+        title = "About",
+        onClick = onAboutClick,
+        trailing = {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                contentDescription = "About",
+                tint = Color.Gray,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    )
+}
+
+@Composable
+private fun ProfileAvatar(photoUrl: Uri?) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 90.dp),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        Box(
+            modifier = Modifier
+                .size(135.dp) // lớn hơn ảnh một chút để tạo khung viền
+                .clip(CircleShape)
+                .shadow(
+                    elevation = 8.dp,
+                    shape = CircleShape,
+                    ambientColor = Color.Gray,
+                    spotColor = Color.Gray
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            if (photoUrl != null) {
+                AsyncImage(
+                    model = photoUrl,
+                    contentDescription = "User Avatar",
+                    modifier = Modifier
+                        .size(130.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = R.drawable.avatar),
+                    contentDescription = "Default Avatar",
+                    modifier = Modifier
+                        .size(130.dp)
+                        .clip(CircleShape)
+                        .background(Color.Gray)
                 )
             }
         }
@@ -295,99 +310,15 @@ fun SettingItem(
         Icon(
             painter = icon,
             contentDescription = null,
-            modifier = Modifier.size(24.dp),
-            tint = Color(0xFFEEC4F5)
+            tint = Color(0xFF9485AC)
         )
-
         Spacer(modifier = Modifier.width(16.dp))
-
         Text(
             text = title,
-            fontSize = 16.sp,
-            color = Color.Black
+            fontSize = 18.sp,
+            color = Color(0xFF313F42)
         )
-
         Spacer(modifier = Modifier.weight(1f))
-
         trailing()
-    }
-}
-
-@Composable
-fun LogoutConfirmationDialog(
-    onConfirm: () -> Unit,
-    onDismiss: () -> Unit
-) {
-    Surface(
-        shape = RoundedCornerShape(16.dp),
-        color = Color.White,
-        shadowElevation = 8.dp,
-    ) {
-        AlertDialog(
-            containerColor = Color.White,
-            shape = RoundedCornerShape(16.dp),
-            onDismissRequest = onDismiss,
-            title = {
-                Text(
-                    text = "Đăng xuất",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black
-                )
-            },
-            text = {
-                Text(
-                    text = "Bạn có chắc chắn muốn đăng xuất không?",
-                    fontSize = 14.sp,
-                    color = Color.DarkGray
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = onConfirm) {
-                    Text(
-                        text = "Đăng xuất",
-                        color = Color.Red,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = onDismiss) {
-                    Text(
-                        text = "Hủy",
-                        color = Color.Gray,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            }
-        )
-    }
-}
-
-@Composable
-fun AboutScreen(navController: NavController) {
-    Scaffold { innerPadding ->
-        Text(
-            text = "About Screen - Coming Soon",
-            fontSize = 20.sp,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp)
-        )
-    }
-}
-
-@Composable
-fun HelpScreen(navController: NavController) {
-    Scaffold { innerPadding ->
-        Text(
-            text = "Help Screen - Coming Soon",
-            fontSize = 20.sp,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(16.dp)
-        )
     }
 }

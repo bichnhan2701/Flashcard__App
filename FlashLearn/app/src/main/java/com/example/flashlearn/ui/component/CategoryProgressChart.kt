@@ -44,10 +44,10 @@ fun CategoryProgressChart(categories: List<CategoryProgress>) {
 
             val dataSet = BarDataSet(entries, "").apply {
                 setColors(
-                    Color(0xFF4CAF50).toArgb(), // Đã nhớ - Xanh lá
-                    Color(0xFFFF5722).toArgb()  // Chưa nhớ - Cam
+                    Color(0xFF76D67A).toArgb(), // Đã nhớ - Xanh lá
+                    Color(0xFFEAB866).toArgb()  // Chưa nhớ - Cam
                 )
-                stackLabels = arrayOf("Đã nhớ", "Chưa nhớ")
+                stackLabels = arrayOf("Remembered", "Not remembered")
             }
 
             val barData = BarData(dataSet).apply {

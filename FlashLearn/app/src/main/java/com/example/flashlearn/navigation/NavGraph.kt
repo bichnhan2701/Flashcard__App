@@ -41,14 +41,7 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
             AddNewFolderScreen(navController = navController)
         }
         composable(BottomNavItem.Progress.route) {
-            ProgressScreen(
-                onCategoryClick = { categoryId ->
-                    navController.navigate(Screen.ProgressDetail.createRoute(categoryId))
-                },
-                onQuizClick = { categoryId ->
-                    navController.navigate(Screen.QuizHistory.createRoute(categoryId))
-                }
-            )
+            ProgressScreen(navController = navController)
         }
 
         composable(BottomNavItem.Profile.route) {
@@ -111,34 +104,5 @@ fun NavGraph(navController: NavHostController, preferences: PreferencesRepositor
             MiniQuizResultScreen(navController = navController, total = total, correct = correct)
         }
 
-        // About
-        composable("about") {
-            AboutScreen(navController = navController)
-        }
-        composable("help") {
-            HelpScreen(navController = navController)
-        }
-
-        // Progress
-        composable(
-            route = Screen.ProgressDetail.route,
-            arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: return@composable
-            ProgressDetailScreen(categoryId)
-        }
-
-        composable(
-            route = Screen.QuizHistory.route,
-            arguments = listOf(navArgument("categoryId") { type = NavType.IntType })
-        ) { backStackEntry ->
-            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: return@composable
-            QuizHistoryScreen(categoryId)
-        }
-
-        // Notification
-        composable(Screen.Notification.route) {
-            NotificationScreen(navController = navController)
-        }
     }
 }
