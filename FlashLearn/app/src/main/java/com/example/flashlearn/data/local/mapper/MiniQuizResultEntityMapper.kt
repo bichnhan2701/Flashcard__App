@@ -9,7 +9,8 @@ fun MiniQuizResult.toEntity() = MiniQuizResultEntity(
     totalQuestions = totalQuestions,
     correctAnswers = correctAnswers,
     timestamp = timestamp,
-    wrongFlashcardIds = wrongFlashcardIds
+    wrongFlashcardIds = wrongFlashcardIds,
+    updatedAt = updateAt
 )
 
 fun MiniQuizResultEntity.toDomain() = MiniQuizResult(
@@ -18,5 +19,6 @@ fun MiniQuizResultEntity.toDomain() = MiniQuizResult(
     totalQuestions = totalQuestions,
     correctAnswers = correctAnswers,
     timestamp = timestamp,
-    wrongFlashcardIds = wrongFlashcardIds
+    wrongFlashcardIds = wrongFlashcardIds,
+    updateAt = updatedAt
 )

@@ -1,10 +1,12 @@
 package com.example.flashlearn.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashlearn.domain.model.Flashcard
 import com.example.flashlearn.domain.usecase.FlashcardUseCases
 import com.example.flashlearn.domain.usecase.GetCategoryByIdUseCase
+import com.example.flashlearn.domain.usecase.SyncAllDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoryDetailViewModel @Inject constructor(
     private val flashcardUseCases: FlashcardUseCases,
-    private val getCategoryByIdUseCase: GetCategoryByIdUseCase
+    private val getCategoryByIdUseCase: GetCategoryByIdUseCase,
+    private val syncAllDataUseCase: SyncAllDataUseCase
 ) : ViewModel() {
     private val _flashcards = MutableStateFlow<List<Flashcard>>(emptyList())
     val flashcards: StateFlow<List<Flashcard>> = _flashcards
@@ -32,14 +35,19 @@ class CategoryDetailViewModel @Inject constructor(
     fun toggleFavorite(card: Flashcard) {
         viewModelScope.launch {
             flashcardUseCases.update(card.copy(isFavorite = !card.isFavorite))
+            triggerSync()
             load(card.categoryId)
         }
     }
 
-//    fun deleteFlashcard(card: Flashcard) {
-//        viewModelScope.launch {
-//            flashcardUseCases.delete(card)
-//            load(card.categoryId, _folderName.value)
-//        }
-//    }
+    private fun triggerSync() {
+        viewModelScope.launch {
+            try {
+                syncAllDataUseCase.sync()
+            } catch (e: Exception) {
+                // Sync fail chỉ log lỗi, không ảnh hưởng trải nghiệm người dùng
+                Log.e("Sync", "Failed to sync after toggling favorite: ${e.message}")
+            }
+        }
+    }
 }

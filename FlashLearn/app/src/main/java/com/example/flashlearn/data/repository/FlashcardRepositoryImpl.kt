@@ -29,4 +29,12 @@ class FlashcardRepositoryImpl @Inject constructor(
     override suspend fun deleteByCategory(categoryId: Int) {
         dao.deleteByCategoryId(categoryId)
     }
+
+    override suspend fun getUpdatedFlashcards(lastSyncedAt: Long): List<Flashcard> {
+        return dao.getUpdatedSince(lastSyncedAt).map { it.toDomain() }
+    }
+
+    override suspend fun deleteAllFlashcards() {
+        dao.deleteAll()
+    }
 }

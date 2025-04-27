@@ -4,7 +4,7 @@
             "outputFile": "com.example.flashlearn.app-mergeDebugResources-83:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Windows\\.gradle\\caches\\8.9\\transforms\\3cb570df2605e5522be8f23b3a364af7\\transformed\\appcompat-1.6.1\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\3f84dfe4831054a2aad4a3f9569acab7\\transformed\\appcompat-1.6.1\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Windows\\.gradle\\caches\\8.9\\transforms\\1006c65ed94d1e1fdb6575192a4444e3\\transformed\\play-services-auth-21.3.0\\res\\values-watch-v20\\values.xml",
+                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\775d98ea28a42a40525164470b1cadc6\\transformed\\play-services-auth-21.3.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",

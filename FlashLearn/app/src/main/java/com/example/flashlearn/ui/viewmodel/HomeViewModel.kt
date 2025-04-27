@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flashlearn.domain.model.Category
 import com.example.flashlearn.domain.usecase.GetAllCategoriesUseCase
+import com.example.flashlearn.domain.usecase.SyncAllDataUseCase
+import com.example.flashlearn.ui.network.NetworkObserver
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,7 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    getAllCategoriesUseCase: GetAllCategoriesUseCase
+    getAllCategoriesUseCase: GetAllCategoriesUseCase,
+    private val syncAllDataUseCase: SyncAllDataUseCase,
+    private val networkObserver: NetworkObserver
 ) : ViewModel() {
 
     private val allCategories = getAllCategoriesUseCase()
@@ -35,6 +39,20 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             allCategories.collect {
                 _filteredCategories.value = it
+            }
+        }
+
+        // ✅ Mới: Observe mạng và trigger đồng bộ
+        viewModelScope.launch {
+            networkObserver.observe().collect { status ->
+                if (status == NetworkObserver.Status.Available) {
+                    try {
+                        syncAllDataUseCase.sync()
+                        Log.d("Sync", "Data synced successfully")
+                    } catch (e: Exception) {
+                        Log.e("Sync", "Failed to sync: ${e.message}")
+                    }
+                }
             }
         }
     }

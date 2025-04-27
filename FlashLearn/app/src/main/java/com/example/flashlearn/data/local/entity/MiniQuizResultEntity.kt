@@ -10,5 +10,6 @@ data class MiniQuizResultEntity(
     val totalQuestions: Int,
     val correctAnswers: Int,
     val timestamp: Long,
-    val wrongFlashcardIds: List<Int>
+    val wrongFlashcardIds: List<Int>,
+    val updatedAt: Long
 )

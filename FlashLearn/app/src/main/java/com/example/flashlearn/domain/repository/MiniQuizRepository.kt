@@ -11,4 +11,6 @@ interface MiniQuizRepository {
     suspend fun getResultsBetween(start: Long, end: Long): List<MiniQuizResult>
     // ✅ MỚI: lấy kết quả quiz mới nhất theo category
     suspend fun getLatestResultByCategory(categoryId: Int): MiniQuizResult?
+    suspend fun getUpdatedMiniQuizResults(lastSyncedAt: Long): List<MiniQuizResult>
+    suspend fun deleteAllMiniQuizResults()
 }

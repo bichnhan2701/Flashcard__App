@@ -1,9 +1,11 @@
 package com.example.flashlearn.di
 
+import com.example.flashlearn.data.remote.FirebaseRemoteDataSource
 import com.example.flashlearn.domain.repository.AuthRepository
 import com.example.flashlearn.domain.repository.CategoryRepository
 import com.example.flashlearn.domain.repository.FlashcardRepository
 import com.example.flashlearn.domain.repository.MiniQuizRepository
+import com.example.flashlearn.domain.repository.SharedPreferencesRepository
 import com.example.flashlearn.domain.usecase.*
 import dagger.Module
 import dagger.Provides
@@ -14,31 +16,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
-    // Cung cấp các use case liên quan đến đăng nhập, đăng ký
-//    @Provides
-//    @Singleton
-//    fun provideLoginWithEmailUseCase(
-//        repository: AuthRepository
-//    ): LoginWithEmailUseCase {
-//        return LoginWithEmailUseCase(repository)
-//    }
-//
-//    @Provides
-//    @Singleton
-//    fun provideRegisterWithEmailUseCase(
-//        repository: AuthRepository
-//    ): RegisterWithEmailUseCase {
-//        return RegisterWithEmailUseCase(repository)
-//    }
-
-    @Provides
+   @Provides
     @Singleton
     fun provideLoginWithGoogleUseCase(
         repository: AuthRepository
     ): LoginWithGoogleUseCase {
         return LoginWithGoogleUseCase(repository)
     }
-
     @Provides
     @Singleton
     fun provideLogoutUseCase(
@@ -46,8 +30,6 @@ object UseCaseModule {
     ): LogoutUseCase {
         return LogoutUseCase(repository)
     }
-
-
     @Provides
     @Singleton
     fun provideGetAllCategoriesUseCase(
@@ -55,14 +37,12 @@ object UseCaseModule {
     ): GetAllCategoriesUseCase {
         return GetAllCategoriesUseCase(repository)
     }
-
     @Provides
     fun provideGetCategoryByIdUseCases(
         repository: CategoryRepository
     ): GetCategoryByIdUseCase {
         return GetCategoryByIdUseCase(repository)
     }
-
     @Provides
     @Singleton
     fun provideCreateCategoryUseCase(
@@ -70,7 +50,6 @@ object UseCaseModule {
     ): CreateCategoryUseCase {
         return CreateCategoryUseCase(repository)
     }
-
     @Provides
     @Singleton
     fun provideFlashcardUseCases(
@@ -86,7 +65,6 @@ object UseCaseModule {
             update = updateFlashcardUseCase
         )
     }
-
     @Provides
     @Singleton
     fun provideGetFolderWithFlashcardsUseCase(
@@ -95,7 +73,6 @@ object UseCaseModule {
     ): GetCategoryWithFlashcardsUseCase {
         return GetCategoryWithFlashcardsUseCase(categoryRepository, flashcardRepository)
     }
-
     @Provides
     @Singleton
     fun provideUpdateFolderWithFlashcardsUseCase(
@@ -104,7 +81,6 @@ object UseCaseModule {
     ): UpdateCategoryWithFlashcardsUseCase {
         return UpdateCategoryWithFlashcardsUseCase(categoryRepository, flashcardRepository)
     }
-
     @Provides
     @Singleton
     fun provideDeleteFolderWithFlashcardsUseCase(
@@ -113,13 +89,11 @@ object UseCaseModule {
     ): DeleteCategoryWithFlashcardsUseCase {
         return DeleteCategoryWithFlashcardsUseCase(flashcardRepository, categoryRepository)
     }
-
     @Provides
     @Singleton
     fun provideGenerateMiniQuizQuestionsUseCase(): GenerateMiniQuizQuestionsUseCase {
         return GenerateMiniQuizQuestionsUseCase()
     }
-
     @Provides
     @Singleton
     fun provideGetQuizHistoryByCategoryUseCase(
@@ -127,7 +101,6 @@ object UseCaseModule {
     ): GetQuizHistoryByCategoryUseCase {
         return GetQuizHistoryByCategoryUseCase(miniQuizRepository)
     }
-
     @Provides
     @Singleton
     fun provideSaveMiniQuizResultUseCase(
@@ -135,7 +108,6 @@ object UseCaseModule {
     ): SaveMiniQuizResultUseCase {
         return SaveMiniQuizResultUseCase(miniQuizRepository)
     }
-
     @Provides
     @Singleton
     fun provideGetAllQuizResultsUseCase(
@@ -143,7 +115,6 @@ object UseCaseModule {
     ): GetAllQuizResultsUseCase {
         return GetAllQuizResultsUseCase(miniQuizRepository)
     }
-
     @Provides
     @Singleton
     fun provideGetQuizResultsBetweenUseCase(
@@ -159,7 +130,6 @@ object UseCaseModule {
     ): GetLatestQuizResultByCategoryUseCase {
         return GetLatestQuizResultByCategoryUseCase(miniQuizRepository)
     }
-
     @Provides
     @Singleton
     fun provideGetAllCategoriesProgressUseCase(
@@ -167,6 +137,24 @@ object UseCaseModule {
         flashcardRepository: FlashcardRepository
     ): GetAllCategoriesProgressUseCase {
         return GetAllCategoriesProgressUseCase(categoryRepository, flashcardRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSyncAllDataUseCase(
+        categoryRepository: CategoryRepository,
+        flashcardRepository: FlashcardRepository,
+        miniQuizRepository: MiniQuizRepository,
+        firebaseRemoteDataSource: FirebaseRemoteDataSource,
+        sharedPreferencesRepository: SharedPreferencesRepository
+    ): SyncAllDataUseCase {
+        return SyncAllDataUseCase(
+            categoryRepository,
+            flashcardRepository,
+            miniQuizRepository,
+            firebaseRemoteDataSource,
+            sharedPreferencesRepository
+        )
     }
 
 }

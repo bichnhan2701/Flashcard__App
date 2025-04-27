@@ -11,9 +11,6 @@ interface CategoryDao{
     @Insert
     suspend fun insert(category: CategoryEntity): Long
 
-//    @Query("SELECT * FROM category ORDER BY createdAt DESC")
-//    fun getAll(): Flow<List<CategoryEntity>>
-
     @Query("""
         SELECT 
             c.id, 
@@ -30,8 +27,9 @@ interface CategoryDao{
     """)
     fun getAll(): Flow<List<CategoryEntity>>
 
-    @Query("UPDATE category SET name = :newName WHERE id = :categoryId")
-    suspend fun updateName(categoryId: Int, newName: String)
+    @Query("UPDATE category SET name = :newName, cardCount = :newCardCount WHERE id = :categoryId")
+    suspend fun updateCategoryInfo(categoryId: Int, newName: String, newCardCount: Int)
+
 
     @Query("DELETE FROM category WHERE id = :categoryId")
     suspend fun deleteById(categoryId: Int)
@@ -41,4 +39,14 @@ interface CategoryDao{
 
     @Query("UPDATE category SET name = :newName WHERE id = :categoryId")
     suspend fun updateCategoryName(categoryId: Int, newName: String)
+
+    // Cac ham sau phuc vu cho chuc nang dong bo du lieu len Firebase Realtime Database
+    @Query("SELECT * FROM category WHERE updatedAt > :lastSyncedAt")
+    suspend fun getUpdatedSince(lastSyncedAt: Long): List<CategoryEntity>
+
+    @Query("DELETE FROM category")
+    suspend fun deleteAll()
+
+    @Query("SELECT COUNT(*) FROM category")
+    suspend fun countCategories(): Int
 }

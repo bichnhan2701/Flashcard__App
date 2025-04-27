@@ -158,14 +158,86 @@ public class CategoryDao_Impl(
     }
   }
 
-  public override suspend fun updateName(categoryId: Int, newName: String) {
-    val _sql: String = "UPDATE category SET name = ? WHERE id = ?"
+  public override suspend fun getUpdatedSince(lastSyncedAt: Long): List<CategoryEntity> {
+    val _sql: String = "SELECT * FROM category WHERE updatedAt > ?"
+    return performSuspending(__db, true, false) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
+        var _argIndex: Int = 1
+        _stmt.bindLong(_argIndex, lastSyncedAt)
+        val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, "id")
+        val _columnIndexOfName: Int = getColumnIndexOrThrow(_stmt, "name")
+        val _columnIndexOfCardCount: Int = getColumnIndexOrThrow(_stmt, "cardCount")
+        val _columnIndexOfIsReviewed: Int = getColumnIndexOrThrow(_stmt, "isReviewed")
+        val _columnIndexOfIsQuizDone: Int = getColumnIndexOrThrow(_stmt, "isQuizDone")
+        val _columnIndexOfCreatedAt: Int = getColumnIndexOrThrow(_stmt, "createdAt")
+        val _columnIndexOfUpdatedAt: Int = getColumnIndexOrThrow(_stmt, "updatedAt")
+        val _result: MutableList<CategoryEntity> = mutableListOf()
+        while (_stmt.step()) {
+          val _item: CategoryEntity
+          val _tmpId: Int
+          _tmpId = _stmt.getLong(_columnIndexOfId).toInt()
+          val _tmpName: String
+          _tmpName = _stmt.getText(_columnIndexOfName)
+          val _tmpCardCount: Int
+          _tmpCardCount = _stmt.getLong(_columnIndexOfCardCount).toInt()
+          val _tmpIsReviewed: Boolean
+          val _tmp: Int
+          _tmp = _stmt.getLong(_columnIndexOfIsReviewed).toInt()
+          _tmpIsReviewed = _tmp != 0
+          val _tmpIsQuizDone: Boolean
+          val _tmp_1: Int
+          _tmp_1 = _stmt.getLong(_columnIndexOfIsQuizDone).toInt()
+          _tmpIsQuizDone = _tmp_1 != 0
+          val _tmpCreatedAt: Long
+          _tmpCreatedAt = _stmt.getLong(_columnIndexOfCreatedAt)
+          val _tmpUpdatedAt: Long
+          _tmpUpdatedAt = _stmt.getLong(_columnIndexOfUpdatedAt)
+          _item =
+              CategoryEntity(_tmpId,_tmpName,_tmpCardCount,_tmpIsReviewed,_tmpIsQuizDone,_tmpCreatedAt,_tmpUpdatedAt)
+          _result.add(_item)
+        }
+        _result
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
+  public override suspend fun countCategories(): Int {
+    val _sql: String = "SELECT COUNT(*) FROM category"
+    return performSuspending(__db, true, false) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
+        val _result: Int
+        if (_stmt.step()) {
+          val _tmp: Int
+          _tmp = _stmt.getLong(0).toInt()
+          _result = _tmp
+        } else {
+          _result = 0
+        }
+        _result
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
+  public override suspend fun updateCategoryInfo(
+    categoryId: Int,
+    newName: String,
+    newCardCount: Int,
+  ) {
+    val _sql: String = "UPDATE category SET name = ?, cardCount = ? WHERE id = ?"
     return performSuspending(__db, false, true) { _connection ->
       val _stmt: SQLiteStatement = _connection.prepare(_sql)
       try {
         var _argIndex: Int = 1
         _stmt.bindText(_argIndex, newName)
         _argIndex = 2
+        _stmt.bindLong(_argIndex, newCardCount.toLong())
+        _argIndex = 3
         _stmt.bindLong(_argIndex, categoryId.toLong())
         _stmt.step()
       } finally {
@@ -197,6 +269,18 @@ public class CategoryDao_Impl(
         _stmt.bindText(_argIndex, newName)
         _argIndex = 2
         _stmt.bindLong(_argIndex, categoryId.toLong())
+        _stmt.step()
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
+  public override suspend fun deleteAll() {
+    val _sql: String = "DELETE FROM category"
+    return performSuspending(__db, false, true) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
         _stmt.step()
       } finally {
         _stmt.close()

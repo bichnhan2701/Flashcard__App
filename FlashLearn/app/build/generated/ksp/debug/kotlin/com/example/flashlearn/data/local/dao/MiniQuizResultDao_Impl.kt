@@ -33,7 +33,7 @@ public class MiniQuizResultDao_Impl(
     this.__insertAdapterOfMiniQuizResultEntity = object :
         EntityInsertAdapter<MiniQuizResultEntity>() {
       protected override fun createQuery(): String =
-          "INSERT OR REPLACE INTO `quiz_results` (`id`,`categoryId`,`totalQuestions`,`correctAnswers`,`timestamp`,`wrongFlashcardIds`) VALUES (nullif(?, 0),?,?,?,?,?)"
+          "INSERT OR REPLACE INTO `quiz_results` (`id`,`categoryId`,`totalQuestions`,`correctAnswers`,`timestamp`,`wrongFlashcardIds`,`updatedAt`) VALUES (nullif(?, 0),?,?,?,?,?,?)"
 
       protected override fun bind(statement: SQLiteStatement, entity: MiniQuizResultEntity) {
         statement.bindLong(1, entity.id.toLong())
@@ -43,6 +43,7 @@ public class MiniQuizResultDao_Impl(
         statement.bindLong(5, entity.timestamp)
         val _tmp: String = __converters.fromIntList(entity.wrongFlashcardIds)
         statement.bindText(6, _tmp)
+        statement.bindLong(7, entity.updatedAt)
       }
     }
   }
@@ -65,6 +66,7 @@ public class MiniQuizResultDao_Impl(
         val _columnIndexOfCorrectAnswers: Int = getColumnIndexOrThrow(_stmt, "correctAnswers")
         val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, "timestamp")
         val _columnIndexOfWrongFlashcardIds: Int = getColumnIndexOrThrow(_stmt, "wrongFlashcardIds")
+        val _columnIndexOfUpdatedAt: Int = getColumnIndexOrThrow(_stmt, "updatedAt")
         val _result: MutableList<MiniQuizResultEntity> = mutableListOf()
         while (_stmt.step()) {
           val _item: MiniQuizResultEntity
@@ -82,8 +84,10 @@ public class MiniQuizResultDao_Impl(
           val _tmp: String
           _tmp = _stmt.getText(_columnIndexOfWrongFlashcardIds)
           _tmpWrongFlashcardIds = __converters.toIntList(_tmp)
+          val _tmpUpdatedAt: Long
+          _tmpUpdatedAt = _stmt.getLong(_columnIndexOfUpdatedAt)
           _item =
-              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds)
+              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds,_tmpUpdatedAt)
           _result.add(_item)
         }
         _result
@@ -104,6 +108,7 @@ public class MiniQuizResultDao_Impl(
         val _columnIndexOfCorrectAnswers: Int = getColumnIndexOrThrow(_stmt, "correctAnswers")
         val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, "timestamp")
         val _columnIndexOfWrongFlashcardIds: Int = getColumnIndexOrThrow(_stmt, "wrongFlashcardIds")
+        val _columnIndexOfUpdatedAt: Int = getColumnIndexOrThrow(_stmt, "updatedAt")
         val _result: MutableList<MiniQuizResultEntity> = mutableListOf()
         while (_stmt.step()) {
           val _item: MiniQuizResultEntity
@@ -121,8 +126,10 @@ public class MiniQuizResultDao_Impl(
           val _tmp: String
           _tmp = _stmt.getText(_columnIndexOfWrongFlashcardIds)
           _tmpWrongFlashcardIds = __converters.toIntList(_tmp)
+          val _tmpUpdatedAt: Long
+          _tmpUpdatedAt = _stmt.getLong(_columnIndexOfUpdatedAt)
           _item =
-              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds)
+              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds,_tmpUpdatedAt)
           _result.add(_item)
         }
         _result
@@ -148,6 +155,7 @@ public class MiniQuizResultDao_Impl(
         val _columnIndexOfCorrectAnswers: Int = getColumnIndexOrThrow(_stmt, "correctAnswers")
         val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, "timestamp")
         val _columnIndexOfWrongFlashcardIds: Int = getColumnIndexOrThrow(_stmt, "wrongFlashcardIds")
+        val _columnIndexOfUpdatedAt: Int = getColumnIndexOrThrow(_stmt, "updatedAt")
         val _result: MutableList<MiniQuizResultEntity> = mutableListOf()
         while (_stmt.step()) {
           val _item: MiniQuizResultEntity
@@ -165,8 +173,10 @@ public class MiniQuizResultDao_Impl(
           val _tmp: String
           _tmp = _stmt.getText(_columnIndexOfWrongFlashcardIds)
           _tmpWrongFlashcardIds = __converters.toIntList(_tmp)
+          val _tmpUpdatedAt: Long
+          _tmpUpdatedAt = _stmt.getLong(_columnIndexOfUpdatedAt)
           _item =
-              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds)
+              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds,_tmpUpdatedAt)
           _result.add(_item)
         }
         _result
@@ -190,6 +200,7 @@ public class MiniQuizResultDao_Impl(
         val _columnIndexOfCorrectAnswers: Int = getColumnIndexOrThrow(_stmt, "correctAnswers")
         val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, "timestamp")
         val _columnIndexOfWrongFlashcardIds: Int = getColumnIndexOrThrow(_stmt, "wrongFlashcardIds")
+        val _columnIndexOfUpdatedAt: Int = getColumnIndexOrThrow(_stmt, "updatedAt")
         val _result: MiniQuizResultEntity?
         if (_stmt.step()) {
           val _tmpId: Int
@@ -206,12 +217,70 @@ public class MiniQuizResultDao_Impl(
           val _tmp: String
           _tmp = _stmt.getText(_columnIndexOfWrongFlashcardIds)
           _tmpWrongFlashcardIds = __converters.toIntList(_tmp)
+          val _tmpUpdatedAt: Long
+          _tmpUpdatedAt = _stmt.getLong(_columnIndexOfUpdatedAt)
           _result =
-              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds)
+              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds,_tmpUpdatedAt)
         } else {
           _result = null
         }
         _result
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
+  public override suspend fun getUpdatedSince(lastSyncedAt: Long): List<MiniQuizResultEntity> {
+    val _sql: String = "SELECT * FROM quiz_results WHERE updatedAt > ?"
+    return performSuspending(__db, true, false) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
+        var _argIndex: Int = 1
+        _stmt.bindLong(_argIndex, lastSyncedAt)
+        val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, "id")
+        val _columnIndexOfCategoryId: Int = getColumnIndexOrThrow(_stmt, "categoryId")
+        val _columnIndexOfTotalQuestions: Int = getColumnIndexOrThrow(_stmt, "totalQuestions")
+        val _columnIndexOfCorrectAnswers: Int = getColumnIndexOrThrow(_stmt, "correctAnswers")
+        val _columnIndexOfTimestamp: Int = getColumnIndexOrThrow(_stmt, "timestamp")
+        val _columnIndexOfWrongFlashcardIds: Int = getColumnIndexOrThrow(_stmt, "wrongFlashcardIds")
+        val _columnIndexOfUpdatedAt: Int = getColumnIndexOrThrow(_stmt, "updatedAt")
+        val _result: MutableList<MiniQuizResultEntity> = mutableListOf()
+        while (_stmt.step()) {
+          val _item: MiniQuizResultEntity
+          val _tmpId: Int
+          _tmpId = _stmt.getLong(_columnIndexOfId).toInt()
+          val _tmpCategoryId: Int
+          _tmpCategoryId = _stmt.getLong(_columnIndexOfCategoryId).toInt()
+          val _tmpTotalQuestions: Int
+          _tmpTotalQuestions = _stmt.getLong(_columnIndexOfTotalQuestions).toInt()
+          val _tmpCorrectAnswers: Int
+          _tmpCorrectAnswers = _stmt.getLong(_columnIndexOfCorrectAnswers).toInt()
+          val _tmpTimestamp: Long
+          _tmpTimestamp = _stmt.getLong(_columnIndexOfTimestamp)
+          val _tmpWrongFlashcardIds: List<Int>
+          val _tmp: String
+          _tmp = _stmt.getText(_columnIndexOfWrongFlashcardIds)
+          _tmpWrongFlashcardIds = __converters.toIntList(_tmp)
+          val _tmpUpdatedAt: Long
+          _tmpUpdatedAt = _stmt.getLong(_columnIndexOfUpdatedAt)
+          _item =
+              MiniQuizResultEntity(_tmpId,_tmpCategoryId,_tmpTotalQuestions,_tmpCorrectAnswers,_tmpTimestamp,_tmpWrongFlashcardIds,_tmpUpdatedAt)
+          _result.add(_item)
+        }
+        _result
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
+  public override suspend fun deleteAll() {
+    val _sql: String = "DELETE FROM quiz_results"
+    return performSuspending(__db, false, true) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
+        _stmt.step()
       } finally {
         _stmt.close()
       }

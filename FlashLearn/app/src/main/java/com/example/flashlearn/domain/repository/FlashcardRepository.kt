@@ -8,4 +8,6 @@ interface FlashcardRepository {
     suspend fun delete(card: Flashcard)
     suspend fun update(card: Flashcard)
     suspend fun deleteByCategory(categoryId: Int)
+    suspend fun getUpdatedFlashcards(lastSyncedAt: Long): List<Flashcard>
+    suspend fun deleteAllFlashcards()
 }

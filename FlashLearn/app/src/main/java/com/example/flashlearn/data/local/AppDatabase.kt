@@ -15,7 +15,7 @@ import com.example.flashlearn.data.local.entity.MiniQuizResultEntity
         FlashcardEntity::class,
         CategoryEntity::class,
         MiniQuizResultEntity::class],
-    version = 8,
+    version = 9,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

@@ -26,4 +26,11 @@ interface FlashcardDao {
 
     @Update
     suspend fun update(card: FlashcardEntity)
+
+    // Cac ham sau phuc vu cho chuc nang dong bo du lieu len Firebase Realtime Database
+    @Query("SELECT * FROM flashcard WHERE updatedAt > :lastSyncedAt")
+    suspend fun getUpdatedSince(lastSyncedAt: Long): List<FlashcardEntity>
+
+    @Query("DELETE FROM flashcard")
+    suspend fun deleteAll()
 }

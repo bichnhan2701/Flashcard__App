@@ -22,4 +22,11 @@ interface MiniQuizResultDao {
 
     @Query("SELECT * FROM quiz_results WHERE categoryId = :categoryId ORDER BY timestamp DESC LIMIT 1")
     suspend fun getLatestResultByCategory(categoryId: Int): MiniQuizResultEntity?
+
+    // Cac ham sau phuc vu cho chuc nang dong bo du lieu len Firebase Realtime Database
+    @Query("SELECT * FROM quiz_results WHERE updatedAt > :lastSyncedAt")
+    suspend fun getUpdatedSince(lastSyncedAt: Long): List<MiniQuizResultEntity>
+
+    @Query("DELETE FROM quiz_results")
+    suspend fun deleteAll()
 }

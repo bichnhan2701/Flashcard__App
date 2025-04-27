@@ -6,5 +6,6 @@ data class MiniQuizResult (
     val totalQuestions: Int,
     val correctAnswers: Int,
     val timestamp: Long = System.currentTimeMillis(), // thời gian hoàn thành bài quiz
-    val wrongFlashcardIds: List<Int>
+    val wrongFlashcardIds: List<Int>,
+    val updateAt: Long
 )

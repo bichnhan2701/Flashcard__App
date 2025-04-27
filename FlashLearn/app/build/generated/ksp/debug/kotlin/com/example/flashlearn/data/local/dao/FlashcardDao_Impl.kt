@@ -186,6 +186,69 @@ public class FlashcardDao_Impl(
     }
   }
 
+  public override suspend fun getUpdatedSince(lastSyncedAt: Long): List<FlashcardEntity> {
+    val _sql: String = "SELECT * FROM flashcard WHERE updatedAt > ?"
+    return performSuspending(__db, true, false) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
+        var _argIndex: Int = 1
+        _stmt.bindLong(_argIndex, lastSyncedAt)
+        val _columnIndexOfId: Int = getColumnIndexOrThrow(_stmt, "id")
+        val _columnIndexOfCategoryId: Int = getColumnIndexOrThrow(_stmt, "categoryId")
+        val _columnIndexOfTerm: Int = getColumnIndexOrThrow(_stmt, "term")
+        val _columnIndexOfDefinition: Int = getColumnIndexOrThrow(_stmt, "definition")
+        val _columnIndexOfPronunciation: Int = getColumnIndexOrThrow(_stmt, "pronunciation")
+        val _columnIndexOfIsFavorite: Int = getColumnIndexOrThrow(_stmt, "isFavorite")
+        val _columnIndexOfIsRemembered: Int = getColumnIndexOrThrow(_stmt, "isRemembered")
+        val _columnIndexOfCreatedAt: Int = getColumnIndexOrThrow(_stmt, "createdAt")
+        val _columnIndexOfUpdatedAt: Int = getColumnIndexOrThrow(_stmt, "updatedAt")
+        val _columnIndexOfLastReviewedDate: Int = getColumnIndexOrThrow(_stmt, "lastReviewedDate")
+        val _result: MutableList<FlashcardEntity> = mutableListOf()
+        while (_stmt.step()) {
+          val _item: FlashcardEntity
+          val _tmpId: Int
+          _tmpId = _stmt.getLong(_columnIndexOfId).toInt()
+          val _tmpCategoryId: Int
+          _tmpCategoryId = _stmt.getLong(_columnIndexOfCategoryId).toInt()
+          val _tmpTerm: String
+          _tmpTerm = _stmt.getText(_columnIndexOfTerm)
+          val _tmpDefinition: String
+          _tmpDefinition = _stmt.getText(_columnIndexOfDefinition)
+          val _tmpPronunciation: String?
+          if (_stmt.isNull(_columnIndexOfPronunciation)) {
+            _tmpPronunciation = null
+          } else {
+            _tmpPronunciation = _stmt.getText(_columnIndexOfPronunciation)
+          }
+          val _tmpIsFavorite: Boolean
+          val _tmp: Int
+          _tmp = _stmt.getLong(_columnIndexOfIsFavorite).toInt()
+          _tmpIsFavorite = _tmp != 0
+          val _tmpIsRemembered: Boolean
+          val _tmp_1: Int
+          _tmp_1 = _stmt.getLong(_columnIndexOfIsRemembered).toInt()
+          _tmpIsRemembered = _tmp_1 != 0
+          val _tmpCreatedAt: Long
+          _tmpCreatedAt = _stmt.getLong(_columnIndexOfCreatedAt)
+          val _tmpUpdatedAt: Long
+          _tmpUpdatedAt = _stmt.getLong(_columnIndexOfUpdatedAt)
+          val _tmpLastReviewedDate: Long?
+          if (_stmt.isNull(_columnIndexOfLastReviewedDate)) {
+            _tmpLastReviewedDate = null
+          } else {
+            _tmpLastReviewedDate = _stmt.getLong(_columnIndexOfLastReviewedDate)
+          }
+          _item =
+              FlashcardEntity(_tmpId,_tmpCategoryId,_tmpTerm,_tmpDefinition,_tmpPronunciation,_tmpIsFavorite,_tmpIsRemembered,_tmpCreatedAt,_tmpUpdatedAt,_tmpLastReviewedDate)
+          _result.add(_item)
+        }
+        _result
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
   public override suspend fun deleteByCategoryId(categoryId: Int) {
     val _sql: String = "DELETE FROM flashcard WHERE categoryId = ?"
     return performSuspending(__db, false, true) { _connection ->
@@ -193,6 +256,18 @@ public class FlashcardDao_Impl(
       try {
         var _argIndex: Int = 1
         _stmt.bindLong(_argIndex, categoryId.toLong())
+        _stmt.step()
+      } finally {
+        _stmt.close()
+      }
+    }
+  }
+
+  public override suspend fun deleteAll() {
+    val _sql: String = "DELETE FROM flashcard"
+    return performSuspending(__db, false, true) { _connection ->
+      val _stmt: SQLiteStatement = _connection.prepare(_sql)
+      try {
         _stmt.step()
       } finally {
         _stmt.close()

@@ -4,7 +4,7 @@
             "outputFile": "com.example.flashlearn.app-mergeDebugResources-83:/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Windows\\.gradle\\caches\\8.9\\transforms\\3cb570df2605e5522be8f23b3a364af7\\transformed\\appcompat-1.6.1\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\FPTSHOP\\.gradle\\caches\\8.9\\transforms\\3f84dfe4831054a2aad4a3f9569acab7\\transformed\\appcompat-1.6.1\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

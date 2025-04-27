@@ -21,6 +21,8 @@ import hilt_aggregated_deps._com_example_flashlearn_FlashLearnApp_GeneratedInjec
 import hilt_aggregated_deps._com_example_flashlearn_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._com_example_flashlearn_di_AuthModule;
 import hilt_aggregated_deps._com_example_flashlearn_di_DatabaseModule;
+import hilt_aggregated_deps._com_example_flashlearn_di_FirebaseRemoteDataSourceModule;
+import hilt_aggregated_deps._com_example_flashlearn_di_NetworkModule;
 import hilt_aggregated_deps._com_example_flashlearn_di_RepositoryModule;
 import hilt_aggregated_deps._com_example_flashlearn_di_UseCaseModule;
 import hilt_aggregated_deps._com_example_flashlearn_ui_viewmodel_AddFolderViewModel_HiltModules_BindsModule;
@@ -91,6 +93,8 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_Ac
         _com_example_flashlearn_MainActivity_GeneratedInjector.class,
         _com_example_flashlearn_di_AuthModule.class,
         _com_example_flashlearn_di_DatabaseModule.class,
+        _com_example_flashlearn_di_FirebaseRemoteDataSourceModule.class,
+        _com_example_flashlearn_di_NetworkModule.class,
         _com_example_flashlearn_di_RepositoryModule.class,
         _com_example_flashlearn_di_UseCaseModule.class,
         _com_example_flashlearn_ui_viewmodel_AddFolderViewModel_HiltModules_BindsModule.class,

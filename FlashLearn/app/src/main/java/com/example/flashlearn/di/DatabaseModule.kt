@@ -1,6 +1,7 @@
 package com.example.flashlearn.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
 import com.example.flashlearn.data.local.AppDatabase
 import com.example.flashlearn.data.local.dao.CategoryDao
@@ -45,5 +46,11 @@ object DatabaseModule {
     @Singleton
     fun provideMiniQuizDao(database: AppDatabase): MiniQuizResultDao {
         return database.miniQuizResultDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences("flashlearn_prefs", Context.MODE_PRIVATE)
     }
 }

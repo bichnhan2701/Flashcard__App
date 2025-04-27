@@ -26,4 +26,12 @@ class MiniQuizRepositoryImpl @Inject constructor(
 
     override suspend fun getLatestResultByCategory(categoryId: Int): MiniQuizResult? =
         dao.getLatestResultByCategory(categoryId)?.toDomain()
+
+    override suspend fun getUpdatedMiniQuizResults(lastSyncedAt: Long): List<MiniQuizResult> {
+        return dao.getUpdatedSince(lastSyncedAt).map { it.toDomain() }
+    }
+
+    override suspend fun deleteAllMiniQuizResults() {
+        dao.deleteAll()
+    }
 }

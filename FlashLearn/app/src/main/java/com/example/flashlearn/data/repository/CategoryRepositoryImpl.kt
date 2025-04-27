@@ -5,6 +5,7 @@ import com.example.flashlearn.data.local.dao.FlashcardDao
 import com.example.flashlearn.data.local.entity.CategoryEntity
 import com.example.flashlearn.data.local.entity.FlashcardEntity
 import com.example.flashlearn.data.local.mapper.toDomain
+import com.example.flashlearn.data.local.mapper.toEntity
 import com.example.flashlearn.domain.model.Category
 import com.example.flashlearn.domain.model.Flashcard
 import com.example.flashlearn.domain.repository.CategoryRepository
@@ -17,30 +18,11 @@ class CategoryRepositoryImpl @Inject constructor(
     private val flashcardDao: FlashcardDao
 ) : CategoryRepository {
     override suspend fun createCategory(category: Category): Int {
-        val entity = CategoryEntity(
-            name = category.name,
-            cardCount = category.cardCount,
-            isReviewed = category.isReviewed,
-            isQuizDone = category.isQuizDone,
-            createdAt = category.createdAt,
-            updatedAt = category.updatedAt
-        )
-        return categoryDao.insert(entity).toInt()
+        return categoryDao.insert(category.toEntity()).toInt()
     }
 
     override suspend fun addFlashcardsToCategory(categoryId: Int, flashcards: List<Flashcard>) {
-        val entities = flashcards.map {
-            FlashcardEntity(
-                categoryId = categoryId,
-                term = it.term,
-                definition = it.definition,
-                pronunciation = it.pronunciation,
-                isFavorite = it.isFavorite,
-                isRemembered = it.isRemembered,
-                createdAt = it.createdAt,
-                updatedAt = it.updatedAt
-            )
-        }
+        val entities = flashcards.map { it.toEntity() }
         flashcardDao.insertAll(entities)
     }
 
@@ -48,8 +30,8 @@ class CategoryRepositoryImpl @Inject constructor(
         return categoryDao.getAll().map { it.map(CategoryEntity::toDomain) }
     }
 
-    override suspend fun updateName(categoryId: Int, newName: String) {
-        categoryDao.updateCategoryName(categoryId, newName)
+    override suspend fun updateCategoryInfo(categoryId: Int, newName: String, newCardCount: Int) {
+        categoryDao.updateCategoryInfo(categoryId, newName, newCardCount)
     }
 
     override suspend fun deleteById(categoryId: Int) {
@@ -59,4 +41,17 @@ class CategoryRepositoryImpl @Inject constructor(
     override suspend fun getCategoryById(categoryId: Int): Category? {
         return categoryDao.getById(categoryId)?.toDomain()
     }
+
+    override suspend fun getUpdatedCategories(lastSyncedAt: Long): List<Category> {
+        return categoryDao.getUpdatedSince(lastSyncedAt).map { it.toDomain() }
+    }
+
+    override suspend fun deleteAllCategories() {
+        categoryDao.deleteAll()
+    }
+
+    override suspend fun hasAnyCategory(): Boolean {
+        return categoryDao.countCategories() > 0
+    }
+
 }

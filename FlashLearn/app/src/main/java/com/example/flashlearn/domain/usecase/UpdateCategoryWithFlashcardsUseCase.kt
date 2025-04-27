@@ -14,7 +14,7 @@ class UpdateCategoryWithFlashcardsUseCase @Inject constructor(
         newName: String,
         updatedCards: List<Flashcard>
     ) {
-        categoryRepository.updateName(categoryId, newName)
+        categoryRepository.updateCategoryInfo(categoryId, newName, updatedCards.size)
 
         val oldCards = flashcardRepository.getByCategory(categoryId)
 

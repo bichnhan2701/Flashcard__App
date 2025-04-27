@@ -92,6 +92,8 @@ dependencies {
     // Firebase Authentication
     implementation(libs.firebase.auth)
     implementation (libs.play.services.auth)
+    // Firebase Database
+    implementation (libs.firebase.database.ktx)
     // Coil
     implementation(libs.coil.compose)
 

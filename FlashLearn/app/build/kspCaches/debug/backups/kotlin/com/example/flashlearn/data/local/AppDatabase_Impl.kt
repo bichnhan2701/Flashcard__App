@@ -46,14 +46,14 @@ public class AppDatabase_Impl : AppDatabase() {
   }
 
   protected override fun createOpenDelegate(): RoomOpenDelegate {
-    val _openDelegate: RoomOpenDelegate = object : RoomOpenDelegate(8,
-        "f10529d25e67814f8b4fb1753d333752", "8cf4421833563efabd1ebb75f82731ed") {
+    val _openDelegate: RoomOpenDelegate = object : RoomOpenDelegate(9,
+        "122d4fd5cddbeb68916f6d3cf0e3ef79", "e924f1eb99f6c8fa093a731634d5d5d6") {
       public override fun createAllTables(connection: SQLiteConnection) {
         connection.execSQL("CREATE TABLE IF NOT EXISTS `flashcard` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `categoryId` INTEGER NOT NULL, `term` TEXT NOT NULL, `definition` TEXT NOT NULL, `pronunciation` TEXT, `isFavorite` INTEGER NOT NULL, `isRemembered` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL, `lastReviewedDate` INTEGER)")
         connection.execSQL("CREATE TABLE IF NOT EXISTS `category` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `cardCount` INTEGER NOT NULL, `isReviewed` INTEGER NOT NULL, `isQuizDone` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER NOT NULL)")
-        connection.execSQL("CREATE TABLE IF NOT EXISTS `quiz_results` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `categoryId` INTEGER NOT NULL, `totalQuestions` INTEGER NOT NULL, `correctAnswers` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `wrongFlashcardIds` TEXT NOT NULL)")
+        connection.execSQL("CREATE TABLE IF NOT EXISTS `quiz_results` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `categoryId` INTEGER NOT NULL, `totalQuestions` INTEGER NOT NULL, `correctAnswers` INTEGER NOT NULL, `timestamp` INTEGER NOT NULL, `wrongFlashcardIds` TEXT NOT NULL, `updatedAt` INTEGER NOT NULL)")
         connection.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)")
-        connection.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f10529d25e67814f8b4fb1753d333752')")
+        connection.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '122d4fd5cddbeb68916f6d3cf0e3ef79')")
       }
 
       public override fun dropAllTables(connection: SQLiteConnection) {
@@ -155,6 +155,8 @@ public class AppDatabase_Impl : AppDatabase() {
             TableInfo.CREATED_FROM_ENTITY))
         _columnsQuizResults.put("wrongFlashcardIds", TableInfo.Column("wrongFlashcardIds", "TEXT",
             true, 0, null, TableInfo.CREATED_FROM_ENTITY))
+        _columnsQuizResults.put("updatedAt", TableInfo.Column("updatedAt", "INTEGER", true, 0, null,
+            TableInfo.CREATED_FROM_ENTITY))
         val _foreignKeysQuizResults: MutableSet<TableInfo.ForeignKey> = mutableSetOf()
         val _indicesQuizResults: MutableSet<TableInfo.Index> = mutableSetOf()
         val _infoQuizResults: TableInfo = TableInfo("quiz_results", _columnsQuizResults,
