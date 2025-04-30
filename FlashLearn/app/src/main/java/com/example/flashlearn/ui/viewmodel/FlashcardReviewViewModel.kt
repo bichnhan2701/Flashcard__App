@@ -98,6 +98,7 @@ class FlashcardReviewViewModel @Inject constructor(
         tts = TextToSpeech(application.applicationContext) {
             if (it == TextToSpeech.SUCCESS) {
                 tts?.language = Locale.US
+//                tts?.setSpeechRate(0.9f)
             }
         }
     }

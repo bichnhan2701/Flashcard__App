@@ -35,7 +35,6 @@ import com.example.flashlearn.di.UseCaseModule_ProvideGetAllCategoriesUseCaseFac
 import com.example.flashlearn.di.UseCaseModule_ProvideGetAllQuizResultsUseCaseFactory;
 import com.example.flashlearn.di.UseCaseModule_ProvideGetCategoryByIdUseCasesFactory;
 import com.example.flashlearn.di.UseCaseModule_ProvideGetFolderWithFlashcardsUseCaseFactory;
-import com.example.flashlearn.di.UseCaseModule_ProvideGetQuizHistoryByCategoryUseCaseFactory;
 import com.example.flashlearn.di.UseCaseModule_ProvideGetQuizResultsBetweenUseCaseFactory;
 import com.example.flashlearn.di.UseCaseModule_ProvideLoginWithGoogleUseCaseFactory;
 import com.example.flashlearn.di.UseCaseModule_ProvideLogoutUseCaseFactory;
@@ -57,7 +56,6 @@ import com.example.flashlearn.domain.usecase.GetAllQuizResultsUseCase;
 import com.example.flashlearn.domain.usecase.GetCategoryByIdUseCase;
 import com.example.flashlearn.domain.usecase.GetCategoryWithFlashcardsUseCase;
 import com.example.flashlearn.domain.usecase.GetFlashcardsByCategoryUseCase;
-import com.example.flashlearn.domain.usecase.GetQuizHistoryByCategoryUseCase;
 import com.example.flashlearn.domain.usecase.GetQuizResultsBetweenUseCase;
 import com.example.flashlearn.domain.usecase.InsertFlashcardsUseCase;
 import com.example.flashlearn.domain.usecase.LoginWithGoogleUseCase;
@@ -83,14 +81,8 @@ import com.example.flashlearn.ui.viewmodel.HomeViewModel;
 import com.example.flashlearn.ui.viewmodel.HomeViewModel_HiltModules;
 import com.example.flashlearn.ui.viewmodel.MiniQuizViewModel;
 import com.example.flashlearn.ui.viewmodel.MiniQuizViewModel_HiltModules;
-import com.example.flashlearn.ui.viewmodel.NotificationViewModel;
-import com.example.flashlearn.ui.viewmodel.NotificationViewModel_HiltModules;
-import com.example.flashlearn.ui.viewmodel.ProgressDetailViewModel;
-import com.example.flashlearn.ui.viewmodel.ProgressDetailViewModel_HiltModules;
 import com.example.flashlearn.ui.viewmodel.ProgressViewModel;
 import com.example.flashlearn.ui.viewmodel.ProgressViewModel_HiltModules;
-import com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel;
-import com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel_HiltModules;
 import com.google.firebase.database.DatabaseReference;
 import dagger.hilt.android.ActivityRetainedLifecycle;
 import dagger.hilt.android.ViewModelLifecycle;
@@ -453,7 +445,7 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(12).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AddFolderViewModel, AddFolderViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AuthViewModel, AuthViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel, CategoryDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel, EditFolderDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel, FlashcardFormViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel, FlashcardReviewViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_MiniQuizViewModel, MiniQuizViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_NotificationViewModel, NotificationViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel, ProgressDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_ProgressViewModel, ProgressViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel, QuizHistoryViewModel_HiltModules.KeyModule.provide()).build());
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(9).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AddFolderViewModel, AddFolderViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AuthViewModel, AuthViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel, CategoryDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel, EditFolderDetailViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel, FlashcardFormViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel, FlashcardReviewViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_HomeViewModel, HomeViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_MiniQuizViewModel, MiniQuizViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_ProgressViewModel, ProgressViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -473,29 +465,35 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardReviewViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel = "com.example.flashlearn.ui.viewmodel.CategoryDetailViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
+
       static String com_example_flashlearn_ui_viewmodel_HomeViewModel = "com.example.flashlearn.ui.viewmodel.HomeViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_AddFolderViewModel = "com.example.flashlearn.ui.viewmodel.AddFolderViewModel";
 
-      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel = "com.example.flashlearn.ui.viewmodel.EditFolderDetailViewModel";
-
       static String com_example_flashlearn_ui_viewmodel_AuthViewModel = "com.example.flashlearn.ui.viewmodel.AuthViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel = "com.example.flashlearn.ui.viewmodel.CategoryDetailViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_ProgressViewModel = "com.example.flashlearn.ui.viewmodel.ProgressViewModel";
 
-      static String com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel = "com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel";
+      static String com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel = "com.example.flashlearn.ui.viewmodel.EditFolderDetailViewModel";
 
-      static String com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardReviewViewModel";
+      @KeepFieldType
+      FlashcardReviewViewModel com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
+      @KeepFieldType
+      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_NotificationViewModel = "com.example.flashlearn.ui.viewmodel.NotificationViewModel";
+      @KeepFieldType
+      CategoryDetailViewModel com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel = "com.example.flashlearn.ui.viewmodel.ProgressDetailViewModel";
+      @KeepFieldType
+      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
 
       @KeepFieldType
       HomeViewModel com_example_flashlearn_ui_viewmodel_HomeViewModel2;
@@ -504,34 +502,13 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
       AddFolderViewModel com_example_flashlearn_ui_viewmodel_AddFolderViewModel2;
 
       @KeepFieldType
-      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
-
-      @KeepFieldType
-      EditFolderDetailViewModel com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel2;
-
-      @KeepFieldType
       AuthViewModel com_example_flashlearn_ui_viewmodel_AuthViewModel2;
-
-      @KeepFieldType
-      CategoryDetailViewModel com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel2;
 
       @KeepFieldType
       ProgressViewModel com_example_flashlearn_ui_viewmodel_ProgressViewModel2;
 
       @KeepFieldType
-      QuizHistoryViewModel com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel2;
-
-      @KeepFieldType
-      FlashcardReviewViewModel com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel2;
-
-      @KeepFieldType
-      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
-
-      @KeepFieldType
-      NotificationViewModel com_example_flashlearn_ui_viewmodel_NotificationViewModel2;
-
-      @KeepFieldType
-      ProgressDetailViewModel com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel2;
+      EditFolderDetailViewModel com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel2;
     }
   }
 
@@ -558,13 +535,7 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
     private Provider<MiniQuizViewModel> miniQuizViewModelProvider;
 
-    private Provider<NotificationViewModel> notificationViewModelProvider;
-
-    private Provider<ProgressDetailViewModel> progressDetailViewModelProvider;
-
     private Provider<ProgressViewModel> progressViewModelProvider;
-
-    private Provider<QuizHistoryViewModel> quizHistoryViewModelProvider;
 
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam,
@@ -587,15 +558,12 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
       this.flashcardReviewViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
       this.homeViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 6);
       this.miniQuizViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 7);
-      this.notificationViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
-      this.progressDetailViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 9);
-      this.progressViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 10);
-      this.quizHistoryViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 11);
+      this.progressViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 8);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(12).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AddFolderViewModel, ((Provider) addFolderViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AuthViewModel, ((Provider) authViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel, ((Provider) categoryDetailViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel, ((Provider) editFolderDetailViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel, ((Provider) flashcardFormViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel, ((Provider) flashcardReviewViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_MiniQuizViewModel, ((Provider) miniQuizViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_NotificationViewModel, ((Provider) notificationViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel, ((Provider) progressDetailViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_ProgressViewModel, ((Provider) progressViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel, ((Provider) quizHistoryViewModelProvider)).build());
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(9).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AddFolderViewModel, ((Provider) addFolderViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_AuthViewModel, ((Provider) authViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel, ((Provider) categoryDetailViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel, ((Provider) editFolderDetailViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel, ((Provider) flashcardFormViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel, ((Provider) flashcardReviewViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_HomeViewModel, ((Provider) homeViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_MiniQuizViewModel, ((Provider) miniQuizViewModelProvider)).put(LazyClassKeyProvider.com_example_flashlearn_ui_viewmodel_ProgressViewModel, ((Provider) progressViewModelProvider)).build());
     }
 
     @Override
@@ -605,65 +573,50 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String com_example_flashlearn_ui_viewmodel_AuthViewModel = "com.example.flashlearn.ui.viewmodel.AuthViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_HomeViewModel = "com.example.flashlearn.ui.viewmodel.HomeViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_AddFolderViewModel = "com.example.flashlearn.ui.viewmodel.AddFolderViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel = "com.example.flashlearn.ui.viewmodel.EditFolderDetailViewModel";
+
+      static String com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardReviewViewModel";
+
       static String com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel = "com.example.flashlearn.ui.viewmodel.CategoryDetailViewModel";
 
       static String com_example_flashlearn_ui_viewmodel_ProgressViewModel = "com.example.flashlearn.ui.viewmodel.ProgressViewModel";
 
-      static String com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel = "com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel";
+      @KeepFieldType
+      AuthViewModel com_example_flashlearn_ui_viewmodel_AuthViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardFormViewModel";
+      @KeepFieldType
+      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_NotificationViewModel = "com.example.flashlearn.ui.viewmodel.NotificationViewModel";
+      @KeepFieldType
+      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_HomeViewModel = "com.example.flashlearn.ui.viewmodel.HomeViewModel";
+      @KeepFieldType
+      HomeViewModel com_example_flashlearn_ui_viewmodel_HomeViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_MiniQuizViewModel = "com.example.flashlearn.ui.viewmodel.MiniQuizViewModel";
+      @KeepFieldType
+      AddFolderViewModel com_example_flashlearn_ui_viewmodel_AddFolderViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel = "com.example.flashlearn.ui.viewmodel.EditFolderDetailViewModel";
+      @KeepFieldType
+      EditFolderDetailViewModel com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel2;
 
-      static String com_example_flashlearn_ui_viewmodel_AddFolderViewModel = "com.example.flashlearn.ui.viewmodel.AddFolderViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel = "com.example.flashlearn.ui.viewmodel.FlashcardReviewViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_AuthViewModel = "com.example.flashlearn.ui.viewmodel.AuthViewModel";
-
-      static String com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel = "com.example.flashlearn.ui.viewmodel.ProgressDetailViewModel";
+      @KeepFieldType
+      FlashcardReviewViewModel com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel2;
 
       @KeepFieldType
       CategoryDetailViewModel com_example_flashlearn_ui_viewmodel_CategoryDetailViewModel2;
 
       @KeepFieldType
       ProgressViewModel com_example_flashlearn_ui_viewmodel_ProgressViewModel2;
-
-      @KeepFieldType
-      QuizHistoryViewModel com_example_flashlearn_ui_viewmodel_QuizHistoryViewModel2;
-
-      @KeepFieldType
-      FlashcardFormViewModel com_example_flashlearn_ui_viewmodel_FlashcardFormViewModel2;
-
-      @KeepFieldType
-      NotificationViewModel com_example_flashlearn_ui_viewmodel_NotificationViewModel2;
-
-      @KeepFieldType
-      HomeViewModel com_example_flashlearn_ui_viewmodel_HomeViewModel2;
-
-      @KeepFieldType
-      MiniQuizViewModel com_example_flashlearn_ui_viewmodel_MiniQuizViewModel2;
-
-      @KeepFieldType
-      EditFolderDetailViewModel com_example_flashlearn_ui_viewmodel_EditFolderDetailViewModel2;
-
-      @KeepFieldType
-      AddFolderViewModel com_example_flashlearn_ui_viewmodel_AddFolderViewModel2;
-
-      @KeepFieldType
-      FlashcardReviewViewModel com_example_flashlearn_ui_viewmodel_FlashcardReviewViewModel2;
-
-      @KeepFieldType
-      AuthViewModel com_example_flashlearn_ui_viewmodel_AuthViewModel2;
-
-      @KeepFieldType
-      ProgressDetailViewModel com_example_flashlearn_ui_viewmodel_ProgressDetailViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -711,17 +664,8 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
           case 7: // com.example.flashlearn.ui.viewmodel.MiniQuizViewModel 
           return (T) new MiniQuizViewModel(singletonCImpl.getFlashcardsByCategoryUseCase(), singletonCImpl.provideGenerateMiniQuizQuestionsUseCaseProvider.get(), singletonCImpl.provideSaveMiniQuizResultUseCaseProvider.get(), singletonCImpl.getCategoryByIdUseCase(), singletonCImpl.provideSyncAllDataUseCaseProvider.get(), singletonCImpl.provideNetworkObserverProvider.get());
 
-          case 8: // com.example.flashlearn.ui.viewmodel.NotificationViewModel 
-          return (T) new NotificationViewModel();
-
-          case 9: // com.example.flashlearn.ui.viewmodel.ProgressDetailViewModel 
-          return (T) new ProgressDetailViewModel(singletonCImpl.getFlashcardsByCategoryUseCase(), singletonCImpl.provideSyncAllDataUseCaseProvider.get(), singletonCImpl.provideNetworkObserverProvider.get());
-
-          case 10: // com.example.flashlearn.ui.viewmodel.ProgressViewModel 
+          case 8: // com.example.flashlearn.ui.viewmodel.ProgressViewModel 
           return (T) new ProgressViewModel(singletonCImpl.provideGetAllQuizResultsUseCaseProvider.get(), singletonCImpl.provideGetQuizResultsBetweenUseCaseProvider.get(), singletonCImpl.provideGetAllCategoriesProgressUseCaseProvider.get(), singletonCImpl.provideSyncAllDataUseCaseProvider.get(), singletonCImpl.provideNetworkObserverProvider.get());
-
-          case 11: // com.example.flashlearn.ui.viewmodel.QuizHistoryViewModel 
-          return (T) new QuizHistoryViewModel(singletonCImpl.provideGetQuizHistoryByCategoryUseCaseProvider.get(), singletonCImpl.provideSyncAllDataUseCaseProvider.get(), singletonCImpl.provideNetworkObserverProvider.get());
 
           default: throw new AssertionError(id);
         }
@@ -861,8 +805,6 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
     private Provider<GetAllCategoriesProgressUseCase> provideGetAllCategoriesProgressUseCaseProvider;
 
-    private Provider<GetQuizHistoryByCategoryUseCase> provideGetQuizHistoryByCategoryUseCaseProvider;
-
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
       initialize(applicationContextModuleParam);
@@ -928,7 +870,6 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
       this.provideGetAllQuizResultsUseCaseProvider = DoubleCheck.provider(new SwitchingProvider<GetAllQuizResultsUseCase>(singletonCImpl, 22));
       this.provideGetQuizResultsBetweenUseCaseProvider = DoubleCheck.provider(new SwitchingProvider<GetQuizResultsBetweenUseCase>(singletonCImpl, 23));
       this.provideGetAllCategoriesProgressUseCaseProvider = DoubleCheck.provider(new SwitchingProvider<GetAllCategoriesProgressUseCase>(singletonCImpl, 24));
-      this.provideGetQuizHistoryByCategoryUseCaseProvider = DoubleCheck.provider(new SwitchingProvider<GetQuizHistoryByCategoryUseCase>(singletonCImpl, 25));
     }
 
     @Override
@@ -1038,9 +979,6 @@ public final class DaggerFlashLearnApp_HiltComponents_SingletonC {
 
           case 24: // com.example.flashlearn.domain.usecase.GetAllCategoriesProgressUseCase 
           return (T) UseCaseModule_ProvideGetAllCategoriesProgressUseCaseFactory.provideGetAllCategoriesProgressUseCase(singletonCImpl.bindCategoryRepositoryProvider.get(), singletonCImpl.flashcardRepositoryImpl());
-
-          case 25: // com.example.flashlearn.domain.usecase.GetQuizHistoryByCategoryUseCase 
-          return (T) UseCaseModule_ProvideGetQuizHistoryByCategoryUseCaseFactory.provideGetQuizHistoryByCategoryUseCase(singletonCImpl.bindMiniQuizRepositoryProvider.get());
 
           default: throw new AssertionError(id);
         }
