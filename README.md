@@ -15,12 +15,12 @@ Link Figma: [FlashLearn App](https://www.figma.com/design/fW8MwTaemzzIKKDVmMra3N
 
 
 ## Cách cài đặt app
-B1: Xuất file APK từ Android Studio:
-- Build > Build Bundle(s) / APK(s) > Build APK(s)
-- Sau khi build xong, bạn sẽ thấy thông báo APK(s) generated successfully. Nhấn "locate" để mở thư mục chứa file APK (thường nằm ở:
+- B1: Xuất file APK từ Android Studio:
+    - Build > Build Bundle(s) / APK(s) > Build APK(s)
+    - Sau khi build xong, bạn sẽ thấy thông báo APK(s) generated successfully. Nhấn "locate" để mở thư mục chứa file APK (thường nằm ở:
 PROJECT_FOLDER/app/build/outputs/apk/debug/app-debug.apk)
-B2: Cài file APK lên điện thoại
-- Chép file APK vào điện thoại (qua USB, Bluetooth, hoặc gửi qua Zalo/Gmail...).
-- Mở file APK đã lưu trên điện thoại 
-- Nếu lần đầu cài APK từ bên ngoài, bạn cần cấp quyền: Vào Cài đặt > Bảo mật > Cài ứng dụng không rõ nguồn gốc và bật cho ứng dụng bạn dùng để mở file (File Manager, Zalo, Gmail...).
-- Xác nhận và cài đặt APK.
+- B2: Cài file APK lên điện thoại
+    - Chép file APK vào điện thoại (qua USB, Bluetooth, hoặc gửi qua Zalo/Gmail...).
+    - Mở file APK đã lưu trên điện thoại 
+    - Nếu lần đầu cài APK từ bên ngoài, bạn cần cấp quyền: Vào Cài đặt > Bảo mật > Cài ứng dụng không rõ nguồn gốc và bật cho ứng dụng bạn dùng để mở file (File Manager, Zalo, Gmail...).
+    - Xác nhận và cài đặt APK.
